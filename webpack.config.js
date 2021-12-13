@@ -18,7 +18,22 @@ module.exports = {
       },
       {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          use: ['style-loader', 'css-loader', {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                [
+                  'postcss-preset-env',
+                  {
+                    features: {
+                      'nesting-rules': true
+                    }
+                  }
+                ],
+                'autoprefixer'
+              ],
+            }
+          }],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
