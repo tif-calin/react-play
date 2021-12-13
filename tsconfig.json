@@ -4,6 +4,21 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
-  ]
+    "build",
+    "dist"
+  ],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+  }
 }
