@@ -18,7 +18,8 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
+    "target": "es5",
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": true
   }
 }
