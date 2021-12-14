@@ -10,6 +10,10 @@
     [ 
       "@babel/plugin-transform-runtime", 
       { "regenerator": true }
+    ],
+    [
+      "@babel/plugin-transform-typescript",
+      { "isTSX": true, "allExtensions": true }
     ]
   ]
 }
