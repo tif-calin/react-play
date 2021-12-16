@@ -1,0 +1,38 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+
+  border: 2px solid #ccc;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-y: overlay;
+}
+
+.Layout > * {
+  padding: 0.5rem;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Layout > header {
+  flex-grow: 0;
+  display: flex;
+}
+
+.Layout > main {
+  flex-grow: 1;
+}
+
+.Layout > :is(main, footer) > * {
+  min-width: calc(100px + 60vw);
+  width: calc(150px + 40vw);
+  max-width: calc(900px + 10vw);
+}
+
+.Layout > footer {
+  flex-grow: 0;
+  display: flex;
+}

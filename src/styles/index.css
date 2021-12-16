@@ -1,2 +1,21 @@
 @import url('./normalize.css');
 @import url('./reset.css');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  overflow-y: overlay;
+
+  accent-color: var(--clr-accent);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+summary, button, input[type=radio], input[type=checkbox] {
+  cursor: pointer;
+}
