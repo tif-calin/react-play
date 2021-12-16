@@ -10,6 +10,7 @@ import {
 import Layout from './components/layout/Layout';
 import Home from './views/home';
 import Rate from './views/rate';
+import './styles/index.css';
 
 const App = () => {
   return (
