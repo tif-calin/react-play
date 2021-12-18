@@ -1,1 +1,10 @@
-repo: https://github.com/tif-calin/react-play
+# Culi's React Prototype Playground
+**repo**: https://github.com/tif-calin/react-play
+
+## Uses
+ - react, react router
+ - [mui](https://mui.com/)  
+ - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
+
+## Credits
+ - hooks inspired by [usehooks.com](https://usehooks.com/)
