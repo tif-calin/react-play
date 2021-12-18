@@ -1,0 +1,16 @@
+.RateField {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 36rem;
+  gap: 2rem;
+}
+
+.RateField > span {
+  padding-bottom: 20px;
+  color: blue;
+}
+
+.RateField .MuiSlider-markLabel {
+  font-size: 0.75rem;
+}
