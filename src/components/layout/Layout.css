@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
 
-  border: 2px solid #ccc;
   min-height: 100vh;
   width: 100vw;
   overflow-y: overlay;
@@ -35,4 +34,8 @@
 .Layout > footer {
   flex-grow: 0;
   display: flex;
+}
+
+.PageTitle {
+  margin-top: 0;
 }
