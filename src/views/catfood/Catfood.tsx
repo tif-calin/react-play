@@ -1,9 +1,13 @@
 import React from 'react';
+import PageTitle from '../../components/layout/PageTitle';
+import PriceObservationForm from './PriceObservationForm';
 
 const Catfood = () => {
+
   return (
     <div>
-      <h1>Catfood</h1>
+      <PageTitle>Catfood</PageTitle>
+      <PriceObservationForm />
     </div>
   );
 };
