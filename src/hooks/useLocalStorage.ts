@@ -18,8 +18,8 @@ const useLocalStorage = <T,>(key: string, initialValue: T) => {
         ? newValue(stateValue)
         : newValue
       ;
-      setStateValue(valueToStore);
-      window?.localStorage?.setItem(key, JSON.stringify(newValue));
+      setStateValue(newValue);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       console.error(error);
     }
