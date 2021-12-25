@@ -1,6 +1,12 @@
 # Culi's React Prototype Playground
 **repo**: https://github.com/tif-calin/react-play
 
+## Things I wanna try:
+ - [plausible](https://plausible.io/)
+ - this [collection of open-source icons](https://www.iconshock.com/freeicons/)
+ - [freeillustrations.xyz](https://freeillustrations.xyz/)
+ - different react ui libraries: material, bootstrap, ant, semantic, chakra, blueprint, and [mantine](https://mantine.dev/)
+
 ## Uses
  - react, react router
  - [mui](https://mui.com/)  
