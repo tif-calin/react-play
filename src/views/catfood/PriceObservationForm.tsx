@@ -1,12 +1,15 @@
+import { Button, TextField } from '@mui/material';
 import React from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { DataEntry, Option } from './Catfood';
 
 // @ts-ignore
 import styles from './catfood.module.css';
+import StoreSelect from './StoreSelect';
 
-type weightUnit = 'g' | 'kg' | 'oz' | 'lb';
+type WeightUnit = 'g' | 'kg' | 'oz' | 'lb';
 
-const convertWeightFromGrams = (weight: number, unit: weightUnit) => {
+const convertWeightFromGrams = (weight: number, unit: WeightUnit) => {
   switch (unit) {
     case 'kg':
       return weight / 1000;
@@ -19,7 +22,7 @@ const convertWeightFromGrams = (weight: number, unit: weightUnit) => {
   }
 };
 
-const convertWeightToGrams = (weight: number, unit: weightUnit) => {
+const convertWeightToGrams = (weight: number, unit: WeightUnit) => {
   switch (unit) {
     case 'kg':
       return weight * 1000;
@@ -32,14 +35,20 @@ const convertWeightToGrams = (weight: number, unit: weightUnit) => {
   }
 };
 
-const PriceObservationForm: React.FC = () => {
+interface Props {
+  addEntry: (entry: DataEntry) => void,
+  options: Option[]
+};
+
+const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
   const [cfdbUrl, setCfdbUrl] = useLocalStorage('catfood_catfooddburl', '');
   const [googleSearch, setGoogleSearch] = React.useState('');
   const [price, setPrice] = useLocalStorage('catfood_price', '');
   const [weight, setWeight] = useLocalStorage('catfood_weight', '');
-  const [weightUnit, setWeightUnit] = React.useState<weightUnit>('g');
+  const [weightUnit, setWeightUnit] = React.useState<WeightUnit>('g');
   const [store, setStore] = useLocalStorage('catfood_store', '');
   const [storeAddress, setStoreAddress] = useLocalStorage('catfood_storeaddress', '');
+  const [date, setDate] = useLocalStorage('catfood_date', '2021-12-18');
 
   const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -48,13 +57,16 @@ const PriceObservationForm: React.FC = () => {
         setPrice(value);
         break;
       case 'weightunit':
-        setWeightUnit(value as weightUnit);
+        setWeightUnit(value as WeightUnit);
         break;
       case 'store':
         setStore(value);
         break;
       case 'storeaddress':
         setStoreAddress(value);
+        break;
+      case 'date':
+        setDate(value);
         break;
     }
   }, []);
@@ -74,10 +86,35 @@ const PriceObservationForm: React.FC = () => {
     ;
   }, []);
 
+  const handleStoreChange = (address: string, store: string) => {
+    setStoreAddress(address);
+    setStore(store);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    addEntry({
+      food: cfdbUrl,
+      weight: Number(weight),
+      price: Number(price),
+      store,
+      place: storeAddress,
+      date
+    });
+  };
+
   return (
     <form className={`PriceObservationForm ${styles.form}`}>
       <fieldset>
-        <input type="text" value={cfdbUrl} onChange={handleFoodChange} placeholder="CatFoodDB URL" />
+        <StoreSelect 
+          options={options}
+          value={{ value: storeAddress, store }}
+          onPlaceSelect={handleStoreChange}
+        />
+      </fieldset>
+      <fieldset>
+        <input type="url" value={cfdbUrl} onChange={handleFoodChange} placeholder="CatFoodDB URL" />
         {googleSearch &&
           <a target="_blank" rel="noreferrer" href={googleSearch}>search google for {cfdbUrl}</a>
         }
@@ -103,17 +140,20 @@ const PriceObservationForm: React.FC = () => {
           <option value="kg">kg</option>
           <option value="g">g</option>
         </select>
+        <span>${(1000 * Number(price) / Number(weight)).toFixed(2)}/kg</span>
       </fieldset>
       <fieldset>
-        <input type="text" placeholder="Store" />
-        <input type="text" placeholder="Address" />
+        <input 
+          name="date" type="date" 
+          value={date} onChange={handleChange}
+        />
       </fieldset>
-      <fieldset>
-        <input type="date" />
-      </fieldset>
-      <button type="submit">Add Entry</button>
+      <Button 
+        type="submit"
+        onClick={handleSubmit}
+      >Add Entry</Button>
     </form>
   )
 };
 
-export default PriceObservationForm;
+export default React.memo(PriceObservationForm);
