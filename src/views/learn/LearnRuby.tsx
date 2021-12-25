@@ -43,8 +43,9 @@ const LearnRuby = () => {
       </ul>
 
       <h3>Learning Log</h3>
-      <p><strong>2021_12dec22</strong>: Today I installed Ruby, did the hello world Exercism problem, and made a study plan.</p>
-      <p><strong>2021_12dec23</strong>: Did a Exercism problem, learned how to define class methods and properties</p>
+      <p><strong>2021_12dec22wed</strong>: Today I installed Ruby, did the hello world Exercism problem, and made a study plan.</p>
+      <p><strong>2021_12dec23thu</strong>: Did a Exercism problem, learned how to define class methods and properties</p>
+      <p><strong>2021_12dec24fri</strong>: Did another Exercism problem. Learned about instantiating. Using ? after getter methods is the cutest thing I&apos;ve ever seen in a language</p>
     </div>
   );
 };
