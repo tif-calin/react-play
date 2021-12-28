@@ -1,7 +1,7 @@
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import React from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { DataEntry, Option } from './Catfood';
+import { DataEntry, Option } from '../../hooks/useCatfood';
 
 // @ts-ignore
 import styles from './catfood.module.css';
@@ -10,16 +10,20 @@ import StoreSelect from './StoreSelect';
 type WeightUnit = 'g' | 'kg' | 'oz' | 'lb';
 
 const convertWeightFromGrams = (weight: number, unit: WeightUnit) => {
+  let newWeight = weight;
   switch (unit) {
     case 'kg':
-      return weight / 1000;
+      newWeight = weight / 1000;
+      break;
     case 'oz':
-      return weight / 28.34952312;
+      newWeight = weight / 28.34952312;
+      break;
     case 'lb':
-      return weight / 453.59237;
-    default:
-      return weight;
+      newWeight = weight / 453.59237;
+      break;
   }
+
+  return Number(newWeight.toFixed(4));
 };
 
 const convertWeightToGrams = (weight: number, unit: WeightUnit) => {
@@ -37,10 +41,11 @@ const convertWeightToGrams = (weight: number, unit: WeightUnit) => {
 
 interface Props {
   addEntry: (entry: DataEntry) => void,
-  options: Option[]
+  options: Option[],
+  stats: any
 };
 
-const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
+const PriceObservationForm: React.FC<Props> = ({ addEntry, options, stats }) => {
   const [cfdbUrl, setCfdbUrl] = useLocalStorage('catfood_catfooddburl', '');
   const [googleSearch, setGoogleSearch] = React.useState('');
   const [price, setPrice] = useLocalStorage('catfood_price', '');
@@ -49,6 +54,11 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
   const [store, setStore] = useLocalStorage('catfood_store', '');
   const [storeAddress, setStoreAddress] = useLocalStorage('catfood_storeaddress', '');
   const [date, setDate] = useLocalStorage('catfood_date', '2021-12-18');
+
+  const foodInfo = stats.foods[cfdbUrl] 
+    ? `Seen at ${stats.foods[cfdbUrl].stores.size} stores, ${stats.foods[cfdbUrl].stores.has(store) ? '' : 'not '}including ${store}.` 
+    : 'No previous observations for this product.'
+  ;
 
   const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -81,7 +91,7 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
 
     setCfdbUrl(input);
     setGoogleSearch(input.startsWith('http') 
-      ? '' 
+      ? ''
       : `https://www.google.com/search?q=site%3Acatfooddb.com%2Fproduct+${input.replace(' ', '+')}`)
     ;
   }, []);
@@ -115,8 +125,9 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
       </fieldset>
       <fieldset>
         <input type="url" value={cfdbUrl} onChange={handleFoodChange} placeholder="CatFoodDB URL" />
-        {googleSearch &&
-          <a target="_blank" rel="noreferrer" href={googleSearch}>search google for {cfdbUrl}</a>
+        {googleSearch
+          ? <a target="_blank" rel="noreferrer" href={googleSearch}>search google for {cfdbUrl}</a>
+          : foodInfo
         }
       </fieldset>
       <fieldset>
@@ -149,6 +160,7 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options }) => {
         />
       </fieldset>
       <Button 
+        variant="contained"
         type="submit"
         onClick={handleSubmit}
       >Add Entry</Button>
