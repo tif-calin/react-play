@@ -1,11 +1,13 @@
 @import url('./normalize.css');
 @import url('./reset.css');
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   overflow-y: overlay;
 
   accent-color: var(--clr-accent);
