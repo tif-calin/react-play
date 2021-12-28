@@ -46,6 +46,7 @@ const LearnRuby = () => {
       <p><strong>2021_12dec22wed</strong>: Today I installed Ruby, did the hello world Exercism problem, and made a study plan.</p>
       <p><strong>2021_12dec23thu</strong>: Did a Exercism problem, learned how to define class methods and properties</p>
       <p><strong>2021_12dec24fri</strong>: Did another Exercism problem. Learned about instantiating. Using ? after getter methods is the cutest thing I&apos;ve ever seen in a language</p>
+      <p><strong>2021_12dec25sat</strong>: Did two more Exercism problems. Ruby has a ton of useful built-in string methods. Also rubocop :O</p>
     </div>
   );
 };
