@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DataEntry } from './Catfood';
+import { DataEntry } from '../../hooks/useCatfood';
 
 import styles from './catfood.module.css';
 
@@ -12,12 +12,13 @@ const urlFood = (url: string): string =>
 
 interface Props {
   data: DataEntry[],
+  stats: any,
   eraseAll: () => void,
   removeEntry: (entry: number) => void,
-  addEntry: (entry: DataEntry) => void,
+  addEntries: (entries: DataEntry[]) => void,
 };
 
-const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, addEntry }) => {
+const PriceObservationList: React.FC<Props> = ({ data, stats, eraseAll, removeEntry, addEntries }) => {
   const dataList = React.useMemo(() => {
     return data.sort((a, b) => a.date.localeCompare(b.date));
   }, [data]);
@@ -25,7 +26,7 @@ const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, ad
   const exportTSV = React.useCallback(() => {
     const tsv = data.map(entry => {
       const { food, weight, price, date, store, place } = entry;
-      return `${food}\t${weight/453.59237}\t${price}\t${date}\t${store}\t${place}`;
+      return [food, weight, price, date, store, place].join('\t');
     });
 
     console.log(tsv.join('\n'));
@@ -33,7 +34,7 @@ const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, ad
 
   return (
     <div className={styles.list}>
-      <span>Total of {data.length} entries.</span>
+      <span>Total of {data.length} entries of catfoods from {stats.brandSet.size} brands across {stats.storeSet.size} stores.</span>
       <ul>
         {dataList.map((entry: DataEntry, index: number) => (
           <li key={index}>
@@ -41,9 +42,13 @@ const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, ad
               <DeleteIcon fontSize="small" />
             </IconButton>
             <span>{entry.store}</span>
-            <span>({entry.date})</span>
+            <span>{entry.date}</span>
             <span>{urlFood(entry.food)}</span>
-            <span>${(1000 * entry.price / entry.weight).toFixed(2)}/kg</span>
+            <span 
+              style={{ 
+                fontWeight: 400 + (((1000 * entry.price / entry.weight) - stats.averagePricePerKg) / stats.standardDeviation) * 100
+              }}
+            >${(1000 * entry.price / entry.weight).toFixed(2)}/kg</span>
           </li>
         ))}
       </ul>
@@ -54,14 +59,14 @@ const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, ad
         reader.readAsText(file as Blob);
         reader.onload = () => {
           const r = reader.result as string;
-          const data = r.split('\r\n').slice(1).map(line => {
+          const newData = r.split('\r\n').slice(1).map(line => {
             const [food, weight_lb, price, date, store, ...rest] = line.split(',');
 
             const place = rest.join().replaceAll('\"', '');
 
             return {
               food,
-              weight: Number(weight_lb) * 453.59237,
+              weight: Number(weight_lb),
               price: Number(price),
               date,
               store,
@@ -69,7 +74,7 @@ const PriceObservationList: React.FC<Props> = ({ data, eraseAll, removeEntry, ad
             }
           }).filter(entry => entry.food);
 
-          data.forEach(addEntry);
+          addEntries(newData);
         };
         if (!file) return;
       }} />
