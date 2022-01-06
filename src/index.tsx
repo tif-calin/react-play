@@ -10,6 +10,7 @@ import Layout from './components/layout/Layout';
 import Home from './views/home';
 import Rate from './views/rate';
 import Catfood from './views/catfood';
+import CatfoodStats from './views/catfood/stats/CatfoodStats';
 import LearnRuby from './views/learn';
 
 import './styles/index.css';
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/rate" element={<Rate />} />
           <Route path="/catfood" element={<Catfood />} />
+          <Route path="/catfood/stats" element={<CatfoodStats />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
