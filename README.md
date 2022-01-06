@@ -8,7 +8,7 @@
  - different react ui libraries: material, bootstrap, ant, semantic, chakra, blueprint, and [mantine](https://mantine.dev/)
  - [node-json-db](https://www.npmjs.com/package/node-json-db)
  - [react-dnd](https://react-dnd.github.io/react-dnd/)
- - [react-charts](https://react-charts.tanstack.com/) and also d3
+ - [react-charts](https://react-charts.tanstack.com/), recharts, and also d3
  - experiment with micro-frontend technologies like [fetchye](https://www.npmjs.com/package/fetchye)
 
 ## Uses
@@ -16,6 +16,8 @@
  - [mui](https://mui.com/)  
  - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
  - [react-select](https://react-select.com/)
+ - [react-charts](https://react-charts.tanstack.com/)
+ - [styled-components](https://www.styled-components.com/)
 
 ## Credits
  - hooks inspired by [usehooks.com](https://usehooks.com/)
