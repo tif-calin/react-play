@@ -34,7 +34,7 @@ const makeStats = (data: DataEntry[]) => {
   let count;
 
   data.forEach(entry => {
-    const { food, store, weight, place: address } = entry;
+    const { food, store, weight, date, place: address } = entry;
     const brand = decodeURIComponent(food.split('/')[4]);
     const price = Number((1000 * entry.price / weight).toFixed(2));
 
@@ -75,11 +75,13 @@ const makeStats = (data: DataEntry[]) => {
     // stores
     if (!stats.stores[store]) stats.stores[store] = {
       brands: new Set([brand]),
-      addresses: new Set([address])
+      addresses: new Set([address]),
+      dates: new Set([date])
     };
     else {
       stats.stores[store].brands.add(brand);
       stats.stores[store].addresses.add(address);
+      stats.stores[store].dates.add(date);
     }
     // storeWithMostBrands
     count = stats.stores[stats.storeWithMostBrands]?.brands?.size || 0;
