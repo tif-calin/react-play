@@ -9,6 +9,7 @@
  - [node-json-db](https://www.npmjs.com/package/node-json-db)
  - [react-dnd](https://react-dnd.github.io/react-dnd/)
  - [react-charts](https://react-charts.tanstack.com/) and also d3
+ - experiment with micro-frontend technologies like [fetchye](https://www.npmjs.com/package/fetchye)
 
 ## Uses
  - react, react router
