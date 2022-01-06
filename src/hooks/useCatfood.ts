@@ -38,6 +38,8 @@ const makeStats = (data: DataEntry[]) => {
     const brand = decodeURIComponent(food.split('/')[4]);
     const price = Number((1000 * entry.price / weight).toFixed(2));
 
+    if (!brand || brand==='undefined') console.log(entry);
+
     // foods
     if (!stats.foods[food]) stats.foods[food] = {
       stores: new Set([store]),
