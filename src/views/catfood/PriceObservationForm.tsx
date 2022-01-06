@@ -55,10 +55,13 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options, stats }) => 
   const [storeAddress, setStoreAddress] = useLocalStorage('catfood_storeaddress', '');
   const [date, setDate] = useLocalStorage('catfood_date', '2021-12-18');
 
-  const foodInfo = stats.foods[cfdbUrl] 
-    ? `Seen at ${stats.foods[cfdbUrl].stores.size} stores, ${stats.foods[cfdbUrl].stores.has(store) ? '' : 'not '}including ${store}.` 
-    : 'No previous observations for this product.'
+  const brand = cfdbUrl.startsWith('http://catfooddb.com/') ? decodeURIComponent(cfdbUrl.split('/').at(-2) as string) : '';
+  const foodStats = stats.foods[decodeURIComponent(cfdbUrl).replaceAll(' ', '%20')];
+  let foodInfo = foodStats 
+    ? `Seen at ${foodStats.stores.size} stores ${foodStats.stores.has(store) ? 'including' : 'but not'} at ${store}. ` 
+    : 'No previous observations for this product. '
   ;
+  foodInfo += stats.brands[brand] ? `There are observations for ${stats.brands[brand].foods.size} ${brand} products. ` : '';
 
   const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
