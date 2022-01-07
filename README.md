@@ -13,12 +13,15 @@
 
 ## Uses
  - react, react router
- - [mui](https://mui.com/)  
+ - typescript and also JS Docs in some parts 
  - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
- - [react-select](https://react-select.com/)
- - [react-charts](https://react-charts.tanstack.com/)
  - [styled-components](https://www.styled-components.com/)
- - [recharts](https://recharts.org/)
+ - component libraries
+   - [mui](https://mui.com/)  
+   - [react-select](https://react-select.com/)
+ - data viz libraries
+   - [react-charts](https://react-charts.tanstack.com/)
+   - [recharts](https://recharts.org/)
 
 ## Credits
  - hooks inspired by [usehooks.com](https://usehooks.com/)
