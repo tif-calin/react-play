@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTitle from '../../../components/layout/PageTitle';
 import useCatfoodData from '../../../hooks/useCatfood';
+import BrandScatter from './BrandScatter';
 import StoreChart from './StoreChart';
 
 const CatfoodStats: React.FC = () => {
@@ -34,15 +35,7 @@ const CatfoodStats: React.FC = () => {
 
       <section>
         <h3>By brand</h3>
-        <ul>
-          {byBrand.map(brand => (
-            <li style={{ display: 'flex', gap: '0.5rem' }} key={brand.name}>
-              <span>{brand.name}</span>
-              <span>{brand.storeCount}</span>
-              <span>{brand.foodCount}</span>
-            </li>
-          ))}
-        </ul>
+        <BrandScatter data={byBrand} />
       </section>
 
       <section>
