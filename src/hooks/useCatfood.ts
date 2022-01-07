@@ -199,7 +199,10 @@ const useCatfoodData = () => {
   }, [data]);
 
   const removeEntry = React.useCallback((i: number) => {
+    const copy = data[i];
     setData(data => data.filter((_, j) => i !== j));
+
+    return copy;
   }, []);
 
   const eraseAll = React.useCallback(() => {
