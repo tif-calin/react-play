@@ -1,6 +1,6 @@
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import React from 'react';
-import { Option } from './Catfood';
+import { Option } from './';
 
 const getOptionLabel = (option: Option) => option.label || option.value;
 const groupBy = (option: Option) => option.store;

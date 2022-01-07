@@ -2,10 +2,10 @@ import { Button } from '@mui/material';
 import React from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { DataEntry, Option } from '../../hooks/useCatfood';
+import StoreSelect from './StoreSelect';
 
 // @ts-ignore
 import styles from './catfood.module.css';
-import StoreSelect from './StoreSelect';
 
 type WeightUnit = 'g' | 'kg' | 'oz' | 'lb';
 
