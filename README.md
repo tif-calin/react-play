@@ -18,6 +18,11 @@
  - [react-select](https://react-select.com/)
  - [react-charts](https://react-charts.tanstack.com/)
  - [styled-components](https://www.styled-components.com/)
+ - [recharts](https://recharts.org/)
 
 ## Credits
  - hooks inspired by [usehooks.com](https://usehooks.com/)
+
+## Some things I've used in the past that I liked:
+ - [SpeechSynthesisUtterence](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)
+ - [Fraunces](https://fraunces.undercase.xyz/)
