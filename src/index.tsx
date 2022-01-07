@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/rate" element={<Rate />} />
           <Route path="/catfood" element={<Catfood />} />
-          <Route path="/catfood" element={<CatfoodStats />} />
+          <Route path="/catfood/stats" element={<CatfoodStats />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
           <Route path="/charts" element={<ChartsPage />} />
           <Route path="*" element={<Navigate to="/" />} />
