@@ -14,6 +14,7 @@ import LearnRuby from './views/learn';
 import ChartsPage from './views/charts';
 
 import './styles/index.css';
+import CrowdWritingPage from './views/crowdwriting';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/catfood/stats" element={<CatfoodStats />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
           <Route path="/charts" element={<ChartsPage />} />
+          <Route path="/crowd-writing" element={<CrowdWritingPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
