@@ -1,0 +1,16 @@
+@import url('./open-color.css');
+
+:root {
+  --red: var(--oc-red-4);
+  --pink: var(--oc-pink-4);
+  --grape: var(--oc-grape-4);
+  --violet: var(--oc-violet-4);
+  --indigo: var(--oc-indigo-4);
+  --blue: var(--oc-blue-4);
+  --cyan: var(--oc-cyan-4);
+  --teal: var(--oc-teal-4);
+  --green: var(--oc-green-4);
+  --lime: var(--oc-lime-4);
+  --yellow: var(--oc-yellow-4);
+  --orange: var(--oc-orange-4);
+}
