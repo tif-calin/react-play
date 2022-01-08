@@ -12,6 +12,8 @@ const Nav = styled.nav`
   border-radius: 0.5rem;
   box-shadow: var(--shadow-medium);
   color: var(--black); 
+  opacity: 1;
+  transition: opacity 0.2s;
 
   & > a {
     display: flex;
@@ -44,6 +46,7 @@ const Nav = styled.nav`
     max-width: calc(100px + 60vw);
     margin: 0 auto;
     padding: 1rem;
+    opacity: ${(props) => Number(props.style?.opacity)};
 
     & > a {
       flex-direction: column;
@@ -71,11 +74,12 @@ const hearts = [
 interface Props {
   path: string;
   anchors: string[];
+  atTop: boolean;
 };
 
-const FloatingNav: React.FC<Props> = ({ path, anchors }) => {
+const FloatingNav: React.FC<Props> = ({ path, anchors, atTop }) => {
   return (
-    <Nav>
+    <Nav style={{ opacity: Number(atTop) }}>
       {anchors.map((anchor, i) => {
         return (
           <a href={`${path}#${anchor}`} key={anchor}>
