@@ -14,7 +14,6 @@
 ## Uses
  - react, react router
  - typescript and also JS Docs in some parts 
- - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
  - [styled-components](https://www.styled-components.com/)
  - component libraries
    - [mui](https://mui.com/)  
@@ -22,6 +21,9 @@
  - data viz libraries
    - [react-charts](https://react-charts.tanstack.com/)
    - [recharts](https://recharts.org/)
+ - css standards
+   - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
+   - [Open Color](https://yeun.github.io/open-color/)
 
 ## Credits
  - hooks inspired by [usehooks.com](https://usehooks.com/)
