@@ -42,18 +42,19 @@ const convertWeightToGrams = (weight: number, unit: WeightUnit) => {
 interface Props {
   addEntry: (entry: DataEntry) => void,
   options: Option[],
-  stats: any
+  stats: any,
+  deleted?: null | DataEntry,
 };
 
-const PriceObservationForm: React.FC<Props> = ({ addEntry, options, stats }) => {
-  const [cfdbUrl, setCfdbUrl] = useLocalStorage('catfood_catfooddburl', '');
-  const [googleSearch, setGoogleSearch] = React.useState('');
-  const [price, setPrice] = useLocalStorage('catfood_price', '');
-  const [weight, setWeight] = useLocalStorage('catfood_weight', '');
+const PriceObservationForm: React.FC<Props> = ({ addEntry, options, stats, deleted }) => {
+  const [cfdbUrl, setCfdbUrl] = useLocalStorage('catfood_catfooddburl', deleted?.food || '');
+  const [price, setPrice] = useLocalStorage('catfood_price', deleted?.price || '');
+  const [weight, setWeight] = useLocalStorage('catfood_weight', deleted?.weight || '');
+  const [store, setStore] = useLocalStorage('catfood_store', deleted?.store || '');
+  const [storeAddress, setStoreAddress] = useLocalStorage('catfood_storeaddress', deleted?.place || '');
+  const [date, setDate] = useLocalStorage('catfood_date', deleted?.date || (new Date()).toISOString().split('T')[0]);
   const [weightUnit, setWeightUnit] = React.useState<WeightUnit>('g');
-  const [store, setStore] = useLocalStorage('catfood_store', '');
-  const [storeAddress, setStoreAddress] = useLocalStorage('catfood_storeaddress', '');
-  const [date, setDate] = useLocalStorage('catfood_date', '2021-12-18');
+  const [googleSearch, setGoogleSearch] = React.useState('');
 
   const brand = cfdbUrl.startsWith('http://catfooddb.com/') ? decodeURIComponent(cfdbUrl.split('/').at(-2) as string) : '';
   const foodStats = stats.foods[decodeURIComponent(cfdbUrl).replaceAll(' ', '%20')];
