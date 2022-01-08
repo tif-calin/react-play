@@ -25,7 +25,7 @@
   flex-grow: 1;
 }
 
-.Layout > :is(main, footer) > * {
+.Layout > :is(main, footer, header) > * {
   min-width: calc(100px + 60vw);
   width: calc(150px + 40vw);
   max-width: calc(900px + 10vw);
