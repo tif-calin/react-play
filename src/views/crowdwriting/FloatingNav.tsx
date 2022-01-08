@@ -5,11 +5,12 @@ const Nav = styled.nav`
   left: 1rem;
   top: 1rem;
   position: fixed;
-  background: #ffee33cc;
+  background: #ffee33aa;
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  box-shadow: var(--shadow-high);
 
   & > a {
     display: flex;
@@ -35,6 +36,26 @@ const Nav = styled.nav`
   &:hover {
     & > a > span:nth-child(2) {
       display: inline;
+    }
+  }
+
+  @media (max-width: 768px) {
+    right: 1rem;
+    flex-direction: row;
+    justify-content: space-around;
+    backdrop-filter: blur(2px);
+    max-width: calc(100px + 60vw);
+    margin: 0 auto;
+    padding: 1rem;
+
+    & > a {
+      flex-direction: column;
+
+      & > span:nth-child(2) {
+        margin: 1rem 0;
+        display: block;
+        transform: rotate(-45deg);
+      }
     }
   }
 `;
