@@ -5,12 +5,13 @@ const Nav = styled.nav`
   left: 1rem;
   top: 1rem;
   position: fixed;
-  background: #ffee33aa;
+  background: hsla(200, 80%, 60%, 0.75);
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  box-shadow: var(--shadow-high);
+  box-shadow: var(--shadow-medium);
+  color: var(--black); 
 
   & > a {
     display: flex;
@@ -19,13 +20,9 @@ const Nav = styled.nav`
     filter: grayscale(100%) brightness(3);
     transition: all 0.1s ease-in-out;
 
-    & * { 
-      color: var(--black); 
-    }
-
     & > span:nth-child(2) {
       transition: opacity 0.1s;
-      opacity: 0.75;
+      opacity: 0.5;
       display: none;
     }
 
@@ -43,7 +40,7 @@ const Nav = styled.nav`
     right: 1rem;
     flex-direction: row;
     justify-content: space-around;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(0.5rem);
     max-width: calc(100px + 60vw);
     margin: 0 auto;
     padding: 1rem;
@@ -63,10 +60,10 @@ const Nav = styled.nav`
 const hearts = [
   '💙',
   '💚',
-  '💛',
   '💜',
   '🧡',
   '🤎',
+  '💛',
   '🖤',
   '🤍'
 ];

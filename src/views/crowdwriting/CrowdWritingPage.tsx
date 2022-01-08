@@ -15,10 +15,10 @@ const Page = styled.div`
 
   --shadow-color: 0deg 0% 80%;
   --shadow-medium:
-    inset 0.3px 0.5px 0.5px hsl(var(--shadow-color) / 0.26),
-    inset 0.7px 1px 1.1px -1.2px hsl(var(--shadow-color) / 0.22),
-    inset 1.9px 2.7px 3.1px -2.5px hsl(var(--shadow-color) / 0.18),
-    inset 4.9px 7.2px 8.2px -3.7px hsl(var(--shadow-color) / 0.13)
+    0.3px 0.5px 0.5px hsl(var(--shadow-color) / 0.26),
+    0.7px 1px 1.1px -1.2px hsl(var(--shadow-color) / 0.22),
+    1.9px 2.7px 3.1px -2.5px hsl(var(--shadow-color) / 0.18),
+    4.9px 7.2px 8.2px -3.7px hsl(var(--shadow-color) / 0.13)
   ;
   --shadow-high:
     0.3px 0.5px 0.5px hsl(var(--shadow-color) / 0.24),
