@@ -26,11 +26,13 @@ const StoreChart: React.FC<Props> = ({ storeData }) => {
     getValue: (data: any) => data.brandCount,
   }];
 
-  const getDatumStyle = () => ({
-    rectangle: {
-      strokeWidth: 12,
-    }
-  });
+  const getDatumStyle = () => {
+    return {
+      rectangle: {
+        strokeWidth: 12,
+      }
+    };
+  };
 
   return (
     <Container>
