@@ -6,6 +6,7 @@ import StoreSelect from './StoreSelect';
 
 // @ts-ignore
 import styles from './catfood.module.css';
+import { convertToBestUnit } from '../../utils/weight';
 
 type WeightUnit = 'g' | 'kg' | 'oz' | 'lb';
 
@@ -59,7 +60,7 @@ const PriceObservationForm: React.FC<Props> = ({ addEntry, options, stats, delet
   const brand = cfdbUrl.startsWith('http://catfooddb.com/') ? decodeURIComponent(cfdbUrl.split('/').at(-2) as string) : '';
   const foodStats = stats.foods[decodeURIComponent(cfdbUrl).replaceAll(' ', '%20')];
   let foodInfo = foodStats 
-    ? `Seen at ${foodStats.stores.size} stores ${foodStats.stores.has(store) ? 'including' : 'but not'} at ${store}. ` 
+    ? `Seen at ${foodStats.stores.size} stores ${foodStats.stores.has(store) ? 'including' : 'but not'} at ${store}. It's been found in the following sizes: ${[...foodStats.sizes].map(w => convertToBestUnit(w).join('')).join(', ')}. ` 
     : 'No previous observations for this product. '
   ;
   foodInfo += stats.brands[brand] ? `There are observations for ${stats.brands[brand].foods.size} ${brand} products. ` : '';
