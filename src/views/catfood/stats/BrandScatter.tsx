@@ -46,7 +46,7 @@ const BrandScatter: React.FC<Props> = ({ data }) => {
             label={{ value: 'Number of stores', angle:-90, position: 'insideLeft', offset: 16 }}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Scatter name="Brands" data={data} fill="#0087bdcc" />
+          <Scatter name="Brands" data={data} fill="#0087bd88" />
         </ScatterChart>
       </ResponsiveContainer>
     </Container>
