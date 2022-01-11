@@ -10,6 +10,7 @@
  - [react-dnd](https://react-dnd.github.io/react-dnd/)
  - [react-charts](https://react-charts.tanstack.com/), recharts, and also d3
  - experiment with micro-frontend technologies like [fetchye](https://www.npmjs.com/package/fetchye)
+ - making a hexagonal grid [like this](https://css-tricks.com/hexagons-and-beyond-flexible-responsive-grid-patterns-sans-media-queries/)
 
 ## Uses
  - react, react router
