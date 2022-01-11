@@ -29,6 +29,18 @@ const findBestUnit = (grams: number): WeightUnit => {
 };
 
 /**
+ * Takes weight in grams and converts to unit with least amount of digits
+ * @param {number} weight - weight in grams
+ * @returns {[number, 'g'|'kg'|'oz'|'lb']} - converted weight and unit
+ */
+const convertToBestUnit = (weight: number) => {
+  const unit = findBestUnit(weight);
+  const convertedWeight = convertFromGrams(weight, unit);
+
+  return [convertedWeight, unit];
+};
+
+/**
  * Takes weight in in grams and converts to weight in the given unit
  * @param weight 
  * @param unit 
@@ -51,5 +63,5 @@ const convertFromGrams = (weight: number, unit: WeightUnit) => {
   return Number(newWeight.toFixed(4));
 };
 
-export { findBestUnit, convertFromGrams };
+export { findBestUnit, convertFromGrams, convertToBestUnit };
 export type { WeightUnit };
