@@ -10,7 +10,7 @@ import Layout from './components/layout/Layout';
 import Home from './views/home';
 import Rate from './views/rate';
 import Catfood, { CatfoodStats } from './views/catfood';
-import LearnRuby from './views/learn';
+import { LearnRuby, LearnD3 } from './views/learn';
 import ChartsPage from './views/charts';
 
 import './styles/index.css';
@@ -26,6 +26,7 @@ const App = () => {
           <Route path="/catfood" element={<Catfood />} />
           <Route path="/catfood/stats" element={<CatfoodStats />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
+          <Route path="/learn/d3" element={<LearnD3 />} />
           <Route path="/charts" element={<ChartsPage />} />
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
           <Route path="*" element={<Navigate to="/" />} />

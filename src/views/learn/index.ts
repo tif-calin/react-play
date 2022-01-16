@@ -1,3 +1,7 @@
 import LearnRuby from './LearnRuby';
+import LearnD3 from './LearnD3';
 
-export default LearnRuby;
+export { 
+  LearnRuby,
+  LearnD3
+};
