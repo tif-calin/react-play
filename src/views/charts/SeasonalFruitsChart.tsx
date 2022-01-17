@@ -1,0 +1,130 @@
+import React from 'react';
+import * as d3 from 'd3';
+
+const useD3 = (renderChart: any, dependencies: any[]) => {
+  const ref = React.useRef<SVGSVGElement>(null);
+
+  React.useEffect(() => {
+    renderChart(d3.select(ref.current));
+  }, dependencies);
+
+  return ref;
+};
+
+const data = {
+  'asian pears': [9.25, 11.75],
+  'blood oranges': [12, 4],
+  'cherimoya': [11, 6.75],
+  'cherries': [4.5, 6.25],
+  'figs': [9, 12],
+  'lychees': [8.5, 9.5],
+  'mandarins': [11, 4],
+  'mangos': [6, 9],
+  'passionfruits': [1, 10],
+  'persimmons': [9.75, 1]
+};
+
+const toMonth = (i: d3.NumberValue) => [
+  'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+][Number(i) - 1 % 12];
+
+const colors = [
+  'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange'
+];
+
+const today = 1 + new Date().getMonth() + new Date().getDate() / 31;
+
+const renderChart = (svg: any) => {
+  const margin = { top: 30, right: 0, bottom: 30, left: 100 };
+  const height = 300;
+  const width = 500;
+
+  const xScale = d3
+    .scaleLinear()
+    .domain([1, 13])
+    .range([margin.left, width - margin.right])
+  ;
+  const yScale = d3
+    .scaleBand()
+    .domain(Object.keys(data))
+    .range([margin.top, height - margin.bottom])
+  ;
+
+  const xAxis = (g: any) => g
+    .attr('transform', `translate(0, ${margin.top})`)
+    .call(d3
+      .axisTop(xScale)
+      .tickFormat(toMonth)
+    )
+  ;
+  const yAxis = (g: any) => g
+    .attr('transform', `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(yScale))
+  ;
+
+  svg.select('.x-axis').call(xAxis);
+  svg.select('.y-axis').call(yAxis);
+
+  const dataWithWrappedBars = Object.entries(data).map(arr => arr.flat()).reduce(
+    (acc: any, curr: any) => {
+      if (curr.at(-1) > curr.at(1)) return [...acc, curr];
+      else return [
+        ...acc,
+        [curr.at(0), curr.at(1), 12.999],
+        [curr.at(0), 1, curr.at(2)]
+      ];
+    }, []
+  );
+
+  const fruits = Object.keys(data);
+
+  svg
+    .select('.plot-area')
+    .attr('fill', 'var(--blue)')
+    .selectAll('.bar')
+    .data(dataWithWrappedBars)
+    .join('rect')
+    .attr('class', 'bar')
+    .attr('fill', (d: any) => `var(--${colors[fruits.indexOf(d[0]) * 5 % colors.length]})`)
+    .attr('x', (d: any[]) => xScale(d[1]))
+    .attr('width', (d: any) => Math.abs(xScale(d[2]) - xScale(d[1])))
+    .attr('y', (d: any) => margin.top + (fruits.indexOf(d[0]) + 1/8) * yScale.bandwidth())
+    .attr('height', () => yScale.bandwidth() * (3/4))
+    .attr('stroke', 'black')
+  ;
+
+  svg
+    .select('.plot-area')
+    .append('rect')
+    .attr('fill', 'black')
+    .attr('x', xScale(today))
+    .attr('width', 1)
+    .attr('y', margin.top)
+    .attr('height', height - margin.top - margin.bottom)
+  ;
+
+};
+
+interface Props {};
+
+const SeasonalFruitsChart: React.FC<Props> = () => {
+  const ref = useD3(renderChart, [data]);
+
+  return (
+    <svg
+      ref={ref}
+      style={{
+        height: 300,
+        width: 600,
+        marginRight: "0px",
+        marginLeft: "0px",
+      }}
+    >
+      <g className="plot-area" />
+      <g className="x-axis" />
+      <g className="y-axis" />
+    </svg>
+  );
+};
+
+export default SeasonalFruitsChart;
