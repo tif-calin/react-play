@@ -28,6 +28,12 @@ const toMonth = (i: d3.NumberValue) => [
   'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
 ][Number(i) - 1 % 12];
 
+const toFancyMonth = (n: d3.NumberValue) => {
+  const month = Math.floor(Number(n));
+  const fancy = ['', 'early ', 'mid ', 'late '][Math.max(Math.round((Number(n) - month) * 4), 3)];
+  return `${fancy}${toMonth(month)}`;
+};
+
 const colors = [
   'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange'
 ];
@@ -80,7 +86,6 @@ const renderChart = (svg: any) => {
 
   svg
     .select('.plot-area')
-    .attr('fill', 'var(--blue)')
     .selectAll('.bar')
     .data(dataWithWrappedBars)
     .join('rect')
@@ -91,13 +96,17 @@ const renderChart = (svg: any) => {
     .attr('y', (d: any) => margin.top + (fruits.indexOf(d[0]) + 1/8) * yScale.bandwidth())
     .attr('height', () => yScale.bandwidth() * (3/4))
     .attr('stroke', 'black')
+    .append('title')
+    .text((d: any) => `${d[0]}\n${toFancyMonth((data[d[0] as keyof typeof data])[0])} - ${toFancyMonth(data[d[0] as keyof typeof data][1])}`)
   ;
 
   svg
     .select('.plot-area')
-    .append('rect')
+    .selectAll('.today')
+    .data([today])
+    .join('rect')
     .attr('fill', 'black')
-    .attr('x', xScale(today))
+    .attr('x', () => xScale(today))
     .attr('width', 1)
     .attr('y', margin.top)
     .attr('height', height - margin.top - margin.bottom)
