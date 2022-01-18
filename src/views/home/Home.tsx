@@ -32,6 +32,9 @@ const Home = () => {
         <li>
           <Link to="/charts">my chart playground</Link>
         </li>
+        <li>
+          Sometimes I log my learning journeys like with <Link to="/learn/d3">d3</Link> or <Link to="/learn/ruby">ruby</Link>
+        </li>
       </StyledList>
     </>
   )
