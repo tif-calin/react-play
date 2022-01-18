@@ -16,14 +16,15 @@ const getColor = (candidate: string) => {
   return colors.includes(candidate) ? candidate : colors[Math.floor(Math.random() * colors.length)];
 };
 
+const howManyTimesLongerTheLastRoundShouldBe = 3;
+
 const RCVRoundsChart: React.FC<Props> = ({ data }) => {
   const [currentRoundNumber, setCurrentRoundNumber] = React.useState(0);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      console.log('tick');
-      setCurrentRoundNumber(current => (current + 1) % (data.length));
-    }, 3000);
+      setCurrentRoundNumber(current => (current + 1) % (data.length + howManyTimesLongerTheLastRoundShouldBe));
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [data]);
@@ -34,7 +35,7 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
     const width = 500 - margin.right;
     svg.attr('viewBox', `0 0 ${width} ${height}`).attr('font-size', '0.8rem');
 
-    const currentRound = data[currentRoundNumber];
+    const currentRound = data[currentRoundNumber < data.length ? currentRoundNumber : data.length - 1];
     const voterCount = d3.sum(Object.values(currentRound));
 
     const xScale = d3
