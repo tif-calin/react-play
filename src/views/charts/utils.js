@@ -49,6 +49,6 @@ const generateRCVResults1 = (candidates) => {
 };
 
 // console.log(JSON.stringify(generateRCVResults1('red orange yellow lime green cyan azure blue indigo violet magenta pink'.split(' ')), null, 2));
-// console.log(JSON.stringify(generateRCVResults1('red orange yellow green blue indigo violet'.split(' ')), null, 2));
-console.log(JSON.stringify(generateRCVResults1('red yellow green blue purple'.split(' ')), null, 2));
+console.log(JSON.stringify(generateRCVResults1('red orange yellow green blue indigo violet'.split(' ')), null, 2));
+// console.log(JSON.stringify(generateRCVResults1('red yellow green blue purple'.split(' ')), null, 2));
 // console.log(JSON.stringify(generateRCVResults1('red green blue'.split(' ')), null, 2));
