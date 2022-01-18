@@ -32,7 +32,7 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
     const margin = { left: 50, right: 0, top: 50, bottom: 50 };
     const height = 500 - margin.top;
     const width = 500 - margin.right;
-    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    svg.attr('viewBox', `0 0 ${width} ${height}`).attr('font-size', '0.8rem');
 
     const currentRound = data[currentRoundNumber];
     const voterCount = d3.sum(Object.values(currentRound));
@@ -81,6 +81,18 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
           .attr('height', (d: [string, number]) => height - margin.bottom - yScale(d[1]))
           .attr('stroke', 'black')
       ;
+
+      svg.select('.plot-area').selectAll('.bar-label')
+        .data(Object.entries(currentRound))
+        .join('text')
+          .attr('class', 'bar-label')
+          .attr('fill', 'black')
+          .attr('x', (_: any, i: number) => (i + 0.5) * xScale.bandwidth())
+          .attr('y', (d: [string, number]) => yScale(d[1]) - 6)
+          .attr('text-anchor', 'middle')
+          // .text((d: [string, number]) => d[1] ? `${Math.round(d[1] / voterCount * 1_000) / 10}%` : '')
+          .text((d: [string, number]) => d[1] ? d[1] : '')
+      ;
   
       svg.select('.win-threshold')
         .attr('x1', margin.left)
@@ -91,7 +103,32 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
         .attr('stroke', 'black')
         .attr('stroke-dasharray', '5,5')
       ;
+
+      svg.select('.win-threshold-label')
+        .attr('x', width)
+        .attr('y', yScale(voterCount / 2))
+        .attr('alignment-baseline', 'middle')
+        .text(`${voterCount / 2} votes`)
+      ;
     } else {
+      svg.select('.plot-area').selectAll('.bar')
+        .transition()
+        .duration(500)
+        .attr('y', (_: any, i) => yScale(currentRound[Object.keys(currentRound)[i]]))
+        .attr('height', (_: any, i) => height - margin.bottom - yScale(currentRound[Object.keys(currentRound)[i]]))
+      ;
+
+      svg.selectAll('.plot-area .bar-label')
+        .transition()
+        .duration(500)
+        .attr('y', (_: any, i) => yScale(currentRound[Object.keys(currentRound)[i]]) - 6)
+        .text((_: any, i: number) => {
+          const d: number = currentRound[Object.keys(currentRound)[i]];
+          return d ? d : '';
+          // return d ? `${Math.round(d / voterCount * 1_000) / 10}%` : '';
+        })
+      ;
+
       svg.select('.win-threshold')
         .transition()
         .duration(500)
@@ -99,12 +136,11 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
         .attr('y2', yScale(voterCount / 2))
       ;
 
-      svg.select('.plot-area')
-        .selectAll('.bar')
+      svg.select('.win-threshold-label')
         .transition()
         .duration(500)
-        .attr('y', (_: any, i) => yScale(currentRound[Object.keys(currentRound)[i]]))
-        .attr('height', (_: any, i) => height - margin.bottom - yScale(currentRound[Object.keys(currentRound)[i]]))
+        .attr('y', yScale(voterCount / 2))
+        .text(`${voterCount / 2}`)
       ;
     }
   }, [currentRoundNumber]);
@@ -117,6 +153,7 @@ const RCVRoundsChart: React.FC<Props> = ({ data }) => {
       <g className="x-axis" />
       <g className="y-axis" />
       <line className="win-threshold" />
+      <text className="win-threshold-label" x={10} y={10}/>
     </svg>
   );
 };
