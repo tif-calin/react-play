@@ -36,6 +36,13 @@ const ChartsPage: React.FC<Props> = () => {
 
         <SeasonalFruitsChart />
       </section>
+
+      <section>
+        <h3>RCV Rounds Animated Bar Chart</h3>
+        <p>
+          Check it out <a href="/charts/rcv">here</a>!
+        </p>
+      </section>
     </Page>
   );
 };
