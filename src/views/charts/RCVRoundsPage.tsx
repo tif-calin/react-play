@@ -22,8 +22,19 @@ const defaultRounds = [
   { red: 20, yellow: 0, green: 19, blue: 0 },   // 39 -> 20
 ];
 
+const defaultRounds2 = [
+  { pink: 36, grape: 8, violet: 16, indigo: 12, blue: 0, cyan: 30, teal: 30, green: 12, lime: 8, yellow: 16, orange: 4, red: 4 },
+  { pink: 39, grape: 8, violet: 16, indigo: 12, blue: 0, cyan: 30, teal: 30, green: 12, lime: 8, yellow: 19, orange: 0, red: 0 },
+  { pink: 43, grape: 0, violet: 20, indigo: 12, blue: 0, cyan: 30, teal: 30, green: 16, lime: 0, yellow: 23, orange: 0, red: 0 },
+  { pink: 43, grape: 0, violet: 26, indigo: 0, blue: 0, cyan: 33, teal: 30, green: 16, lime: 0, yellow: 23, orange: 0, red: 0 },
+  { pink: 43, grape: 0, violet: 26, indigo: 0, blue: 0, cyan: 33, teal: 38, green: 0, lime: 0, yellow: 27, orange: 0, red: 0 },
+  { pink: 49, grape: 0, violet: 0, indigo: 0, blue: 0, cyan: 36, teal: 38, green: 0, lime: 0, yellow: 28, orange: 0, red: 0 },
+  { pink: 52, grape: 0, violet: 0, indigo: 0, blue: 0, cyan: 36, teal: 41, green: 0, lime: 0, yellow: 0, orange: 0, red: 0 },
+  { pink: 52, grape: 0, violet: 0, indigo: 0, blue: 0, cyan: 0, teal: 59, green: 0, lime: 0, yellow: 0, orange: 0, red: 0 }
+];
+
 const RCVRoundsChartPage: React.FC<Props> = () => {
-  const [rounds, setRounds] = React.useState<{ [candidate: string]: number }[]>(defaultRounds);
+  const [rounds, setRounds] = React.useState<{ [candidate: string]: number }[]>(defaultRounds2);
   const [invalidInput, setInvalidInput] = React.useState(false);
 
   const handleRoundsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
