@@ -11,7 +11,7 @@ import Home from './views/home';
 import Rate from './views/rate';
 import Catfood, { CatfoodStats } from './views/catfood';
 import { LearnRuby, LearnD3 } from './views/learn';
-import ChartsPage from './views/charts';
+import ChartsPage, { RCVRoundsChartPage } from './views/charts';
 
 import './styles/index.css';
 import CrowdWritingPage from './views/crowdwriting';
@@ -28,6 +28,7 @@ const App = () => {
           <Route path="/learn/ruby" element={<LearnRuby />} />
           <Route path="/learn/d3" element={<LearnD3 />} />
           <Route path="/charts" element={<ChartsPage />} />
+          <Route path="/charts/rcv" element={<RCVRoundsChartPage />} />
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
