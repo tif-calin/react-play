@@ -7,7 +7,7 @@ interface Props {
 
 const Axis: React.FC<Props> = ({ scale }) => {
   const ticks = React.useMemo(() => {
-    return scale.ticks().map(value => ({
+    return scale.nice().ticks().map(value => ({
       value,
       xOffset: scale(value)
     }));
