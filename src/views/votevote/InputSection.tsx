@@ -10,6 +10,8 @@ const Container = styled.form`
   min-width: 300px;
   flex-basis: 40%;
   flex-grow: 1;
+  background: whitesmoke;
+  box-shadow: var(--shadow), 0 0 3px hsl(var(--shadow-color));
 
   border: 1px dashed;
 

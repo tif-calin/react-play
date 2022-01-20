@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   background: whitesmoke;
+  box-shadow: var(--shadow-inset), inset 0 0 3px hsl(var(--shadow-color));
 
   & > * {
     padding: 1.5rem;
