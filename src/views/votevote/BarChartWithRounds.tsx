@@ -11,13 +11,12 @@ interface Props {
   data: { [color: string]: number }[];
 };
 
-const StyledSVG = styled.svg`
-  box-shadow: var(--shadow);
-`;
+const StyledSVG = styled.svg``;
 
-const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+const margin = { top: 20, right: 40, bottom: 30, left: 40 };
 const width = 500;
 const height = 500;
+const howManyTimesLongerTheLastRoundShouldBe = 3;
 
 const BarChartWithRounds: React.FC<Props> = ({ data }) => {
   const ref = React.useRef<SVGSVGElement>(null);
@@ -30,9 +29,10 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
       [curr]: Number(data[Math.min(currentRoundNumber, data.length - 1)][curr])
     }), {});
   }, [data, currentRoundNumber]);
+  const threshold = Math.floor(d3.sum(Object.values(currentRound)) / 2) + 1;
 
   useInterval(() => {
-    setCurrentRoundNumber(current => (current + 1) % (data.length));
+    setCurrentRoundNumber(current => (current + 1) % (data.length + howManyTimesLongerTheLastRoundShouldBe));
   }, 2000);
 
   const xScale = React.useMemo(() => {
@@ -53,7 +53,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
   }, [data, height, margin.top, margin.bottom]);
 
   return (<>
-    <span>Round {currentRoundNumber + 1}</span>
+    <span>Round {Math.min(currentRoundNumber + 1, data.length)}</span>
     <StyledSVG ref={ref} height={height} viewBox={`0 0 ${width} ${height}`}>
       <g className="plot-area">
         {Object.entries(currentRound).map(([color, count]) => {
@@ -79,8 +79,18 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
       <g transform={`translate(0, ${height - margin.top - margin.bottom})`}>
         <XAxis scale={xScale} />
       </g>
-      <line className="win-threshold" />
-      <text className="win-threshold-label" x={10} y={10}/>
+      <g>
+        <path
+          fill="none" stroke="currentColor" strokeDasharray="5, 5"
+          d={`M ${xScale.range()[0]} ${yScale(threshold)} H ${xScale.range()[1]}`}
+        />
+        <text
+          x={xScale.range()[1] + 4}
+          y={yScale(threshold)}
+          alignmentBaseline='middle'
+        >{threshold}</text>
+        {/* <ThresholdLine threshold={threshold} scale={yScale} /> */}
+      </g>
     </StyledSVG>
   </>);
 };
