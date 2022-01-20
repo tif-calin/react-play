@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTitle from '../../../components/layout/PageTitle';
-import useCatfoodData from '../../../hooks/useCatfood';
+import useCatfoodData from '../useCatfood';
 import BrandScatter from './BrandScatter';
 import ProductTable from './ProductTable';
 import StoreChart from './StoreChart';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { hasSameValues } from '../utils/utils';
-import useLocalStorage from './useLocalStorage';
+import { hasSameValues } from '../../utils/utils';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 type DataEntry = {
   [key: string]: string | number,

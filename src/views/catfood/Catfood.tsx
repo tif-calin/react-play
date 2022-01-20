@@ -2,7 +2,7 @@ import React from 'react';
 import PageTitle from '../../components/layout/PageTitle';
 import PriceObservationForm from './PriceObservationForm';
 import PriceObservationList from './PriceObservationList';
-import useCatfoodData from '../../hooks/useCatfood';
+import useCatfoodData from './useCatfood';
 import styles from './catfood.module.css';
 
 import type { DataEntry } from './';

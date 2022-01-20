@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DataEntry } from '../../hooks/useCatfood';
+import { DataEntry } from './useCatfood';
 
 import styles from './catfood.module.css';
 

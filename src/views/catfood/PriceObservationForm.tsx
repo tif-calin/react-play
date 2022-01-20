@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { DataEntry, Option } from '../../hooks/useCatfood';
+import { DataEntry, Option } from './useCatfood';
 import StoreSelect from './StoreSelect';
 
 // @ts-ignore
