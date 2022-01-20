@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import colors from '../../data/colors';
 import useInterval from '../../hooks/useInterval';
 import Bar from './chart/Bar';
+import YAxis from './chart/YAxis';
+import XAxis from './chart/XAxis';
 
 interface Props {
   data: { [color: string]: number }[];
@@ -51,7 +53,8 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
     ;
   }, [data, height, margin.top, margin.bottom]);
 
-  return (
+  return (<>
+    <span>Round {currentRoundNumber + 1}</span>
     <StyledSVG ref={ref} height={height} viewBox={`0 0 ${width} ${height}`}>
       <g className="plot-area">
         {Object.entries(currentRound).map(([color, count]) => {
@@ -71,12 +74,16 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
           );
         })}
       </g>
-      <g className="x-axis" />
-      <g className="y-axis" />
+      <g transform={`translate(${margin.left}, 0)`}>
+        <YAxis scale={yScale} />
+      </g>
+      <g transform={`translate(0, ${height - margin.top - margin.bottom})`}>
+        <XAxis scale={xScale} />
+      </g>
       <line className="win-threshold" />
       <text className="win-threshold-label" x={10} y={10}/>
     </StyledSVG>
-  );
+  </>);
 };
 
 const MemoizedBarChartWithRounds = React.memo(BarChartWithRounds);
