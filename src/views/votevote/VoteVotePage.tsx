@@ -6,7 +6,8 @@ import VisualizationOutputSection from './VisualizationOutputSection';
 
 const Wrapper = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap');
-  font-family: 'Josefin Sans', sans-serif;
+  
+  * { font-family: 'Josefin Sans', sans-serif; }
 
   --shadow-color: 0deg 0% 80%;
   --shadow:
@@ -72,13 +73,13 @@ const VoteVotePage: React.FC<Props> = () => {
 
   const datasets = React.useMemo(() => [
     { 
-      title: 'Ranked Choice Vote', data: rcv, explanation: ''
+      title: 'Ranked Choice Vote', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
     },
     { 
-      title: 'Coombs', data: coombs, explanation: '' 
+      title: 'Coombs', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate witht he fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
     },
     { 
-      title: 'Culi', data: culi, explanation: '' 
+      title: 'Culi', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.' 
     },
   ], [rcv, coombs, culi]);
 
