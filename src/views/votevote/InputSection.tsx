@@ -46,8 +46,9 @@ const ColorRoster = styled.output`
     place-content: center;
     color: transparent;
 
-    &:hover {
-      color: black;
+    &:hover span {
+      color: white;
+      mix-blend-mode: exclusion;
     }
   }
 `;
@@ -104,7 +105,7 @@ const InputSection: React.FC<Props> = ({ setData }) => {
             style={{ backgroundColor: colors[name] }} 
             onClick={() => { setSelectedCandidate(name); removeCandidate(name); }}
             title={`${name} (${colors[name]})`}
-          >x</div>
+          ><span>x</span></div>
         ))}
       </ColorRoster>
 
@@ -121,7 +122,7 @@ const InputSection: React.FC<Props> = ({ setData }) => {
             style={{ backgroundColor: colors[name] }} 
             onClick={() => removeVoter(name)}
             title={`${name} (${colors[name]})`}
-          >x</div>))}
+          ><span>x</span></div>))}
       </ColorRoster>
 
       <p>
