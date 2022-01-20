@@ -13,7 +13,7 @@ interface Props {
 
 const StyledSVG = styled.svg``;
 
-const margin = { top: 20, right: 40, bottom: 30, left: 40 };
+const margin = { top: 30, right: 40, bottom: 50, left: 40 };
 const width = 500;
 const height = 500;
 const howManyTimesLongerTheLastRoundShouldBe = 3;

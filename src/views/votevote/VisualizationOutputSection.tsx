@@ -10,6 +10,7 @@ const Container = styled.section`
   flex-basis: 60%;
   flex-grow: 1;
   gap: 2rem;
+  box-shadow: var(--shadow-inset), inset 0 0 3px hsl(var(--shadow-color));
 
   & > * {
     background-color: #fff8;

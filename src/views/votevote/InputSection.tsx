@@ -38,7 +38,7 @@ const ColorRoster = styled.output`
   gap: 0.25rem;
   margin: 0.5rem;
 
-  & > * {
+  & > div {
     width: 1.5rem;
     height: 1.5rem;
     border: 1px solid black;
@@ -64,7 +64,7 @@ interface Props {
 type ColorName = keyof typeof colors;
 
 const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
-  const [candidates, setCandidates] = React.useState<ColorName[]>(['tomato', 'icterine', 'chartreuse', 'turquoise', 'sapphire', 'heliotrope']);
+  const [candidates, setCandidates] = React.useState<ColorName[]>(['tomato', 'icterine', 'chartreuse', 'turquoise', 'azure', 'heliotrope']);
   const [voters, setVoters] = React.useState<ColorName[]>(Object.keys(colors) as ColorName[]);
 
   React.useEffect(() => {
@@ -116,6 +116,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
             title={`${name} (${colors[name]})`}
           ><span>x</span></div>
         ))}
+        <span>{candidates.length} candidates</span>
       </ColorRoster>
 
       <fieldset name="voters">
@@ -131,7 +132,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
             style={{ backgroundColor: colors[name] }} 
             onClick={() => removeVoter(name)}
             title={`${name} (${colors[name]})`}
-          ><span>x</span></div>))}
+          ><span>x</span></div>
+        ))}
+        <span>{voters.length} voters</span>
       </ColorRoster>
 
       <p>
