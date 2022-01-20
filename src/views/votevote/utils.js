@@ -65,11 +65,9 @@ const generalizedRCV = (candidates, votes, method = 'rcv') => {
     // record this round
     rounds.push(firstPicks);
 
-    console.table(firstPicks);
-    console.log(dropScore, dropped, lastPicks);
     if (rounds.length > candidates.length) {
-      console.error(`ERROR: more rounds than candidates: Method ${method}`);
-      console.table(rounds);
+      // console.error(`ERROR: more rounds than candidates: Method ${method}`);
+      // console.table(rounds);
       break;
     }
   }

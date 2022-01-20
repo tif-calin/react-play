@@ -6,6 +6,7 @@ interface Props {
 
 const XAxis: React.FC<Props> = ({ scale }) => {
   const barWidth = scale.bandwidth();
+  const tickVariations = 1 + Math.round(80 / Number(barWidth));
 
   const ticks = React.useMemo(() => {
     return scale.domain().map(value => ({
@@ -19,15 +20,18 @@ const XAxis: React.FC<Props> = ({ scale }) => {
       fill="none" stroke="currentColor"
       d={`M ${scale.range()[0]} 0 H ${scale.range()[1]}`}
     />
-    {ticks.map(({ value, xOffset }, i) => (
-      <g key={value} transform={`translate(${xOffset}, 0)`}>
-        <line y2={!(i % 2) ? 8 : 20} stroke="currentColor" />
+    {ticks.map(({ value, xOffset }, i) => {
+      const PRIME = 17;
+      const offset = ((i * PRIME) % tickVariations) * 16;
+
+      return <g key={value} transform={`translate(${xOffset}, 0)`}>
+        <line y2={8 + offset} stroke="currentColor" strokeDasharray={"3, 3"} />
         <text key={value} style={{
           textAnchor: 'middle',
-          transform: `translateY(${!(i % 2) ? 1.25 : 2.25}rem)`
+          transform: `translateY(${20 + offset}px)`
         }}>{value}</text>
-      </g>
-    ))}
+      </g>;
+    })}
   </>);
 };
 
