@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import useInterval from '../../hooks/useInterval';
+import Bar from './chart/Bar';
 
 interface Props {
   data: { [color: string]: number }[];
@@ -36,7 +37,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
   const xScale = React.useMemo(() => {
     return d3.scaleBand()
       .domain(Object.keys(currentRound))
-      .range([0, width - margin.right - margin.left])
+      .range([margin.left, width - margin.right])
     ;
   }, [data, width, margin.left, margin.right]);
 
@@ -46,7 +47,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
         d3.sum(Object.values(data[0])) * 0.6, 
         Math.max(...Object.values(data?.at(-1) || {}))) * 1.05
       ])
-      .range([height - margin.bottom - margin.top, 0])
+      .range([height - margin.bottom - margin.top, -margin.bottom])
     ;
   }, [data, height, margin.top, margin.bottom]);
 
@@ -54,15 +55,15 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
     <StyledSVG ref={ref} height={height} viewBox={`0 0 ${width} ${height}`}>
       <g className="plot-area">
         {Object.entries(currentRound).map(([color, count]) => {
-          const y = yScale(count);
+          const y = yScale(count || 0);
           const x = xScale(color);
           return (
-            <rect
+            <Bar
               key={color}
               x={x}
               y={y}
               width={xScale.bandwidth()}
-              height={height - y}
+              height={height - margin.bottom - margin.top - y || 0}
               fill={colors[color as keyof typeof colors]}
               stroke="black"
               strokeWidth={1}
