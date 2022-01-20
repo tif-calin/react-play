@@ -163,6 +163,8 @@ const LearnD3: React.FC<Props> = () => {
             <span>2020_01jan18tue</span>
             <span>
               Today I added labels to the RCV animated bar chart and read a tutorial for d3 in react by Varvara Munday. The article made me realize the ways I wasn&apos;t taking advantage of D3&apos;s .join functionality. When a data element is joined, the <i>enter</i> selection gets triggered when a new piece of data is added and the <i>exit</i> selection is triggered when one of those datums is removed. 
+              <br/><br/>
+              Every React + D3 tutorial seems to still utilize D3&apos;s DOM manipulation functionality, even the ones that specifically say they should be avoided. But after some more research today, someone on hackernews pointed out that Amelia Wattenberger&apos;s guide is the only one they found that doesn&apos;t. It was already on my list, but I&apos;ll look through it asap now. 
             </span>
           </LogEntry>
         </ul>
