@@ -12,9 +12,10 @@ import Rate from './views/rate';
 import Catfood, { CatfoodStats } from './views/catfood';
 import { LearnRuby, LearnD3 } from './views/learn';
 import ChartsPage, { RCVRoundsChartPage } from './views/charts';
+import CrowdWritingPage from './views/crowdwriting';
+import VoteVotePage from './views/votevote';
 
 import './styles/index.css';
-import CrowdWritingPage from './views/crowdwriting';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/charts" element={<ChartsPage />} />
           <Route path="/charts/rcv" element={<RCVRoundsChartPage />} />
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
+          <Route path="/votevote" element={<VoteVotePage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
