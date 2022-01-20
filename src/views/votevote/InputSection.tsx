@@ -58,12 +58,8 @@ interface Props {
 type ColorName = keyof typeof colors;
 
 const InputSection: React.FC<Props> = ({ setData }) => {
-  const [candidates, setCandidates] = React.useState<ColorName[]>(['red', 'yellow', 'green', 'blue']);
-  const [voters, setVoters] = React.useState<ColorName[]>([
-    'amber', 'aqua', 'azure', 'black', 'cyan', 'gold', 'grey', 'indigo', 
-    'jade', 'lime', 'magenta', 'maroon', 'mint', 'navy', 'olive', 'orange', 
-    'pink', 'purple', 'red', 'silver', 'teal', 'turquoise', 'white', 'yellow'
-  ]);
+  const [candidates, setCandidates] = React.useState<ColorName[]>(['tomato', 'icterine', 'chartreuse', 'turquoise', 'sapphire', 'heliotrope']);
+  const [voters, setVoters] = React.useState<ColorName[]>(Object.keys(colors) as ColorName[]);
 
   React.useEffect(() => {
     const rounds = rankedChoiceVote(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
@@ -83,7 +79,6 @@ const InputSection: React.FC<Props> = ({ setData }) => {
 
   const addVoter = () => {
     if (selectedVoter) setVoters(arr => [...arr, selectedVoter]);
-    setSelectedVoter(Object.keys(colors)[0] as ColorName);
   };
 
   const removeCandidate = (color: ColorName) => setCandidates(arr => arr.filter(c => c !== color));
@@ -114,7 +109,7 @@ const InputSection: React.FC<Props> = ({ setData }) => {
       </ColorRoster>
 
       <fieldset name="voters">
-        <select name="voter">
+        <select name="voter" value={selectedVoter} onChange={e => setSelectedVoter(e.target.value as ColorName)}>
           {Object.entries(colors).map(([name]) => <option key={name}>{name}</option>)}
         </select>
         <button onClick={addVoter}>add voter</button>
