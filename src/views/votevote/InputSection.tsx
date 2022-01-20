@@ -24,6 +24,7 @@ const Container = styled.form`
   }
 
   & p {
+    margin-top: auto;
     font-size: 0.8rem;
     font-weight: 300;
   }
