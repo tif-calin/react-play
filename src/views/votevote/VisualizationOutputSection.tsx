@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import RCVRoundsChart from '../charts/RCVRoundsChart';
 import BarChartWithRounds from './BarChartWithRounds';
 
 const Container = styled.section`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-width: 200px;
   flex-basis: 60%;
   flex-grow: 1;
@@ -23,6 +24,7 @@ interface Props {
 const VisualizationOutputSection: React.FC<Props> = ({ data }) => {
   return (
     <Container>
+      <h3>Ranked Choice Vote</h3>
       {data.length && <BarChartWithRounds data={data} />}
     </Container>
   );
