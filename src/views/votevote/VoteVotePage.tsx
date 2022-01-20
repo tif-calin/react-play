@@ -4,9 +4,7 @@ import PageTitle from '../../components/layout/PageTitle';
 import { MemoizedInputSection } from './InputSection';
 import VisualizationOutputSection from './VisualizationOutputSection';
 
-const Wrapper = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap');
-  
+const Wrapper = styled.div`  
   * { font-family: 'Josefin Sans', sans-serif; }
 
   --shadow-color: 0deg 0% 80%;

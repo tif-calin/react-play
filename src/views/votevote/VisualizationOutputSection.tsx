@@ -33,10 +33,11 @@ const Container = styled.section`
     font-size: 0.8rem;
     line-height: 1.25rem;
     padding: 0.5rem;
+    border: 1px solid #0000; 
     border-radius: 0.25rem;
 
     &[open] {
-      border: 1px solid hsl(var(--shadow-color)); 
+      border-color: hsl(var(--shadow-color));
 
       & summary { 
         border-bottom: 1px solid hsl(var(--shadow-color)); 
