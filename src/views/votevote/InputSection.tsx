@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
-import { calcBallotPreferences, rankedChoiceVote } from './utils';
+import { calcBallotPreferences, coombsRCV, culiRCV, rankedChoiceVote } from './utils';
 
 const Container = styled.form`
   display: flex;
@@ -54,19 +54,25 @@ const ColorRoster = styled.output`
 `;
 
 interface Props {
-  setData: (data: { [color: string]: number }[]) => void;
+  setRCV: (data: { [color: string]: number }[]) => void;
+  setCoombs: (data: { [color: string]: number }[]) => void;
+  setCuli: (data: { [color: string]: number }[]) => void;
 };
 type ColorName = keyof typeof colors;
 
-const InputSection: React.FC<Props> = ({ setData }) => {
+const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
   const [candidates, setCandidates] = React.useState<ColorName[]>(['tomato', 'icterine', 'chartreuse', 'turquoise', 'sapphire', 'heliotrope']);
   const [voters, setVoters] = React.useState<ColorName[]>(Object.keys(colors) as ColorName[]);
 
   React.useEffect(() => {
-    const rounds = rankedChoiceVote(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
-    console.log(rounds);
-    setData(rounds);
-  }, [candidates, voters, setData]);
+    const rcvRounds = rankedChoiceVote(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
+    const coombsRounds = coombsRCV(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
+    const culiRounds = culiRCV(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
+
+    setRCV(rcvRounds);
+    setCoombs(coombsRounds);
+    setCuli(culiRounds);
+  }, [candidates, voters, setRCV, setCoombs, setCuli]);
 
   const [selectedCandidate, setSelectedCandidate] = React.useState<ColorName>('acid');
   const [selectedVoter, setSelectedVoter] = React.useState<ColorName>('acid');

@@ -9,23 +9,41 @@ const Container = styled.section`
   min-width: 200px;
   flex-basis: 60%;
   flex-grow: 1;
+
+  & h3 {
+    display: flex;
+    justify-content: space-between;
+  
+    & > span {
+      font-size: 0.8rem;
+      font-weight: 300;
+      align-self: flex-end;
+    }
+  }
 `;
 
-const fakeData = [
-  { red: 6, green: 3, blue: 12, yellow: 6 }, 
-  { red: 7, green: 0, blue: 13, yellow: 6 },
-  { red: 10, green: 0, blue: 14, yellow: 0 },
-];
-
 interface Props {
-  data: { [color: string]: number }[];
+  datasets: { 
+    title: string, 
+    explanation: string,
+    data: { [color: string]: number }[] 
+  }[];
 };
 
-const VisualizationOutputSection: React.FC<Props> = ({ data }) => {
+const getWinners = (round: { [name: string]: number }) => {
+  const max = Math.max(...Object.values(round));
+  return Object.keys(round).filter(key => round[key] === max);
+};
+
+const VisualizationOutputSection: React.FC<Props> = ({ datasets }) => {
   return (
     <Container>
-      <h3>Ranked Choice Vote</h3>
-      {data.length && <BarChartWithRounds data={data} />}
+      {datasets.map(({ title, data }, i) => (
+        <div key={i}>
+          <h3>{title}: <span>{getWinners(data.at(-1) || {}).join(', ')}</span></h3>
+          {data.length && <BarChartWithRounds data={data}/>}
+        </div>
+      ))}
     </Container>
   );
 };

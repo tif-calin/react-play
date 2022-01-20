@@ -66,15 +66,29 @@ const Wrapper = styled.div`
 interface Props {};
 
 const VoteVotePage: React.FC<Props> = () => {
-  const [rounds, setRounds] = React.useState<{ [color: string]: number }[]>([]);
+  const [rcv, setRCV] = React.useState<{ [color: string]: number }[]>([]);
+  const [coombs, setCoombs] = React.useState<{ [color: string]: number }[]>([]);
+  const [culi, setCuli] = React.useState<{ [color: string]: number }[]>([]);
+
+  const datasets = React.useMemo(() => [
+    { 
+      title: 'Ranked Choice Vote', data: rcv, explanation: ''
+    },
+    { 
+      title: 'Coombs', data: coombs, explanation: '' 
+    },
+    { 
+      title: 'Culi', data: culi, explanation: '' 
+    },
+  ], [rcv, coombs, culi]);
 
   return (
     <div>
       <PageTitle>VoteVote</PageTitle>
 
       <Wrapper>
-        <MemoizedInputSection setData={setRounds} />
-        <VisualizationOutputSection data={rounds} />
+        <MemoizedInputSection setRCV={setRCV} setCoombs={setCoombs} setCuli={setCuli} />
+        <VisualizationOutputSection datasets={datasets} />
       </Wrapper>
     </div>
   );
