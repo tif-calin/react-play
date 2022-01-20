@@ -13,7 +13,6 @@ interface Props {
 
 const StyledSVG = styled.svg`
   box-shadow: var(--shadow);
-  border: 2px solid ${colors.gold};
 `;
 
 const margin = { top: 20, right: 20, bottom: 30, left: 40 };
