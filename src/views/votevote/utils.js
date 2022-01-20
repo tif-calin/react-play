@@ -36,7 +36,7 @@ const generalizedRCV = (candidates, votes, method = 'rcv') => {
     });
 
     // loop though and find the combined score
-    if (method === 'culi') combined = candidates.reduce((acc, candidate) => ({
+    if (method === 'culi') combined = candidates.filter(c => !dropped.includes(c)).reduce((acc, candidate) => ({
       ...acc,
       [candidate]: firstPicks[candidate] - lastPicks[candidate]
     }), {});
@@ -65,9 +65,10 @@ const generalizedRCV = (candidates, votes, method = 'rcv') => {
     // record this round
     rounds.push(firstPicks);
 
+    // error handling in case of infinite loop
     if (rounds.length > candidates.length) {
-      // console.error(`ERROR: more rounds than candidates: Method ${method}`);
-      // console.table(rounds);
+      console.error(`ERROR: more rounds than candidates: Method ${method}`);
+      console.table(rounds);
       break;
     }
   }
