@@ -1,6 +1,8 @@
 import React from 'react';
 import * as d3 from 'd3';
 import styled from 'styled-components';
+import { ResizeObserver } from '@juggle/resize-observer';
+
 import colors from '../../data/colors';
 import useInterval from '../../hooks/useInterval';
 import Bar from './chart/Bar';
@@ -11,15 +13,57 @@ interface Props {
   data: { [color: string]: number }[];
 };
 
-const StyledSVG = styled.svg``;
+const Wrapper = styled.div`
+  max-height: 400px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+`;
 
-const margin = { top: 30, right: 40, bottom: 50, left: 40 };
-const width = 500;
-const height = 500;
+const useChartSettings = (settings: { [key: string]: any } = {}): [React.Ref<any>, { [dms: string]: number }] => {
+  const containerRef = React.useRef<any>(null);
+
+  const [width, setWidth] = React.useState<number>(0);
+  const [height, setHeight] = React.useState<number>(0);
+  
+  React.useEffect(() => {
+    // if width && height set manually, don't observe
+    if (settings.width && settings.height) return () => {};
+
+    // otherwise create an observer to get width/height 
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries?.length) {
+        const [ entry ] = entries;
+
+        if (width !== entry.contentRect.width) setWidth(Number(entry.contentRect.width));
+        if (height !== entry.contentRect.height) setHeight(Number(entry.contentRect.height));
+      }
+    });
+
+    console.log('\n\n\n\n\n\n\nHIIIIIIIIIIIIIIIIIIIII');
+    const element = containerRef.current;
+    console.log(element);
+    if (element) {
+      resizeObserver.observe(element);
+      return () => resizeObserver.unobserve(element);
+    }
+  }, []);
+
+  return [ containerRef, { width, height } ];
+};
+
+const margin = {
+  top: 30,
+  right: 40,
+  bottom: 30,
+  left: 40,
+};
 const howManyTimesLongerTheLastRoundShouldBe = 3;
 
 const BarChartWithRounds: React.FC<Props> = ({ data }) => {
-  const ref = React.useRef<SVGSVGElement>(null);
+  const [ ref, dms ] = useChartSettings({});
+  const width = dms.width || 500;
+  const height = dms.height || 500;
   const [currentRoundNumber, setCurrentRoundNumber] = React.useState(0);
 
   const candidates = React.useMemo(() => Object.keys(data[0]), [data]);
@@ -52,9 +96,9 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
     ;
   }, [data, height, margin.top, margin.bottom]);
 
-  return (<>
+  return (<Wrapper ref={ref}>
     <span>Round {Math.min(currentRoundNumber + 1, data.length)}</span>
-    <StyledSVG ref={ref} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <svg viewBox={`0 0 ${width} ${height}`}>
       <g className="plot-area">
         {Object.entries(currentRound).map(([color, count]) => {
           const y = yScale(count || 0);
@@ -89,10 +133,9 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
           y={yScale(threshold)}
           alignmentBaseline='middle'
         >{threshold}</text>
-        {/* <ThresholdLine threshold={threshold} scale={yScale} /> */}
       </g>
-    </StyledSVG>
-  </>);
+    </svg>
+  </Wrapper>);
 };
 
 const MemoizedBarChartWithRounds = React.memo(BarChartWithRounds);
