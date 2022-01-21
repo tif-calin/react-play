@@ -44,6 +44,6 @@ const rgb2hsl = (rgb, toIntegers = false) => {
 
 
 // composite functions
-const hex2hsl = (hex) => rgb2hsl(hex2rgb(hex));
+const hex2hsl = (hex, toIntegers = false) => rgb2hsl(hex2rgb(hex), toIntegers);
 
 export { hex2rgb, rgb2hex, rgb2hsl, hex2hsl };

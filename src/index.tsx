@@ -16,6 +16,7 @@ import CrowdWritingPage from './views/crowdwriting';
 import VoteVotePage from './views/votevote';
 
 import './styles/index.css';
+import ColorMixPage from './views/colors/mix';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/charts/rcv" element={<RCVRoundsChartPage />} />
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
           <Route path="/votevote" element={<VoteVotePage />} />
+          <Route path="/colors/mix" element={<ColorMixPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
