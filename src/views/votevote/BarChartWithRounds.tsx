@@ -1,10 +1,10 @@
 import React from 'react';
 import * as d3 from 'd3';
 import styled from 'styled-components';
-import { ResizeObserver } from '@juggle/resize-observer';
 
 import colors from '../../data/colors';
 import useInterval from '../../hooks/useInterval';
+import useChartSettings from './hooks/useChartSettings';
 import Bar from './chart/Bar';
 import YAxis from './chart/YAxis';
 import XAxis from './chart/XAxis';
@@ -14,54 +14,23 @@ interface Props {
 };
 
 const Wrapper = styled.div`
-  max-height: 400px;
+  max-height: calc(300px + 10vh);
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 `;
 
-const useChartSettings = (settings: { [key: string]: any } = {}): [React.Ref<any>, { [dms: string]: number }] => {
-  const containerRef = React.useRef<any>(null);
-
-  const [width, setWidth] = React.useState<number>(0);
-  const [height, setHeight] = React.useState<number>(0);
-  
-  React.useEffect(() => {
-    // if width && height set manually, don't observe
-    if (settings.width && settings.height) return () => {};
-
-    // otherwise create an observer to get width/height 
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries?.length) {
-        const [ entry ] = entries;
-
-        if (width !== entry.contentRect.width) setWidth(Number(entry.contentRect.width));
-        if (height !== entry.contentRect.height) setHeight(Number(entry.contentRect.height));
-      }
-    });
-
-    console.log('\n\n\n\n\n\n\nHIIIIIIIIIIIIIIIIIIIII');
-    const element = containerRef.current;
-    console.log(element);
-    if (element) {
-      resizeObserver.observe(element);
-      return () => resizeObserver.unobserve(element);
-    }
-  }, []);
-
-  return [ containerRef, { width, height } ];
-};
-
 const margin = {
-  top: 30,
+  top: 20,
   right: 40,
-  bottom: 30,
+  bottom: 60,
   left: 40,
 };
 const howManyTimesLongerTheLastRoundShouldBe = 3;
 
 const BarChartWithRounds: React.FC<Props> = ({ data }) => {
-  const [ ref, dms ] = useChartSettings({});
+  const [ ref, dms ] = useChartSettings();
   const width = dms.width || 500;
   const height = dms.height || 500;
   const [currentRoundNumber, setCurrentRoundNumber] = React.useState(0);
@@ -92,7 +61,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
         d3.sum(Object.values(data[0])) * 0.6, 
         Math.max(...Object.values(data?.at(-1) || {}))) * 1.05
       ])
-      .range([height - margin.bottom - margin.top, -margin.bottom])
+      .range([height - margin.bottom - margin.top, margin.top])
     ;
   }, [data, height, margin.top, margin.bottom]);
 
