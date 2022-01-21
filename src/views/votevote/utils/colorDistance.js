@@ -29,7 +29,7 @@ const getClosestHSL = (voter, candidates) => {
   // find distances for all the colors
   const distances = candidates.reduce((acc, clr) => {
     const [h, s, l] = rgb2hsl(hex2rgb(colors[clr]), true);
-    const hDist = Math.min(Math.abs(h - H), Math.abs(360 - Math.abs(h + H)));
+    const hDist = Math.min(Math.abs(h - H), Math.abs(360 - Math.abs(h - H)));
     const dist = Math.sqrt(Math.pow(hDist, 2) + Math.pow(s - S, 2) + Math.pow(l - L, 2));
 
     return { ...acc, [clr]: dist };
