@@ -5,14 +5,20 @@ interface Props {
   [key: string]: any;
 };
 
-const Bar: React.FC<Props> = (props) => {
+const Bar: React.FC<Props> = ({ y, height, ...props }) => {
   const style = useSpring({
     config: { duration: 400 },
-    ...props
+    y,
+    height
   });
 
   return (<>
-    <animated.rect {...style}/>
+    <animated.rect 
+      {...style} 
+      {...props}
+      stroke="black"
+      strokeWidth={1}
+    />
   </>);
 };
 
