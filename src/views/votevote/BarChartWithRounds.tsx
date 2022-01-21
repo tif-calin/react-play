@@ -32,7 +32,7 @@ const margin = {
   bottom: 60,
   left: 40,
 };
-const howManyTimesLongerTheLastRoundShouldBe = 3;
+const howManyTimesLongerTheLastRoundShouldBe = 2;
 
 const BarChartWithRounds: React.FC<Props> = ({ data }) => {
   const [ ref, dms ] = useChartSettings();
@@ -51,7 +51,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
 
   useInterval(() => {
     setCurrentRoundNumber(current => (current + 1) % (data.length + howManyTimesLongerTheLastRoundShouldBe));
-  }, 2000);
+  }, 2500);
 
   const xScale = React.useMemo(() => {
     return d3.scaleBand()
@@ -85,8 +85,6 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
               width={xScale.bandwidth()}
               height={height - margin.bottom - margin.top - y || 0}
               fill={colors[color as keyof typeof colors]}
-              stroke="black"
-              strokeWidth={1}
             />
           );
         })}
