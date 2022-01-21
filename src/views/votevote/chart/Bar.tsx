@@ -7,7 +7,7 @@ interface Props {
 
 const Bar: React.FC<Props> = (props) => {
   const style = useSpring({
-    config: { duration: 500 },
+    config: { duration: 400 },
     ...props
   });
 
