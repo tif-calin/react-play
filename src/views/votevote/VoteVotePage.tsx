@@ -74,10 +74,10 @@ const VoteVotePage: React.FC<Props> = () => {
       title: 'Standard Ranked Choice Vote', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
     },
     { 
-      title: 'Coomb\'s RCV', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate witht he fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
+      title: 'Coomb\'s RCV', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate witht the fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
     },
     { 
-      title: 'Culi\'s RCV', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.' 
+      title: 'Culi\'s RCV', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.\n\nPS sorry for being cringey and naming it after myself. idk what to call it' 
     },
   ], [rcv, coombs, culi]);
 
