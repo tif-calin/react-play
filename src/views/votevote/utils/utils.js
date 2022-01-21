@@ -1,5 +1,5 @@
 // @ts-nocheck
-import colors from '../../data/colors.js';
+import colors from '../../../data/colors.js';
 
 /**
  * Generalized RCV or Coombs Method

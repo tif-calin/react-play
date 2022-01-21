@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
-import { calcBallotPreferences, coombsRCV, culiRCV, rankedChoiceVote } from './utils';
+import { calcBallotPreferences, coombsRCV, culiRCV, rankedChoiceVote } from './utils/utils';
 
 const Container = styled.form`
   display: flex;
