@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
-import { calcBallotPreferences, coombsRCV, culiRCV, rankedChoiceVote } from './utils/utils';
+import { coombsRCV, culiRCV, rankedChoiceVote } from './utils/votingMethods';
+import { calcBallotPreferences, getClosestHSL } from './utils/colorDistance';
+
+const colorDistanceFncs = {
+  'hsl': getClosestHSL,
+  'rgb': calcBallotPreferences,
+};
 
 const Container = styled.form`
   display: flex;
@@ -29,6 +35,11 @@ const Container = styled.form`
     margin-top: auto;
     font-size: 0.8rem;
     font-weight: 300;
+
+    & > span {
+      font-weight: 600;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -66,16 +77,17 @@ type ColorName = keyof typeof colors;
 const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
   const [candidates, setCandidates] = React.useState<ColorName[]>(['tomato', 'icterine', 'chartreuse', 'turquoise', 'azure', 'heliotrope']);
   const [voters, setVoters] = React.useState<ColorName[]>(Object.keys(colors) as ColorName[]);
+  const [distanceMap, setDistanceMap] = React.useState<keyof typeof colorDistanceFncs>('rgb');
 
   React.useEffect(() => {
-    const rcvRounds = rankedChoiceVote(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
-    const coombsRounds = coombsRCV(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
-    const culiRounds = culiRCV(candidates, voters.map(v => calcBallotPreferences(v, candidates)));
+    const rcvRounds = rankedChoiceVote(candidates, voters.map(v => colorDistanceFncs[distanceMap](v, candidates)));
+    const coombsRounds = coombsRCV(candidates, voters.map(v => colorDistanceFncs[distanceMap](v, candidates)));
+    const culiRounds = culiRCV(candidates, voters.map(v => colorDistanceFncs[distanceMap](v, candidates)));
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);
     setCuli(culiRounds);
-  }, [candidates, voters, setRCV, setCoombs, setCuli]);
+  }, [candidates, voters, setRCV, setCoombs, setCuli, distanceMap]);
 
   const [selectedCandidate, setSelectedCandidate] = React.useState<ColorName>('acid');
   const [selectedVoter, setSelectedVoter] = React.useState<ColorName>('acid');
@@ -138,7 +150,11 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       </ColorRoster>
 
       <p>
-        Voter preferences are calculated based on RGB distance between colors. Each voter will prefer the closest candidate.
+        Voter preferences are calculated based on 
+        <span 
+          onClick={() => setDistanceMap(dm => dm === 'rgb' ? 'hsl' : 'rgb')}
+        >{` ${distanceMap.toUpperCase()} `}</span> 
+        distance between colors. Each voter will prefer the closest candidate.
       </p>
     </Container>
   );
