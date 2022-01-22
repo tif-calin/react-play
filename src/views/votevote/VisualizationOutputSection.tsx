@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import BarChartWithRounds from './BarChartWithRounds';
+import { MemoizedBarChartWithRounds } from './BarChartWithRounds';
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   min-width: 200px;
   flex-basis: 60%;
   flex-grow: 1;
@@ -68,7 +67,7 @@ const VisualizationOutputSection: React.FC<Props> = ({ datasets }) => {
       {datasets.map(({ title, explanation, data }, i) => (
         <div key={i}>
           <h3>{title} <span>Winner(s): {getWinners(data.at(-1) || {}).join(', ')}</span></h3>
-          {data.length && <BarChartWithRounds data={data}/>}
+          {data.length && <MemoizedBarChartWithRounds data={data}/>}
           <details><summary>Explanation</summary>{explanation}</details>
         </div>
       ))}
