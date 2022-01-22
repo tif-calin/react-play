@@ -11,7 +11,7 @@
     "start": "webpack-dev-server --history-api-fallback --hot --config webpack.config.js --mode development --devtool eval-source-map --open",
     "build": "webpack --config webpack.config.js --env env=production"
   },
-  "browserlist": [
+  "browserslist": [
     "> 1%",
     "last 2 versions",
     "ie >= 11"
