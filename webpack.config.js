@@ -3,12 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'eval-cheap-source-map',
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    sourceMapFileName: ''
   },
   module: {
     rules: [
