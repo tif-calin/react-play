@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-cheap-source-map',
@@ -35,6 +36,7 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
     }),
     new CleanWebpackPlugin(),
+    new NodePolyfillPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
