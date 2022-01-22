@@ -37,6 +37,13 @@ const Wrapper = styled.div`
   & > * {
     padding: 1.5rem;
   }
+
+  & > *:last-child {
+    padding: 0;
+    padding-top: 1rem;
+    background: white;
+    width: 100%;
+  }
 `;
 
 interface Props {};
@@ -48,7 +55,7 @@ const VoteVotePage: React.FC<Props> = () => {
 
   const datasets = React.useMemo(() => [
     { 
-      title: 'Standard Ranked Choice Vote', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
+      title: 'Instant Runoff Voting RCV', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
     },
     { 
       title: 'Coomb\'s RCV', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate with the fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
@@ -65,7 +72,9 @@ const VoteVotePage: React.FC<Props> = () => {
       <Wrapper>
         <MemoizedInputSection setRCV={setRCV} setCoombs={setCoombs} setCuli={setCuli} />
         <VisualizationOutputSection datasets={datasets} />
+        <p>Heavily inspired by Nicky Cases&apos;s similar work <i><a href="https://ncase.me/ballot/">To Build a Better Ballot</a></i>.</p>
       </Wrapper>
+
     </div>
   );
 };
