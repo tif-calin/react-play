@@ -37,29 +37,6 @@ const Wrapper = styled.div`
   & > * {
     padding: 1.5rem;
   }
-
-  & button, select {
-    padding: 0.15rem 0.2rem;
-    line-height: 1rem;
-    width: 7.5rem;
-    border: none;
-    transition: box-shadow 0.2s;
-    border-radius: 0.25rem;
-  }
-
-  & button {
-    border: 1px solid hsl(var(--shadow-color));
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-  }
-
-  & select {
-    &:hover {
-      box-shadow: var(--shadow-inset);
-    }
-  }
 `;
 
 interface Props {};
@@ -74,7 +51,7 @@ const VoteVotePage: React.FC<Props> = () => {
       title: 'Standard Ranked Choice Vote', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
     },
     { 
-      title: 'Coomb\'s RCV', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate witht the fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
+      title: 'Coomb\'s RCV', data: coombs, explanation: 'Coomb\'s method, works almost exactly the same way as typical RCV, but instead of eliminating the candidate with the fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
     },
     { 
       title: 'Culi\'s RCV', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.\n\nPS sorry for being cringey and naming it after myself. idk what to call it' 
