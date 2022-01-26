@@ -2,12 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { coombsRCV, culiRCV, rankedChoiceVote } from './utils/votingMethods';
-import { rankClosestRGB, rankClosestHSL } from './utils/colorDistance';
+import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 
-const colorDistanceFncs = {
+const colorDistanceRankingFncs = {
   'hsl': rankClosestHSL,
   'rgb': rankClosestRGB,
+};
+
+const colorDistanceScoringFncs = {
+  'hsl': scoreClosestHSL,
+  'rgb': scoreClosestRGB
 };
 
 const Container = styled.form`
@@ -103,7 +108,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
   // Candidate roster
   const {
     selected: selectedCandidate, setSelected: setSelectedCandidate,
-    roster: candidates, add: addCandidate, remove: removeCandidate,
+    roster: candidates, add: addCandidate, remove: removeCandidate, clear: clearCandidates,
   } = useRoster(['tomato', 'icterine', 'chartreuse', 'turquoise', 'azure', 'heliotrope'], 'acid', true);
 
   // Voter roster
@@ -112,9 +117,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     roster: voters, add: addVoter, remove: removeVoter, clear: clearVoters,
   } = useRoster(Object.keys(colors) as ColorName[], 'acid');
 
-  const [distanceMap, setDistanceMap] = React.useState<keyof typeof colorDistanceFncs>('rgb');
+  const [distanceMap, setDistanceMap] = React.useState<keyof typeof colorDistanceRankingFncs>('rgb');
   React.useEffect(() => {
-    const rankedVotes = voters.map(v => colorDistanceFncs[distanceMap](v, candidates));
+    const rankedVotes = voters.map(v => colorDistanceRankingFncs[distanceMap](v, candidates));
     
     const rcvRounds = rankedChoiceVote(candidates, rankedVotes);
     const coombsRounds = coombsRCV(candidates, rankedVotes);
@@ -134,6 +139,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
           )}
         </select>
         <button onClick={() => addCandidate()}>add candidate</button>
+        {candidates.length > 1 && <button disabled={candidates.length < 3} onClick={clearCandidates}>clear</button>}
       </fieldset>
       <ColorRoster name="candidates">
         {candidates.map((name) => (
@@ -152,7 +158,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
           {Object.entries(colors).map(([name]) => <option key={name}>{name}</option>)}
         </select>
         <button onClick={() => addVoter()}>add voter</button>
-        <button onClick={clearVoters}>clear voters</button>
+        {voters.length > 1 && <button onClick={clearVoters} disabled={voters.length < 3}>clear voters</button>}
         {/* <button onClick={() => setVoters(v => [...v, ...Object.keys(colors)])}>one of each</button> */}
       </fieldset>
       <ColorRoster name="candidates">
