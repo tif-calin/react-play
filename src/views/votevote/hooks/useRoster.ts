@@ -1,7 +1,7 @@
 import React from 'react';
 import colors from '../../../data/colors';
 
-type ColorName = keyof typeof colors | '';
+type ColorName = keyof typeof colors;
 
 const useRoster = (arr: ColorName[] = [], initiallySelected: ColorName, isUnique = false) => {
   const [roster, setRoster] = React.useState<ColorName[]>(arr);
