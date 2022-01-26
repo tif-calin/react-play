@@ -1,7 +1,7 @@
 import React from 'react';
 import colors from '../../../data/colors';
 
-type ColorName = keyof typeof colors;
+type ColorName = keyof typeof colors | '';
 
 const useRoster = (arr: ColorName[] = [], initiallySelected: ColorName, isUnique = false) => {
   const [roster, setRoster] = React.useState<ColorName[]>(arr);
@@ -9,9 +9,18 @@ const useRoster = (arr: ColorName[] = [], initiallySelected: ColorName, isUnique
 
   const add = React.useCallback((item: ColorName = selected, n: number = 1) => {
     setRoster(current => [...current, ...Array(n).fill(item)]);
-    if (isUnique) setSelected(Object.keys(colors).find(
-      i => !roster.includes(i as ColorName) && i !== selected
-    ) as ColorName);
+
+    if (isUnique) {
+      const currentIndex = Object.keys(colors).indexOf(selected);
+
+      for (let i = 1; i < Object.keys(colors).length; i++) {
+        const color: ColorName = Object.keys(colors)[(currentIndex + i) % Object.keys(colors).length] as ColorName;
+        if (!roster.includes(color)) {
+          setSelected(color);
+          break;
+        }
+      }
+    }
   }, [selected]);
 
   const clear = React.useCallback(() => setRoster([]), []);
