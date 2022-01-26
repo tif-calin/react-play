@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTitle from '../../components/layout/PageTitle';
-import RateField from '../../components/rate/RateField';
+import RateField from './components/RateField';
 
 const Rate = () => {
   return (
