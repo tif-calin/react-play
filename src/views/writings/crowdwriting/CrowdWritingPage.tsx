@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageTitle from '../../components/layout/PageTitle';
+import PageTitle from '../../../components/layout/PageTitle';
 import FloatingNav from './FloatingNav';
 
 const path = '/crowd-writing';

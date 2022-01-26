@@ -13,7 +13,7 @@ import Rate from './views/rate';
 import Catfood, { CatfoodStats } from './views/catfood';
 import { LearnRuby, LearnD3 } from './views/learn';
 import ChartsPage, { RCVRoundsChartPage } from './views/charts';
-import CrowdWritingPage from './views/crowdwriting';
+import CrowdWritingPage from './views/writings/crowdwriting';
 import VoteVotePage from './views/votevote';
 
 import './styles/index.css';
