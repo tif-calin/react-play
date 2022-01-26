@@ -1,3 +1,3 @@
-import Rate from './Rate';
+import RatePage from './RatePage';
 
-export default Rate;
+export default RatePage;

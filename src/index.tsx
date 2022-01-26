@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Home from './views/home';
-import Rate from './views/rate';
+import RatePage from './views/rate';
 import Catfood, { CatfoodStats } from './views/catfood';
 import { LearnRuby, LearnD3 } from './views/learn';
 import ChartsPage, { RCVRoundsChartPage } from './views/charts';
@@ -25,7 +25,7 @@ const App = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/rate" element={<Rate />} />
+          <Route path="/rate" element={<RatePage />} />
           <Route path="/catfood" element={<Catfood />} />
           <Route path="/catfood/stats" element={<CatfoodStats />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
