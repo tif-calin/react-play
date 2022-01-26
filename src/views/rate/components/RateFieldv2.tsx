@@ -3,27 +3,32 @@ import styled from 'styled-components';
 import Slider from '@mui/material/Slider';
 
 const marks = [
-  { value: -2, label: 'worst' },
-  { value: -1, label: 'below average' },
-  { value: 0, label: 'average' },
-  { value: 1, label: 'above average' },
-  { value: 2, label: 'best' }
+  { value: -2, label: 'definitely not' },
+  { value: -1, label: 'nope' },
+  { value: 0, label: 'not really' },
+  { value: 1, label: 'kinda' },
+  { value: 2, label: 'perfect' }
 ];
 
 const SliderContainer = styled.fieldset`
   display: flex;
-  flex-direction: column;
-  padding: 0.75rem 2rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.25rem;
   box-shadow: var(--shadow-inset);
-
-  & > * {
-    font-family: 'Inconsolata', monospace;
-  }
+  & > * { font-family: 'Inconsolata', monospace; }
 
   & > *:first-child {
     font-weight: 700;
+    min-width: 12rem;
+    width: 33%;
+  }
+
+  & > *:last-child {
+    margin: 0.5rem 1.5rem 1.5rem 2rem;
   }
 `;
 
@@ -65,22 +70,23 @@ const sx = {
 
 interface Props {
   label: string;
+  [key: string]: any;
 };
 
-const RateField:React.FC<Props> = ({ label }) => {
+const RateField:React.FC<Props> = ({ label, i, ...props }) => {
+
   return (
-    <div className="RateField">
-      <SliderContainer>
-        <span>{label}</span>
-        <Slider
-          sx={sx}
-          defaultValue={0} min={-2} max={2} step={0.01}
-          track={false}
-          marks={marks}
-          valueLabelDisplay="auto"
-        />
-      </SliderContainer>
-    </div>
+    <SliderContainer>
+      <span>{label}</span>
+      <Slider
+        name={`${i}`}
+        sx={sx}
+        defaultValue={0} min={-2} max={2} step={0.1}
+        marks={marks}
+        valueLabelDisplay="auto"
+        {...props}
+      />
+    </SliderContainer>
   );
 };
 

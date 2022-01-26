@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PageTitle from '../../components/layout/PageTitle';
+import Book from './Book';
 import RateField from './components/RateField';
 
 const Page = styled.div`
@@ -29,26 +30,51 @@ const Page = styled.div`
     inset 10.7px 15.7px 17.8px -3.2px hsl(var(--shadow-color) / 0.12),
     inset 0 0 3px hsl(var(--shadow-color))
   ;
+
+  & > h3 {
+    margin-top: 1rem;
+
+    & + div {
+      padding: 1rem;
+      box-shadow: var(--shadow-border);
+      border-radius: 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  accent-color: var(--pink);
 `;
 
 const Joke = styled.div`
-  padding: 1rem;
-  box-shadow: var(--shadow-border);
-  border-radius: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
   & > p:last-of-type {
     margin-bottom: 0.5rem;
   }
 `;
 
+const jokes = [
+  {
+    setup: 'Can someone please tell me what the lowest rank in the military is?',
+    punchline: 'Every time I ask they say \"it\'s private\"!',
+  }
+];
+
+const books = [
+  {
+    title: 'The Dawn of Everything',
+    subtitle: 'A New History of Humanity',
+    authors: ['David Graeber', 'David Wengrow'],
+    year: 2021
+  }
+];
+
 const RatePage = () => {
   return (
     <Page>
       <PageTitle>RateRate</PageTitle>
-      <p>Rate this joke</p>
+
+      <h3>Rate this joke</h3>
       <Joke>
         <p><strong>Can someone please tell me what the lowest rank in the military is?</strong></p>
         <p>Every time I ask they say "it's private"!</p>
@@ -57,6 +83,9 @@ const RatePage = () => {
         <RateField label="original" />
         <RateField label="clever" />
       </Joke>
+
+      <h3>Categorize this book</h3>
+      <Book book={books[0]} />
     </Page>
   );
 };
