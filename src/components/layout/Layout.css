@@ -17,6 +17,7 @@
 }
 
 .Layout > header {
+  text-align: center;
   flex-grow: 0;
   display: flex;
 }
