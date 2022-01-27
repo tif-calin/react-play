@@ -3,15 +3,27 @@
 
 :root {
   --red: var(--oc-red-4);
+  --red-rgb: var(--oc-red-4-rgb);
   --pink: var(--oc-pink-4);
+  --pink-rgb: var(--oc-pink-4-rgb);
   --grape: var(--oc-grape-4);
+  --grape-rgb: var(--oc-grape-4-rgb);
   --violet: var(--oc-violet-4);
+  --violet-rgb: var(--oc-violet-4-rgb);
   --indigo: var(--oc-indigo-4);
+  --indigo-rgb: var(--oc-indigo-4-rgb);
   --blue: var(--oc-blue-4);
+  --blue-rgb: var(--oc-blue-4-rgb);
   --cyan: var(--oc-cyan-4);
+  --cyan-rgb: var(--oc-cyan-4-rgb);
   --teal: var(--oc-teal-4);
+  --teal-rgb: var(--oc-teal-4-rgb);
   --green: var(--oc-green-4);
+  --green-rgb: var(--oc-green-4-rgb);
   --lime: var(--oc-lime-4);
+  --lime-rgb: var(--oc-lime-4-rgb);
   --yellow: var(--oc-yellow-4);
+  --yellow-rgb: var(--oc-yellow-4-rgb);
   --orange: var(--oc-orange-4);
+  --orange-rgb: var(--oc-orange-4-rgb);
 }
