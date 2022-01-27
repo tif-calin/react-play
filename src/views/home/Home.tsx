@@ -24,16 +24,16 @@ const Home = () => {
       </p>
       <StyledList>
         <li>
-          <Link to="/rate">prototype of raterate</Link>
-        </li>
-        <li>
-          <Link to="/catfood">catfood price data entry tool</Link> and their <Link to="/catfood/stats">stats</Link>
+          React forms are still hard tbh, so I tried playing around with a couple things: <Link to="/rate">prototype of raterate</Link>, <Link to="/catfood">catfood price data entry tool</Link> and their <Link to="/catfood/stats">stats</Link>
         </li>
         <li>
           <Link to="/charts">my chart playground</Link>
         </li>
         <li>
           Sometimes I log my learning journeys like with <Link to="/learn/d3">d3</Link> or <Link to="/learn/ruby">ruby</Link>
+        </li>
+        <li>
+          The coolest thing I&apos;ve made so far is my prototype of <Link to="/votevote">votevote.page</Link> (soon to be a <a href="https://votevote.page/">website</a>).
         </li>
       </StyledList>
     </>

@@ -38,7 +38,7 @@ const Container = styled.form`
     border: none;
   }
 
-  & p {
+  & p:last-of-type {
     margin-top: auto;
     font-size: 0.8rem;
     font-weight: 300;
@@ -104,7 +104,17 @@ interface Props {
 };
 type ColorName = keyof typeof colors;
 
+const getWinners = (round: { [name: string]: number }) => {
+  if (!round) return [];
+
+  const max = Math.max(...Object.values(round));
+  return Object.keys(round).filter(key => round[key] === max);
+};
+
 const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
+  // const results = React.useRef<{ [method: string]: string[] }>({});
+  const [results, setResults] = React.useState<{ [method: string]: string[] }>({});
+
   // Candidate roster
   const {
     selected: selectedCandidate, setSelected: setSelectedCandidate,
@@ -117,13 +127,26 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     roster: voters, add: addVoter, remove: removeVoter, clear: clearVoters,
   } = useRoster(Object.keys(colors) as ColorName[], 'acid');
 
+  // calculate results
   const [distanceMap, setDistanceMap] = React.useState<keyof typeof colorDistanceRankingFncs>('rgb');
   React.useEffect(() => {
     const rankedVotes = voters.map(v => colorDistanceRankingFncs[distanceMap](v, candidates));
+    const scoredVotes = voters.map(v => colorDistanceScoringFncs[distanceMap](v, candidates));
     
     const rcvRounds = rankedChoiceVote(candidates, rankedVotes);
     const coombsRounds = coombsRCV(candidates, rankedVotes);
     const culiRounds = culiRCV(candidates, rankedVotes);
+
+    // results.current = {
+    //   irv: getWinners(rcvRounds.at(-1) as any),
+    //   coombs: getWinners(coombsRounds.at(-1) as any),
+    //   frontAndBack: getWinners(culiRounds.at(-1) as any),
+    // };
+    setResults({
+      irv: getWinners(rcvRounds.at(-1) as any),
+      coombs: getWinners(coombsRounds.at(-1) as any),
+      frontAndBack: getWinners(culiRounds.at(-1) as any),
+    });
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);
@@ -172,6 +195,21 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
         ))}
         <span>{voters.length} voters</span>
       </ColorRoster>
+
+      <div>
+        All results:
+        <ul>
+          <li>
+            <span>irv</span>: {results['irv']?.join(', ')}
+          </li>
+          <li>
+            <span>coombs</span>: {results['coombs']?.join(', ')}
+          </li>
+          <li>
+            <span>front and back</span>: {results['frontAndBack']?.join(', ')}
+          </li>
+        </ul>
+      </div>
 
       <p>
         Voter preferences are calculated based on 

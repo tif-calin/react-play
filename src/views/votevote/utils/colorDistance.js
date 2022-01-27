@@ -46,6 +46,7 @@ const rankClosestHSL = (voter, candidates) => {
  * 
  * @param {string} voter 
  * @param {Array.<string>} candidates 
+ * @param {boolean} [asArray=true] whether to return an array of tuples or an object
  * @returns {Object|Array}
  */
 const scoreClosestRGB = (voter, candidates, asArray = false) => {
@@ -64,6 +65,13 @@ const scoreClosestRGB = (voter, candidates, asArray = false) => {
   ;
 };
 
+/**
+ * 
+ * @param {string} voter - color name of the voter
+ * @param {Array.<string>} candidates - a list of color names
+ * @param {boolean} [asArray=true] whether to return an array of tuples or an object
+ * @returns {Object|Array}
+ */
 const scoreClosestHSL = (voter, candidates, asArray = false) => {
   const [H, S, L] = rgb2hsl(hex2rgb(colors[voter]), true);
 
