@@ -15,9 +15,10 @@ import { LearnRuby, LearnD3 } from './views/learn';
 import ChartsPage, { RCVRoundsChartPage } from './views/charts';
 import CrowdWritingPage from './views/writings/crowdwriting';
 import VoteVotePage from './views/votevote';
+import ColorMixPage from './views/colors/mix';
+import ReadLaterPage from './views/readlater';
 
 import './styles/index.css';
-import ColorMixPage from './views/colors/mix';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
           <Route path="/votevote" element={<VoteVotePage />} />
           <Route path="/colors/mix" element={<ColorMixPage />} />
+          <Route path="/read-later" element={<ReadLaterPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
