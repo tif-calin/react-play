@@ -25,11 +25,11 @@
 .Layout > header h1 {
   font-size: 2.5rem;
   filter: saturate(0.55) brightness(0.25);
-  transition: all 2s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: all 2s cubic-bezier(0, 0.9, 0.8, 0.99);
 }
 
 .Layout > header h1:hover {
-  filter: saturate(1) brightness(1) hue-rotate(1080deg);
+  filter: saturate(1) brightness(1) hue-rotate(1440deg);
 }
 
 .Layout > main {
