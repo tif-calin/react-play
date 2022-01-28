@@ -47,7 +47,7 @@ const BarChartWithRounds: React.FC<Props> = ({ data }) => {
       [curr]: Number(data[Math.min(currentRoundNumber, data.length - 1)][curr])
     }), {});
   }, [data, currentRoundNumber]);
-  const threshold = Math.floor(d3.sum(Object.values(currentRound)) / 2) + 1;
+  const threshold = d3.sum(Object.values(currentRound)) / 2;
 
   useInterval(() => {
     setCurrentRoundNumber(current => (current + 1) % (data.length + howManyTimesLongerTheLastRoundShouldBe));
