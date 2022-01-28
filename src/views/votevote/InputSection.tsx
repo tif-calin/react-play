@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { ColorName } from '.';
-import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff } from './utils/votingMethods';
+import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff, star } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -154,7 +154,13 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const vfaResult = vfa( rankedVotes);
     const vfaRunoffRounds = vfaRunoff(rankedVotes);
 
-    console.log(vfaRunoffRounds);
+    // not fully finished
+    let starRounds = [{}];
+    try {
+      starRounds = star(scoredVotes.map(v => Ballot.toDiscreteScore(v, 0, 5)));
+    } catch (e) {
+      console.error(e);
+    }
 
     setResults({
       irv: getWinners(rcvRounds.at(-1) as any),
@@ -169,6 +175,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       lullCopeland: getWinners(lullCopelandResult as any),
       vfa: getWinners(vfaResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
+      star: getWinners(starRounds.at(-1) as any),
     });
 
     // scoredVotes.slice(0, 8).forEach((v, i) => {
