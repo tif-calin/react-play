@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
+import { ColorName } from '.';
 import { approval, coombsRCV, culiRCV, fptp, rankedChoiceVote } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
+import { MemoizedWinnersDisplay } from './WinnersDisplay';
 
 const colorDistanceRankingFncs = {
   'rgb': rankClosestRGB,
@@ -74,32 +76,6 @@ const Container = styled.form`
   }
 `;
 
-const ResultsDisplay = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  padding: 0;
-
-  & > li {
-    display: flex-inline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-
-    & > span {
-      display: flex;
-      place-items: center;
-      place-content: center;
-      font-size: 0.8rem;
-      padding: 0 0.25rem;
-      border: 1px solid #233;
-      border-radius: 0.25rem;
-      background-color: var(--color);
-      filter: grayscale(0.5);
-      color: black;
-    }
-  }
-`;
-
 const ColorRoster = React.memo(styled.output`
   display: flex;
   flex-wrap: wrap;
@@ -129,7 +105,6 @@ interface Props {
   setCoombs: (data: { [color: string]: number }[]) => void;
   setCuli: (data: { [color: string]: number }[]) => void;
 };
-type ColorName = keyof typeof colors;
 
 const getWinners = (round: { [name: string]: number }) => {
   if (!round) return [];
@@ -169,11 +144,6 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const approvalRound = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
     const fptpRound = fptp(rankedVotes.map(v => v[0]));
 
-    // results.current = {
-    //   irv: getWinners(rcvRounds.at(-1) as any),
-    //   coombs: getWinners(coombsRounds.at(-1) as any),
-    //   frontAndBack: getWinners(culiRounds.at(-1) as any),
-    // };
     setResults({
       irv: getWinners(rcvRounds.at(-1) as any),
       coombs: getWinners(coombsRounds.at(-1) as any),
@@ -182,14 +152,13 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       fptp: getWinners(fptpRound as any),
     });
 
-    scoredVotes.slice(0, 8).forEach((v, i) => {
-      console.log(`${voters[i]}`, v);
-      console.table({
-        approval: Ballot.toApproval(v, 0),
-        ranked: rankedVotes[i].flat(),
-      });
-    });
-    console.log(approvalRound);
+    // scoredVotes.slice(0, 8).forEach((v, i) => {
+    //   console.log(`${voters[i]}`, v);
+    //   console.table({
+    //     approval: Ballot.toApproval(v, 0),
+    //     ranked: rankedVotes[i].flat(),
+    //   });
+    // });
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);
@@ -239,16 +208,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
         <span>{voters.length} voters</span>
       </ColorRoster>
 
-      <div>
-        <span>All results:</span>
-        <ResultsDisplay>
-          {Object.entries(results).map(([name, winners]) => (
-            <li key={name}>
-              {name}: {winners?.map((w, i) => <span key={i} style={{ '--color': colors[w as ColorName] } as React.CSSProperties}>{w}</span>)}
-            </li>
-          ))}
-        </ResultsDisplay>
-      </div>
+      {voters.length && candidates.length > 1 ? (
+        <MemoizedWinnersDisplay results={results} />
+      ): null}
 
       <p>
         Voter preferences are calculated based on 
