@@ -20,6 +20,7 @@ const ResultsDisplay = styled.ul`
     column-gap: 0.25rem;
     row-gap: 0.15rem;
     line-height: 1;
+    align-items: center;
   }
 `;
 
@@ -29,11 +30,11 @@ const ResultItem = styled.div`
   }};
   display: flex;
   place-items: center;
+  padding: 0.05rem 0.15rem;
   place-content: center;
 
   &:hover {
     border-radius: 0.15rem;
-    padding: 0 0.15rem;
     background: var(--color);
 
     & > span { color: black; }
