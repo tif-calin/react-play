@@ -406,6 +406,135 @@ const vfaRunoff = votes => {
 
 // #endregion
 
+// #region star
+/**
+ * Takes a list of scored ballots and a subset of candidates and returns their matrix
+ * @param {Array.<string>} candidates 
+ * @param {Array.<Object.<string, number>>} votes 
+ * @returns {Object.<string, Object.<string, number>>}
+ */
+const matrixFromScoredVotes = (candidates, votes) => {
+  const matrix = candidates.reduce((a, c, i) => ({ 
+    ...a, 
+    [c]: candidates.reduce((b, d) => ({ ...b, [d]: 0 }), {})
+  }), {});
+
+  votes.forEach(vote => {
+    for (let i = 0; i < candidates.length - 1; i++) {
+      const current = candidates[i];
+      const currentScore = vote[current];
+
+      for (let j = i + 1; j < candidates.length; j++) {
+        const next = candidates[j];
+        const nextScore = vote[next];
+
+        if (currentScore > nextScore) {
+          matrix[current][next]++;
+        } else if (currentScore < nextScore) {
+          matrix[next][current]++;
+        }
+      }
+    }
+  });
+
+  return matrix;
+};
+
+/**
+ * Convert a matrix to scores
+ * @param {{Object.<Object.<string, number>>}} matrix 
+ * @param {number} totalVoters 
+ * @param {number} [perLoss=-1] 
+ * @param {number} [perTie=0] 
+ * @param {number} [perWin=1]
+ * @returns {Object.<string, number>}
+ */
+const matrixToPoints = (matrix, totalVoters, perLoss = -1, perTie = 0, perWin = 1) => {
+  const candidates = Object.keys(matrix);
+  const points = candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {});
+
+  candidates.forEach(candidate => {
+    const wins = Object.values(matrix[candidate]).reduce((a, b) => a + b, 0);
+    const losses = candidates.map(c => matrix[c][candidate]).reduce((a, b) => a + b, 0);
+    const ties = totalVoters - wins - losses;
+
+    points[candidate] = wins * perWin + ties * perTie + losses * perLoss;
+  });
+
+  return points;
+};
+
+/**
+ * Get the top N candidates from scores
+ * @param {Object.<string, number>} scores
+ * @param {number} n
+ * @returns {Array.<string>}
+ */
+const topN = (scores, n = 2) => {
+  const sortedValues = Object.values(scores).sort((a, b) => b - a);
+  
+  const top = [];
+  let i = 0;
+  while (top.length < n && i < sortedValues.length) {
+    Object.entries(scores).forEach(([candidate, score]) => {
+      if (score === sortedValues[i]) top.push(candidate);
+    });
+    i++;
+  }
+
+  return top;
+};
+
+/**
+ * STAR Method
+ * @param {Array.<Object.<string, number>>} votes
+ * @returns {Array.<Round>}
+ */
+const star = (votes) => {
+  const result = {};
+
+  votes.forEach(vote => {
+    Object.entries(vote).forEach(([c, s]) => {
+      result[c] = ~~result[c] + s;
+    });
+  });
+
+  const topTwo = topN(result, 2);
+
+  if (topTwo.length === 2) {
+    return [
+      result,
+      votes.reduce((acc, vote) => {
+        const [ one, two ] = topTwo;
+        if (vote[one] > vote[two]) acc[one]++;
+        else if (vote[one] < vote[two]) acc[two]++;
+        return acc;
+      }, { [topTwo[0]]: 0, [topTwo[1]]: 0 })
+    ];
+  } else {
+    const mat = matrixFromScoredVotes(topTwo, votes);
+    const scr = matrixToPoints(mat, votes.length, 0, 0, 1);
+    const topTwo2 = topN(scr, 2);
+
+    if (topTwo2.length > 2) return [ result ];
+
+    const secondRound = 
+      matrixToPoints(matrixFromScoredVotes(topTwo2, votes), votes.length, 0, 0, 1)
+    ;
+
+    if (Object.values(secondRound).slice(1).every((s, arr) => s === arr[0])) {
+      throw new Error('STAR Method: tie breakers not yet implemented!!!');
+    } else {
+      return [
+        result,
+        secondRound
+      ]
+    }
+  }
+};
+
+// #endregion
+
 export { 
   rankedChoiceVote, coombsRCV, culiRCV, 
   supplementary,
@@ -413,5 +542,6 @@ export {
   borda, modifiedBorda, tournamentBorda,
   approval, combinedApproval,
   copeland, lullCopeland,
-  vfa, vfaRunoff
+  vfa, vfaRunoff,
+  star,
 };
