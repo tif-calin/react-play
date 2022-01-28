@@ -32,6 +32,7 @@
  - css standards
    - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
    - [Open Color](https://yeun.github.io/open-color/)
+   - [easings.net](https://easings.net/)
 
 ## Credits
  - hooks inspired by [usehooks.com](https://usehooks.com/)
