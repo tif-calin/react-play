@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { ColorName } from '.';
-import { approval, borda, combinedApproval, coombsRCV, culiRCV, fptp, rankedChoiceVote, supplementary } from './utils/votingMethods';
+import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -142,10 +142,19 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const coombsRounds = coombsRCV(candidates, rankedVotes);
     const culiRounds = culiRCV(candidates, rankedVotes);
     const approvalResult = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
-    const combinedApprovalResult = combinedApproval(rankedVotes);
+    const combinedApprovalResult = combinedApproval(
+      scoredVotes.map(v => Ballot.toApproval(v, 1/3)), 
+      scoredVotes.map(v => Ballot.toDisapproval(v, -1/3))
+    );
     const fptpResult = fptp(rankedVotes.map(v => v[0]));
     const bordaResult = borda(candidates, rankedVotes);
     const supplementaryRounds = supplementary(candidates, rankedVotes);
+    const copelandResult = copeland(candidates, rankedVotes);
+    const lullCopelandResult = lullCopeland(candidates, rankedVotes);
+    const vfaResult = vfa( rankedVotes);
+    const vfaRunoffRounds = vfaRunoff(rankedVotes);
+
+    console.log(vfaRunoffRounds);
 
     setResults({
       irv: getWinners(rcvRounds.at(-1) as any),
@@ -156,6 +165,10 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       fptp: getWinners(fptpResult as any),
       borda: getWinners(bordaResult as any),
       supplementary: getWinners(supplementaryRounds.at(-1) as any),
+      copeland: getWinners(copelandResult as any),
+      lull: getWinners(lullCopelandResult as any),
+      vfa: getWinners(vfaResult as any),
+      vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
     });
 
     // scoredVotes.slice(0, 8).forEach((v, i) => {

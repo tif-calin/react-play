@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-// #region IRV 
+// #region irv 
 /**
  * Generalized IRV Method
  * @param {Array.<string>} candidates
@@ -262,17 +262,148 @@ const approval = votes => {
 
 /**
  * Combined Approval Method
+ * @param {Array.<Array.<string>>} approvals
+ * @param {Array.<Array.<string>>} disapprovals
+ * @returns {Round}
+ */
+const combinedApproval = (approvals, disapprovals) => {
+  const result = {};
+
+  approvals.forEach(arr => {
+    arr.forEach(c => result[c] = ~~result[c] + 1);
+  });
+
+  disapprovals.forEach(arr => {
+    arr.forEach(c => result[c] = ~~result[c] - 1);
+  });
+  
+  return result;
+};
+// #endregion
+
+// #region copeland
+/**
+ * Copeland Method
+ * @param {Array.<string>} candidates
  * @param {Array.<Array.<string>>} votes
  * @returns {Round}
  */
-const combinedApproval = (votes) => {
+const copeland = (candidates, votes) => {
+  // assuming complete ballots
+  const copeland = {};
+  const result = {};
+
+  candidates.forEach(c => {
+    copeland[c] = {};
+    result[c] = 0;
+  });
+
+  votes.forEach(vote => {
+    for (let i = 0; i < vote.length - 1; i++) {
+      const winner = vote[i];
+
+      for (let j = i + 1; j < vote.length; j++) {
+        const loser = vote[j];
+        copeland[winner][loser] = ~~copeland[winner][loser] + 1;
+      }
+    }
+  });
+
+  Object.entries(copeland).forEach(([candidate, matches]) => {
+    Object.values(matches).forEach(count => {
+      if (count > votes.length / 2) result[candidate]++;
+      else if (count === votes.length / 2) result[candidate] += 0.5;
+    });
+  });
+
+  return result;
+};
+
+/**
+ * Lull-Copeland Method is like Copeland but instead of 1 / 0.5 / 0, it is 1 / 1 / 0
+ * @param {Array.<string>} candidates
+ * @param {Array.<Array.<string>>} votes
+ * @returns {Round}
+ */
+const lullCopeland = (candidates, votes) => {
+  // assuming complete ballots
+  const copeland = {};
+  const result = {};
+
+  candidates.forEach(c => {
+    copeland[c] = {};
+    result[c] = 0;
+  });
+
+  votes.forEach(vote => {
+    for (let i = 0; i < vote.length - 1; i++) {
+      const winner = vote[i];
+
+      for (let j = i + 1; j < vote.length; j++) {
+        const loser = vote[j];
+        copeland[winner][loser] = ~~copeland[winner][loser] + 1;
+      }
+    }
+  });
+
+  Object.entries(copeland).forEach(([candidate, matches]) => {
+    Object.values(matches).forEach(count => {
+      if (count >= votes.length / 2) result[candidate]++;
+    });
+  });
+
+  return result;
+};
+
+// #endregion
+
+// #region vfa
+/**
+ * Vote For or Against Method
+ * @param {Array.<Array.<string>>} votes
+ * @returns {Round}
+ */
+const vfa = votes => {
   return votes.reduce((acc, vote) => {
     acc[vote[0]] = ~~acc[vote[0]] + 1;
-    acc[vote.at(-1)] = ~~acc[vote.at(-1)] + 1;
-
+    acc[vote.at(-1)] = ~~acc[vote.at(-1)] - 1;
     return acc;
   }, {});
 };
+
+/**
+ * Vote For or Against 2 round Runoff Method
+ * @param {Array.<Array.<string>>} votes
+ * @returns {Array.<Round>}
+ */
+const vfaRunoff = votes => {
+  const result = votes.reduce((acc, vote) => {
+    acc[vote[0]] = ~~acc[vote[0]] + 1;
+    acc[vote.at(-1)] = ~~acc[vote.at(-1)] - 1;
+    return acc;
+  }, {});
+
+  const scores = Object.values(result).sort().reverse();
+
+  const topTwo = [];
+  let i = 0;
+  while (topTwo.length < 2 && i < scores.length) {
+    Object.entries(result).forEach(([candidate, score]) => {
+      if (score === scores[i]) topTwo.push(candidate);
+    });
+    i++;
+  }
+
+  return [
+    result,
+    votes.reduce((acc, vote) => {
+      const first = vote.find(c => topTwo.includes(c));
+      if (first) acc[first] = ~~acc[first] + 1;
+      return acc;
+    }, {})
+  ];
+};
+
 // #endregion
 
 export { 
@@ -280,5 +411,7 @@ export {
   supplementary,
   fptp, 
   borda, modifiedBorda, tournamentBorda,
-  approval, combinedApproval
+  approval, combinedApproval,
+  copeland, lullCopeland,
+  vfa, vfaRunoff
 };

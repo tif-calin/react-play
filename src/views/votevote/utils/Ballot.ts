@@ -61,6 +61,10 @@ class Ballot {
     return Object.keys(ballot).filter(candidate => ballot[candidate] >= approvalThreshold);
   };
 
+  static toDisapproval(ballot: { [candidate: string]: number }, disapprovalThreshold: number): string[] {
+    return Object.keys(ballot).filter(candidate => ballot[candidate] <= disapprovalThreshold);
+  };
+
   static toDiscreteScore(ballot: { [candidate: string]: number }, min: number, max: number): { [candidate: string]: number } {
     const scores = Object.entries(ballot).reduce((acc, [candidate, score]) => ({
       ...acc,
