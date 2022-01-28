@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
-import { coombsRCV, culiRCV, rankedChoiceVote } from './utils/votingMethods';
+import { approval, coombsRCV, culiRCV, rankedChoiceVote } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
+import Ballot from './utils/Ballot';
 
 const colorDistanceRankingFncs = {
-  'hsl': rankClosestHSL,
   'rgb': rankClosestRGB,
+  'hsl': rankClosestHSL,
 };
 
 const colorDistanceScoringFncs = {
+  'rgb': scoreClosestRGB,
   'hsl': scoreClosestHSL,
-  'rgb': scoreClosestRGB
 };
 
 const Container = styled.form`
@@ -131,11 +132,14 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
   const [distanceMap, setDistanceMap] = React.useState<keyof typeof colorDistanceRankingFncs>('rgb');
   React.useEffect(() => {
     const rankedVotes = voters.map(v => colorDistanceRankingFncs[distanceMap](v, candidates));
-    const scoredVotes = voters.map(v => colorDistanceScoringFncs[distanceMap](v, candidates));
+    const scoredVotes: { [candidate: string]: number }[] = voters
+      .map(v => colorDistanceScoringFncs[distanceMap](v, candidates) as { [candidate: string]: number });
+    ;
     
     const rcvRounds = rankedChoiceVote(candidates, rankedVotes);
     const coombsRounds = coombsRCV(candidates, rankedVotes);
     const culiRounds = culiRCV(candidates, rankedVotes);
+    const approvalRound = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
 
     // results.current = {
     //   irv: getWinners(rcvRounds.at(-1) as any),
@@ -146,7 +150,14 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       irv: getWinners(rcvRounds.at(-1) as any),
       coombs: getWinners(coombsRounds.at(-1) as any),
       frontAndBack: getWinners(culiRounds.at(-1) as any),
+      approval: getWinners(approvalRound as any),
     });
+
+    // scoredVotes.slice(0, 12).forEach((v, i) => {
+    //   console.log(`approval for ${voters[i]}`, Ballot.toApproval(v, 0));
+    //   console.log(`ranked for ${voters[i]}`, Ballot.toRanked(v).flat());
+    // });
+    // console.log(approvalRound);
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);
@@ -199,15 +210,11 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       <div>
         All results:
         <ul>
-          <li>
-            <span>irv</span>: {results['irv']?.join(', ')}
-          </li>
-          <li>
-            <span>coombs</span>: {results['coombs']?.join(', ')}
-          </li>
-          <li>
-            <span>front and back</span>: {results['frontAndBack']?.join(', ')}
-          </li>
+          {Object.entries(results).map(([name, winners]) => (
+            <li key={name}>
+              <span>{name}</span>: {winners?.join(', ')}
+            </li>
+          ))}
         </ul>
       </div>
 
