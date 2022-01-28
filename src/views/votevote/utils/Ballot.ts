@@ -65,10 +65,10 @@ class Ballot {
     return Object.keys(ballot).filter(candidate => ballot[candidate] <= disapprovalThreshold);
   };
 
-  static toDiscreteScore(ballot: { [candidate: string]: number }, min: number, max: number): { [candidate: string]: number } {
+  static toDiscreteScore(ballot: { [candidate: string]: number }, newMin: number, newMax: number, prevMin = -1, prevMax = 1): { [candidate: string]: number } {
     const scores = Object.entries(ballot).reduce((acc, [candidate, score]) => ({
       ...acc,
-      [candidate]: Math.floor((score - min) / (max - min) * (max - min) + min)
+      [candidate]: Math.floor((score - prevMin) / (prevMax - prevMin) * (newMax - newMin) + newMin)
     }), {});
 
     return scores;
@@ -86,7 +86,7 @@ class Ballot {
   };
 
   toDiscreteScore(): { [candidate: string]: number } {
-    return Ballot.toDiscreteScore(this.ballot, this._min, this._max);
+    return Ballot.toDiscreteScore(this.ballot, this._min, this._max, this._min, this._max);
   };
 
   toFirstChoice = (): string[] => Ballot.toFirstChoice(this.ballot);
