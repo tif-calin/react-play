@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { ColorName } from '.';
-import { approval, coombsRCV, culiRCV, fptp, rankedChoiceVote } from './utils/votingMethods';
+import { approval, borda, combinedApproval, coombsRCV, culiRCV, fptp, rankedChoiceVote, supplementary } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -141,15 +141,21 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const rcvRounds = rankedChoiceVote(candidates, rankedVotes);
     const coombsRounds = coombsRCV(candidates, rankedVotes);
     const culiRounds = culiRCV(candidates, rankedVotes);
-    const approvalRound = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
-    const fptpRound = fptp(rankedVotes.map(v => v[0]));
+    const approvalResult = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
+    const combinedApprovalResult = combinedApproval(rankedVotes);
+    const fptpResult = fptp(rankedVotes.map(v => v[0]));
+    const bordaResult = borda(candidates, rankedVotes);
+    const supplementaryRounds = supplementary(candidates, rankedVotes);
 
     setResults({
       irv: getWinners(rcvRounds.at(-1) as any),
       coombs: getWinners(coombsRounds.at(-1) as any),
       frontAndBack: getWinners(culiRounds.at(-1) as any),
-      approval: getWinners(approvalRound as any),
-      fptp: getWinners(fptpRound as any),
+      approval: getWinners(approvalResult as any),
+      combinedApproval: getWinners(combinedApprovalResult as any),
+      fptp: getWinners(fptpResult as any),
+      borda: getWinners(bordaResult as any),
+      supplementary: getWinners(supplementaryRounds.at(-1) as any),
     });
 
     // scoredVotes.slice(0, 8).forEach((v, i) => {
