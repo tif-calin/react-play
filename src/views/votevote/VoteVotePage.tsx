@@ -38,10 +38,9 @@ const Wrapper = styled.div`
     padding: 1.5rem;
   }
 
-  & > *:last-child {
+  & + p {
     padding: 0;
     padding-top: 1rem;
-    background: white;
     width: 100%;
   }
 `;
@@ -72,8 +71,9 @@ const VoteVotePage: React.FC<Props> = () => {
       <Wrapper>
         <MemoizedInputSection setRCV={setRCV} setCoombs={setCoombs} setCuli={setCuli} />
         <VisualizationOutputSection datasets={datasets} />
-        <p>Heavily inspired by Nicky Cases&apos;s similar work <i><a href="https://ncase.me/ballot/">To Build a Better Ballot</a></i>.</p>
       </Wrapper>
+      
+      <p>Heavily inspired by Nicky Cases&apos;s similar work <i><a href="https://ncase.me/ballot/">To Build a Better Ballot</a></i>.</p>
 
     </div>
   );
