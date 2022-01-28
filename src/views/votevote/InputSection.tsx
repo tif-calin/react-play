@@ -166,7 +166,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       borda: getWinners(bordaResult as any),
       supplementary: getWinners(supplementaryRounds.at(-1) as any),
       copeland: getWinners(copelandResult as any),
-      lull: getWinners(lullCopelandResult as any),
+      lullCopeland: getWinners(lullCopelandResult as any),
       vfa: getWinners(vfaResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
     });
