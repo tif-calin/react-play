@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
-import { approval, coombsRCV, culiRCV, rankedChoiceVote } from './utils/votingMethods';
+import { approval, coombsRCV, culiRCV, fptp, rankedChoiceVote } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -74,6 +74,32 @@ const Container = styled.form`
   }
 `;
 
+const ResultsDisplay = styled.ul`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+
+  & > li {
+    display: flex-inline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    & > span {
+      display: flex;
+      place-items: center;
+      place-content: center;
+      font-size: 0.8rem;
+      padding: 0 0.25rem;
+      border: 1px solid #233;
+      border-radius: 0.25rem;
+      background-color: var(--color);
+      filter: grayscale(0.5);
+      color: black;
+    }
+  }
+`;
+
 const ColorRoster = React.memo(styled.output`
   display: flex;
   flex-wrap: wrap;
@@ -133,13 +159,15 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
   React.useEffect(() => {
     const rankedVotes = voters.map(v => colorDistanceRankingFncs[distanceMap](v, candidates));
     const scoredVotes: { [candidate: string]: number }[] = voters
-      .map(v => colorDistanceScoringFncs[distanceMap](v, candidates) as { [candidate: string]: number });
+      .map(v => colorDistanceScoringFncs[distanceMap](v, candidates) as { [candidate: string]: number })
+      .map(v => Object.fromEntries(Object.entries(v).map(([k, v]) => [k, -v])))
     ;
     
     const rcvRounds = rankedChoiceVote(candidates, rankedVotes);
     const coombsRounds = coombsRCV(candidates, rankedVotes);
     const culiRounds = culiRCV(candidates, rankedVotes);
     const approvalRound = approval(scoredVotes.map(v => Ballot.toApproval(v, 0)));
+    const fptpRound = fptp(rankedVotes.map(v => v[0]));
 
     // results.current = {
     //   irv: getWinners(rcvRounds.at(-1) as any),
@@ -151,13 +179,17 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       coombs: getWinners(coombsRounds.at(-1) as any),
       frontAndBack: getWinners(culiRounds.at(-1) as any),
       approval: getWinners(approvalRound as any),
+      fptp: getWinners(fptpRound as any),
     });
 
-    // scoredVotes.slice(0, 12).forEach((v, i) => {
-    //   console.log(`approval for ${voters[i]}`, Ballot.toApproval(v, 0));
-    //   console.log(`ranked for ${voters[i]}`, Ballot.toRanked(v).flat());
-    // });
-    // console.log(approvalRound);
+    scoredVotes.slice(0, 8).forEach((v, i) => {
+      console.log(`${voters[i]}`, v);
+      console.table({
+        approval: Ballot.toApproval(v, 0),
+        ranked: rankedVotes[i].flat(),
+      });
+    });
+    console.log(approvalRound);
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);
@@ -208,14 +240,14 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       </ColorRoster>
 
       <div>
-        All results:
-        <ul>
+        <span>All results:</span>
+        <ResultsDisplay>
           {Object.entries(results).map(([name, winners]) => (
             <li key={name}>
-              <span>{name}</span>: {winners?.join(', ')}
+              {name}: {winners?.map((w, i) => <span key={i} style={{ '--color': colors[w as ColorName] } as React.CSSProperties}>{w}</span>)}
             </li>
           ))}
-        </ul>
+        </ResultsDisplay>
       </div>
 
       <p>

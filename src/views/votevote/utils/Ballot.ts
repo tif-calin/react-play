@@ -45,7 +45,7 @@ class Ballot {
   };
 
   static toRanked(ballot: { [candidate: string]: number }): string[][] {
-    const scores = Array.from(new Set(Object.values(ballot))).sort((a, b) => b - a);
+    const scores = Array.from(new Set(Object.values(ballot))).sort((a, b) => a - b);
 
     return Object.entries(ballot).reduce((acc: string[][], [candidate, score]) => {
       const scoreIndex = scores.indexOf(score);
@@ -68,7 +68,12 @@ class Ballot {
     }), {});
 
     return scores;
-  }
+  };
+
+  static toFirstChoice(ballot: { [candidate: string]: number }): string[] {
+    const maxScore = Math.max(...Object.values(ballot));
+    return Object.keys(ballot).filter(candidate => ballot[candidate] === maxScore);
+  };
 
   toRanked = (): string[][] => Ballot.toRanked(this.ballot);
 
@@ -79,6 +84,8 @@ class Ballot {
   toDiscreteScore(): { [candidate: string]: number } {
     return Ballot.toDiscreteScore(this.ballot, this._min, this._max);
   };
+
+  toFirstChoice = (): string[] => Ballot.toFirstChoice(this.ballot);
 };
 
 export default Ballot;

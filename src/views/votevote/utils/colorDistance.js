@@ -81,7 +81,9 @@ const scoreClosestHSL = (voter, candidates, asArray = false) => {
     const hDist = Math.min(Math.abs(h - H), Math.abs(360 - Math.abs(h - H)));
     const dist = Math.sqrt(Math.pow(hDist, 2) + Math.pow(s - S, 2) + Math.pow(l - L, 2));
 
-    return [clr, (2 * dist / Math.sqrt((360 * 360) + 2 * (100 * 100))) - 1];
+    const maxDist = Math.sqrt(Math.pow(180, 2) + 2 * Math.pow(100, 2));
+
+    return [clr, (2 * dist / maxDist) - 1];
   }).sort((a, b) => a[1] - b[1]);
 
   return asArray
