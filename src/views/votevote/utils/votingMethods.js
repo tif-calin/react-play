@@ -259,6 +259,20 @@ const approval = votes => {
     };
   }, {});
 };
+
+/**
+ * Combined Approval Method
+ * @param {Array.<Array.<string>>} votes
+ * @returns {Round}
+ */
+const combinedApproval = (votes) => {
+  return votes.reduce((acc, vote) => {
+    acc[vote[0]] = ~~acc[vote[0]] + 1;
+    acc[vote.at(-1)] = ~~acc[vote.at(-1)] + 1;
+
+    return acc;
+  }, {});
+};
 // #endregion
 
 export { 
@@ -266,5 +280,5 @@ export {
   supplementary,
   fptp, 
   borda, modifiedBorda, tournamentBorda,
-  approval
+  approval, combinedApproval
 };
