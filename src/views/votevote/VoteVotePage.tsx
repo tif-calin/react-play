@@ -54,13 +54,13 @@ const VoteVotePage: React.FC<Props> = () => {
 
   const datasets = React.useMemo(() => [
     { 
-      title: 'Instant Runoff Voting RCV', data: rcv, explanation: 'In typical RCV, voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
+      title: 'Instant Runoff Voting RCV', data: rcv, explanation: 'In IRV (the RCV method most people are familiar with), voters rank the candidates by preference. Each round, the candidate with the fewest votes gets eliminated and the voters who voted for that candidate have their votes move to their next best choice.'
     },
     { 
       title: 'Coombs IRV', data: coombs, explanation: 'Coombs\' method, works almost exactly the same way as typical IRV, but instead of eliminating the candidate with the fewest first-choice votes, you elimate the candidate with the most last-choice votes each round.' 
     },
     { 
-      title: 'Front and Back IRV', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.\n\nPS, please lemme know if you have a better name for this. idk what to call it' 
+      title: 'Front and Back IRV', data: culi, explanation: 'While studying these methods, I thought, why not have the best of both worlds and combine Coombs and regular RCV? With this method, each round we take the number of first-choice votes and subtract the number of last-choice votes for each candidate. Then we eliminate based on the resulting scores.'
     },
   ], [rcv, coombs, culi]);
 
@@ -74,7 +74,6 @@ const VoteVotePage: React.FC<Props> = () => {
       </Wrapper>
       
       <p>Heavily inspired by Nicky Cases&apos;s similar work <i><a href="https://ncase.me/ballot/">To Build a Better Ballot</a></i>.</p>
-
     </div>
   );
 };
