@@ -42,8 +42,32 @@ const rgb2hsl = (rgb, toIntegers = false) => {
   ).map((c, i) => i ? Math.max(0, c) : c % 360);
 };
 
-
 // composite functions
 const hex2hsl = (hex, toIntegers = false) => rgb2hsl(hex2rgb(hex), toIntegers);
 
 export { hex2rgb, rgb2hex, rgb2hsl, hex2hsl };
+
+// import colors from '../../../data/colors';
+// (() => {
+//   const newCols = {};
+//   Object.keys(colors).sort().forEach(name => {
+//     const hex = colors[name];
+
+//     newCols[name] = {
+//       hex,
+//       hsl: hex2hsl(hex, true),
+//       rgb: hex2rgb(hex),
+//     };
+//   });
+
+//   const stringForm = JSON.stringify(newCols, (k, v) => {
+//     if (v instanceof Array) return JSON.stringify(v);
+//     else return v;
+//   }, 2).replaceAll('"[', '[').replaceAll(']"', ']')
+//     .replaceAll('  "', '  ')
+//     .replaceAll('":', ':')
+//     .replaceAll('"', "'")
+//   + ';';
+
+//   console.log(stringForm);
+// })();
