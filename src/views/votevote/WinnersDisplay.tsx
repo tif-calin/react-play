@@ -62,7 +62,7 @@ const WinnersDisplay: React.FC<Props> = ({ results }) => {
       {Object.entries(results).map(([name, winners]) => (
           <li key={name}>
             {name}: {winners?.map((w, i) => (
-              <ResultItem color={w}>
+              <ResultItem key={w} color={w}>
                 <span key={i}>{w}</span>
               </ResultItem>
             ))}
