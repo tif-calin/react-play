@@ -74,6 +74,15 @@ class Ballot {
     return scores;
   };
 
+  static toContinuousRange(ballot: { [candidate: string]: number }, newMin: number, newMax: number, prevMin = -1, prevMax = 1): { [candidate: string]: number } {
+    const scores = Object.entries(ballot).reduce((acc, [candidate, score]) => ({
+      ...acc,
+      [candidate]: ((score - prevMin) / (prevMax - prevMin)) * (newMax - newMin) + newMin
+    }), {});
+
+    return scores;
+  };
+
   static toFirstChoice(ballot: { [candidate: string]: number }): string[] {
     const maxScore = Math.max(...Object.values(ballot));
     return Object.keys(ballot).filter(candidate => ballot[candidate] === maxScore);
