@@ -43,8 +43,19 @@
 }
 
 .Layout > footer {
+  margin-top: 3rem;
   flex-grow: 0;
   display: flex;
+  text-align: center;
+}
+
+.Layout > footer > a {
+  opacity: 0.5;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.Layout > footer > a:hover {
+  opacity: 1;
 }
 
 .PageTitle {
