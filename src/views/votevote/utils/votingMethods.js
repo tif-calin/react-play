@@ -612,8 +612,6 @@ const historicalBucklin = (votes) => {
  * @description Voters rank each candidate as "good", "ok", or "bad". There are three rounds. In the first, the top 3 candidates with the most "good" move on. In the second, the top 2 candidates with the least "bad" move on. In the final round, the candidate who is most preferred over the other wins
  */
 const threeTwoOne = (candidates, votes) => {
-  console.log(votes.slice(0, 6));
-
   const round1 = votes.reduce((acc, vote) => {
     Object.entries(vote).forEach(([c, s]) => {
       if (s === 1) acc[c]++;
@@ -645,6 +643,48 @@ const threeTwoOne = (candidates, votes) => {
 };
 // #endregion
 
+// #region cumulative
+/**
+ * Franctional Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Object.<string, number>>} votes - each weight assigned to a candidate is positive
+ * @returns {Round}
+ */
+const fractional = (candidates, votes) => {
+  const result = candidates.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
+
+  votes.forEach(vote => {
+    const sum = Object.values(vote).reduce((a, s) => a + s, 0);
+    Object.entries(vote).forEach(([c, s]) => {
+      result[c] += s / sum;
+    });
+  })
+
+  return result;
+};
+
+/** 
+ * Quadratic Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Object.<string, number>>} votes - each weight assigned to a candidate is positive
+ * @returns {Round}
+ * 
+ * @description 
+ */
+const quadratic = (candidates, votes) => {
+  const result = candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {});
+
+  votes.forEach(vote => {
+    const sum = Object.values(vote).reduce((a, s) => a + s, 0);
+    Object.entries(vote).forEach(([c, s]) => { 
+      result[c] += Math.sqrt(s / sum);
+    });
+  });
+
+  return result;
+};
+// #endregion
+
 export { 
   rankedChoiceVote, coombsRCV, culiRCV, 
   supplementary,
@@ -655,5 +695,6 @@ export {
   vfa, vfaRunoff,
   star,
   bucklin, historicalBucklin,
-  threeTwoOne
+  threeTwoOne,
+  fractional, quadratic
 };
