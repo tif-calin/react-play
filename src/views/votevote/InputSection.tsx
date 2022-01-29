@@ -2,7 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { ColorName } from '.';
-import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff, star, historicalBucklin, bucklin, threeTwoOne, quadratic, fractional } from './utils/votingMethods';
+import { 
+  approval, 
+  borda, 
+  combinedApproval, coombsRCV, copeland, culiRCV, 
+  fallback, fptp, 
+  historicalBucklin,
+  lullCopeland, 
+  quadratic,
+  rankedChoiceVote, 
+  score, star, supplementary, 
+  threeTwoOne,
+  vfa, vfaRunoff, 
+} from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -153,11 +165,11 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const lullCopelandResult = lullCopeland(candidates, rankedVotes);
     const vfaResult = vfa( rankedVotes);
     const vfaRunoffRounds = vfaRunoff(rankedVotes);
-    const bucklinRounds = bucklin(candidates, rankedVotes);
+    const fallbackRounds = fallback(candidates, rankedVotes);
     const historicalBucklinRounds = historicalBucklin(rankedVotes.map(v => v.slice(0, 2)) as [string, string][]);
     const threeTwoOneRounds = threeTwoOne(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, -1, 1)));
     const quadraticResult = quadratic(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
-    const fractionalResult = fractional(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
+    const scoreResult = score(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
 
     // not fully finished
     let starRounds = [{}];
@@ -181,11 +193,11 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       vfa: getWinners(vfaResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
       star: getWinners(starRounds.at(-1) as any),
-      bucklin: getWinners(bucklinRounds.at(-1) as any),
+      fallback: getWinners(fallbackRounds.at(-1) as any),
       historicalBucklin: getWinners(historicalBucklinRounds.at(-1) as any),
       threeTwoOne: getWinners(threeTwoOneRounds.at(-1) as any),
       quadratic: getWinners(quadraticResult as any),
-      fractional: getWinners(fractionalResult as any),
+      score: getWinners(scoreResult as any),
     });
 
     setRCV(rcvRounds);
