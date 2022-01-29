@@ -4,15 +4,17 @@ import colors from '../../data/colors';
 import { ColorName } from '.';
 import { 
   approval, 
-  borda, 
-  combinedApproval, coombsRCV, copeland, culiRCV, 
+  boehmSigned, borda, 
+  combinedApproval, coombsRCV, copeland, culiRCV, cumulative,
   fallback, fptp, 
   historicalBucklin,
   lullCopeland, 
+  nauru, 
   quadratic,
   rankedChoiceVote, 
-  score, star, supplementary, 
+  star, supplementary, 
   threeTwoOne,
+  veto,
   vfa, vfaRunoff, 
 } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
@@ -159,17 +161,20 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       scoredVotes.map(v => Ballot.toDisapproval(v, -1/3))
     );
     const fptpResult = fptp(rankedVotes.map(v => v[0]));
+    const vetoResult = veto(rankedVotes.map(v => v.at(-1)) as string[]);
     const bordaResult = borda(candidates, rankedVotes);
+    const nauruResult = nauru(rankedVotes);
     const supplementaryRounds = supplementary(candidates, rankedVotes);
     const copelandResult = copeland(candidates, rankedVotes);
     const lullCopelandResult = lullCopeland(candidates, rankedVotes);
-    const vfaResult = vfa( rankedVotes);
+    const vfaResult = vfa(rankedVotes);
+    const boehmSignedResult = boehmSigned(scoredVotes);
     const vfaRunoffRounds = vfaRunoff(rankedVotes);
     const fallbackRounds = fallback(candidates, rankedVotes);
     const historicalBucklinRounds = historicalBucklin(rankedVotes.map(v => v.slice(0, 2)) as [string, string][]);
     const threeTwoOneRounds = threeTwoOne(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, -1, 1)));
     const quadraticResult = quadratic(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
-    const scoreResult = score(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
+    const cumulativeResult = cumulative(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
 
     // not fully finished
     let starRounds = [{}];
@@ -186,18 +191,21 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       approval: getWinners(approvalResult as any),
       combinedApproval: getWinners(combinedApprovalResult as any),
       fptp: getWinners(fptpResult as any),
+      veto: getWinners(vetoResult as any),
       borda: getWinners(bordaResult as any),
+      nauru: getWinners(nauruResult as any),
       supplementary: getWinners(supplementaryRounds.at(-1) as any),
       copeland: getWinners(copelandResult as any),
       lullCopeland: getWinners(lullCopelandResult as any),
       vfa: getWinners(vfaResult as any),
+      boehmSigned: getWinners(boehmSignedResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
       star: getWinners(starRounds.at(-1) as any),
       fallback: getWinners(fallbackRounds.at(-1) as any),
       historicalBucklin: getWinners(historicalBucklinRounds.at(-1) as any),
       threeTwoOne: getWinners(threeTwoOneRounds.at(-1) as any),
       quadratic: getWinners(quadraticResult as any),
-      score: getWinners(scoreResult as any),
+      cumulative: getWinners(cumulativeResult as any),
     });
 
     setRCV(rcvRounds);

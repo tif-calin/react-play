@@ -170,6 +170,7 @@ const veto = (votes) => {
     [vote]: ~~acc[vote] - 1
   }), {});
 };
+// http://www.9mail.de/m-schulze/votedesc.pdf
 // #endregion
 
 // #region borda
@@ -253,6 +254,25 @@ const tournamentBorda = (candidates, votes) => {
 
 const dowdallBorda = (candidates, votes) => {
 
+};
+// #endregion
+
+// #region other weighted positional
+/**
+ * Nauru Method
+ * @param {Array.<Array.<string>>} votes 
+ * @returns {Round}
+ */
+const nauru = (votes) => {
+  const result = {};
+
+  votes.forEach(vote => {
+    vote.forEach((candidate, i) => {
+      result[candidate] = ~~result[candidate] + 1 / (i + 1);
+    });
+  });
+
+  return result;
 };
 // #endregion
 
@@ -378,6 +398,25 @@ const vfa = votes => {
   return votes.reduce((acc, vote) => {
     acc[vote[0]] = ~~acc[vote[0]] + 1;
     acc[vote.at(-1)] = ~~acc[vote.at(-1)] - 1;
+    return acc;
+  }, {});
+};
+
+/**
+ * Negative Boehm Method
+ * @param {Array.<Object<string, number>} votes
+ * @returns {Round}
+ * 
+ * @description each voter can vote for a candidate xor vote against a candidate
+ */
+const boehmSigned = votes => {
+  return votes.reduce((acc, vote) => {
+    const [top, topScore] = Object.entries(vote).reduce((a, c) => a[1] > c[1] ? a : c);
+    const [bottom, bottomScore] = Object.entries(vote).reduce((a, c) => a[1] < c[1] ? a : c);
+
+    if (Math.abs(topScore) > Math.abs(bottomScore)) acc[top] = ~~acc[top] + 1;
+    else if (Math.abs(topScore) < Math.abs(bottomScore)) acc[bottom] = ~~acc[bottom] - 1;
+
     return acc;
   }, {});
 };
@@ -548,13 +587,27 @@ const star = (votes) => {
 
 // #region bucklin
 /**
- * Bucklin Method
- * @param {*} candidates 
- * @param {*} votes 
- * @returns 
- * 
- * @description 
+ * getMedian helper function
+ * @param {Array.<number>} arr 
+ * @returns {number}
  */
+const getMedian = (arr) => {
+  const mid = Math.floor(arr.length / 2);
+  const sorted = [...arr].sort();
+  return arr.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
+/**
+ * Bucklin Method
+ * @param {Array.<string>} candidates 
+ * @param {Array.<Object.<string, number>>} votes 
+ * @returns {Array.<Round>}
+ * 
+ * @description Majority judgement bucklin method
+ */
+const bucklin = (candidates, votes) => {
+
+};
 
 /**
  * Fallback Voting Method
@@ -686,14 +739,14 @@ const quadratic = (candidates, votes) => {
 };
 // #endregion
 
-// #region scoreVoting
+// #region cumulative
 /**
- * Score Method
+ * Cumulative Method
  * @param {Array.<string>} candidates
  * @param {Array.<Object.<string, number>>} votes - each weight assigned to a candidate is positive
  * @returns {Round}
  */
- const score = (candidates, votes) => {
+ const cumulative = (candidates, votes) => {
   const result = candidates.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
 
   votes.forEach(vote => {
@@ -728,13 +781,14 @@ export {
   supplementary,
   fptp, veto,
   borda, modifiedBorda, tournamentBorda,
+  nauru,
   approval, combinedApproval,
   copeland, lullCopeland,
-  vfa, vfaRunoff,
+  vfa, boehmSigned, vfaRunoff,
   star,
   fallback, historicalBucklin,
   threeTwoOne,
   quadratic,
-  score,
+  cumulative,
   kemenyYoung
 };
