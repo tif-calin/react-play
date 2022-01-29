@@ -159,6 +159,17 @@ const fptp = (votes) => {
   }), {});
 };
 
+/**
+ * Veto Voting Method
+ * @param {Array.<string>} votes 
+ * @returns {Round}
+ */
+const veto = (votes) => {
+  return votes.reduce((acc, vote) => ({
+    ...acc,
+    [vote]: ~~acc[vote] - 1
+  }), {});
+};
 // #endregion
 
 // #region borda
@@ -538,13 +549,22 @@ const star = (votes) => {
 // #region bucklin
 /**
  * Bucklin Method
+ * @param {*} candidates 
+ * @param {*} votes 
+ * @returns 
+ * 
+ * @description 
+ */
+
+/**
+ * Fallback Voting Method
  * @param {Array.<string>} candidates
  * @param {Array.<Array.<string>>} votes 
  * @returns {Array.<Round>}
  * 
  * @description Voters rank their top candidates. Each round, if a candidate has more than half the number of voters, the top vote-getter wins. Otherwise, the voters' next choice is added in to the scores
  */
-const bucklin = (candidates, votes) => {
+const fallback = (candidates, votes) => {
   const results = [];
 
   let i = 0;
@@ -643,26 +663,7 @@ const threeTwoOne = (candidates, votes) => {
 };
 // #endregion
 
-// #region cumulative
-/**
- * Franctional Method
- * @param {Array.<string>} candidates
- * @param {Array.<Object.<string, number>>} votes - each weight assigned to a candidate is positive
- * @returns {Round}
- */
-const fractional = (candidates, votes) => {
-  const result = candidates.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
-
-  votes.forEach(vote => {
-    const sum = Object.values(vote).reduce((a, s) => a + s, 0);
-    Object.entries(vote).forEach(([c, s]) => {
-      result[c] += s / sum;
-    });
-  })
-
-  return result;
-};
-
+// #region quadratic
 /** 
  * Quadratic Method
  * @param {Array.<string>} candidates
@@ -685,16 +686,55 @@ const quadratic = (candidates, votes) => {
 };
 // #endregion
 
+// #region scoreVoting
+/**
+ * Score Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Object.<string, number>>} votes - each weight assigned to a candidate is positive
+ * @returns {Round}
+ */
+ const score = (candidates, votes) => {
+  const result = candidates.reduce((acc, c) => ({ ...acc, [c]: 0 }), {});
+
+  votes.forEach(vote => {
+    const sum = Object.values(vote).reduce((a, s) => a + s, 0);
+    Object.entries(vote).forEach(([c, s]) => {
+      result[c] += s / sum;
+    });
+  })
+
+  return result;
+};
+// #endregion
+
+// #region kemenyYoung
+/**
+ * Kemeny-Young Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Array.<Array.<string>>>} votes - ties are allowed
+ * @returns {Round}
+ */
+const kemenyYoung = (candidates, votes) => {
+  // 1. create a pairwise matrix
+  // 2. get all possible permutations of candidates
+  // 3. for each permutation, use the pairwise matrix to calculate its score
+  // 4. return the permutation with the highest score
+
+};
+// #endregion
+
 export { 
   rankedChoiceVote, coombsRCV, culiRCV, 
   supplementary,
-  fptp, 
+  fptp, veto,
   borda, modifiedBorda, tournamentBorda,
   approval, combinedApproval,
   copeland, lullCopeland,
   vfa, vfaRunoff,
   star,
-  bucklin, historicalBucklin,
+  fallback, historicalBucklin,
   threeTwoOne,
-  fractional, quadratic
+  quadratic,
+  score,
+  kemenyYoung
 };
