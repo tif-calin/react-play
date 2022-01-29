@@ -163,6 +163,8 @@ const fptp = (votes) => {
  * Veto Voting Method
  * @param {Array.<string>} votes 
  * @returns {Round}
+ * 
+ * http://www.9mail.de/m-schulze/votedesc.pdf
  */
 const veto = (votes) => {
   return votes.reduce((acc, vote) => ({
@@ -170,7 +172,6 @@ const veto = (votes) => {
     [vote]: ~~acc[vote] - 1
   }), {});
 };
-// http://www.9mail.de/m-schulze/votedesc.pdf
 // #endregion
 
 // #region borda
@@ -587,23 +588,13 @@ const star = (votes) => {
 
 // #region bucklin
 /**
- * getMedian helper function
- * @param {Array.<number>} arr 
- * @returns {number}
- */
-const getMedian = (arr) => {
-  const mid = Math.floor(arr.length / 2);
-  const sorted = [...arr].sort();
-  return arr.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-};
-
-/**
  * Bucklin Method
  * @param {Array.<string>} candidates 
  * @param {Array.<Array.<string>>} votes - a list of ranked ballots of varying length
  * @returns {Array.<Round>}
  * 
  * @description Majority judgement bucklin method
+ * https://rcvforcolorado.org/wp-content/uploads/2021/01/Comparing-Bucklin-Voting-to-other-Voting-Methods.pdf
  */
 const bucklin = (candidates, votes) => {
   const results = [];
@@ -668,6 +659,7 @@ const fallback = (candidates, votes) => {
  * @returns {Array.<Round>}
  * 
  * @description Voters rank their top 2 candidates. If no candidate has majority support, the voters' second choices are added to the top 2 vote getters
+ * http://archive.fairvote.org/?page=2077 
  */
 const historicalBucklin = (votes) => {
   const majority = votes.length / 2;
@@ -688,13 +680,13 @@ const historicalBucklin = (votes) => {
 
   return [ result, secondRound ];
 };
-// http://archive.fairvote.org/?page=2077 
 
 // /**
 //  * Fallback Voting Method
 //  */
 // const fallback = (candidates, votes) => {
 // };
+
 // #endregion
 
 // #region threeTwoOne
@@ -781,6 +773,68 @@ const quadratic = (candidates, votes) => {
 };
 // #endregion
 
+// #region majorityJudgement
+/**
+ * getMedian helper function
+ * @param {Array.<number>} arr 
+ * @returns {number}
+ */
+const getMedian = (arr) => {
+  const mid = Math.floor(arr.length / 2);
+  const sorted = [...arr].sort();
+  return arr.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
+/**
+ * Majority Judgement Method
+ * @param {Array.<string>} candidates 
+ * @param {Array.<Object<string, number>>} votes - numbers are discrete values from 0 to 5
+ * @returns {Array.<Round>}
+ * 
+ * @description The candidate with the highest median score wins
+ */
+const majorityJudgement = (candidates, votes) => {
+  const results = [];
+  const grades = candidates.reduce((acc, c) => ({ ...acc, [c]: [] }), {});
+
+  votes.forEach(vote => {
+    Object.entries(vote).forEach(([c, s]) => {
+      grades[c].push(s);
+    });
+  });
+
+  let highestMedian = 0;
+  results.push(
+    candidates.reduce((acc, c) => {
+      const median = getMedian(grades[c]);
+      if (median > highestMedian) highestMedian = median;
+      return { ...acc, [c]: median };
+    }, {})
+  );
+
+  let i = 0;
+  let topCandidates = candidates.filter((c) => results.at(-1)[c] === highestMedian);
+  while (topCandidates.length > 1 && i < votes.length) {
+    topCandidates.forEach(c => {
+      const mid = Math.floor(grades[c].length / 2);
+      // drop one or two depending on odd/even length
+      grades[c].splice(mid - ((1 + grades[c].length) % 2), grades[c].length % 2 ? 1 : 2);
+    });
+
+    highestMedian = 0;
+    results.push(candidates.reduce((acc, c) => {
+      const median = getMedian(grades[c]);
+      if (median > highestMedian) highestMedian = median;
+      return { ...acc, [c]: median };
+    }, {}));
+    topCandidates = Object.keys(results.at(-1)).filter((c) => results.at(-1)[c] === highestMedian);
+    i++;
+  }
+
+  return results;
+};
+// #endregion
+
 // #region kemenyYoung
 /**
  * Kemeny-Young Method
@@ -811,5 +865,6 @@ export {
   threeTwoOne,
   quadratic,
   cumulative,
-  kemenyYoung
+  // kemenyYoung,
+  majorityJudgement
 };

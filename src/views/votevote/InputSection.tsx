@@ -9,6 +9,7 @@ import {
   fallback, fptp, 
   historicalBucklin,
   lullCopeland, 
+  majorityJudgement, 
   nauru, 
   quadratic,
   rankedChoiceVote, 
@@ -176,6 +177,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const threeTwoOneRounds = threeTwoOne(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, -1, 1)));
     const quadraticResult = quadratic(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
     const cumulativeResult = cumulative(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
+    const majorityJudgementRounds = majorityJudgement(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, 0, 5)));
 
     // not fully finished
     let starRounds = [{}];
@@ -208,6 +210,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       threeTwoOne: getWinners(threeTwoOneRounds.at(-1) as any),
       quadratic: getWinners(quadraticResult as any),
       cumulative: getWinners(cumulativeResult as any),
+      majorityJudgement: getWinners(majorityJudgementRounds.at(-1) as any),
     });
 
     setRCV(rcvRounds);
