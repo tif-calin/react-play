@@ -21,5 +21,6 @@ NOTES FOR WHEN I MAKE VOTEVOTE.PAGE
   - topN: given a scored list of candidates, find the topN candidates
  • different voting methods have different conditions for the winner. Like Bucklin might consider all candidates above majority to be winners instead of just the top
  • make a winners-only version of each method and a version that returns more detailed results depending on the system
+ • support for different datasets than colors like cities, or only html colors, or custom data.
 
 */
