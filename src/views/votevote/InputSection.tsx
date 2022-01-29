@@ -4,7 +4,7 @@ import colors from '../../data/colors';
 import { ColorName } from '.';
 import { 
   approval, 
-  boehmSigned, borda, 
+  boehmSigned, borda, bucklin, 
   combinedApproval, coombsRCV, copeland, culiRCV, cumulative,
   fallback, fptp, 
   historicalBucklin,
@@ -170,6 +170,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const vfaResult = vfa(rankedVotes);
     const boehmSignedResult = boehmSigned(scoredVotes);
     const vfaRunoffRounds = vfaRunoff(rankedVotes);
+    const bucklinRounds = bucklin(candidates, scoredVotes.map(v => Ballot.toRankedApproved(v)));
     const fallbackRounds = fallback(candidates, rankedVotes);
     const historicalBucklinRounds = historicalBucklin(rankedVotes.map(v => v.slice(0, 2)) as [string, string][]);
     const threeTwoOneRounds = threeTwoOne(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, -1, 1)));
@@ -201,6 +202,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       boehmSigned: getWinners(boehmSignedResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
       star: getWinners(starRounds.at(-1) as any),
+      bucklin: getWinners(bucklinRounds.at(-1) as any),
       fallback: getWinners(fallbackRounds.at(-1) as any),
       historicalBucklin: getWinners(historicalBucklinRounds.at(-1) as any),
       threeTwoOne: getWinners(threeTwoOneRounds.at(-1) as any),

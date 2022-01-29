@@ -88,6 +88,26 @@ class Ballot {
     return Object.keys(ballot).filter(candidate => ballot[candidate] === maxScore);
   };
 
+  static toRankedApproved(ballot: { [candidate: string]: number }, approvalThreshold: number = 0): string[] {
+    const approved = Object.keys(ballot).filter(candidate => ballot[candidate] >= approvalThreshold);
+    return approved.sort((a, b) => ballot[b] - ballot[a]);
+  };
+  // static toRankedApproved(ballot: { [candidate: string]: number }, n: number, approvalThreshold: number): string[] {
+  //   const approvedScores = Object.values(ballot).filter(score => score >= approvalThreshold);
+  //   const topN: string[] = [];
+    
+  //   let i = 0;
+  //   while (topN.length < n && i < approvedScores.length) {
+  //     const score = approvedScores[i];
+  //     Object.keys(ballot).forEach(c => {
+  //       if (ballot[c] === score) topN.push(c);
+  //     });
+  //     i++;
+  //   };
+
+  //   return topN;
+  // };
+
   toRanked = (): string[][] => Ballot.toRanked(this.ballot);
 
   toApproval(): string[] {

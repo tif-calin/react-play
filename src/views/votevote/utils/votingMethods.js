@@ -600,13 +600,34 @@ const getMedian = (arr) => {
 /**
  * Bucklin Method
  * @param {Array.<string>} candidates 
- * @param {Array.<Object.<string, number>>} votes 
+ * @param {Array.<Array.<string>>} votes - a list of ranked ballots of varying length
  * @returns {Array.<Round>}
  * 
  * @description Majority judgement bucklin method
  */
 const bucklin = (candidates, votes) => {
+  const results = [];
 
+  let i = 0;
+  while (i < ~~candidates.length + 1 && results.length < 3) {
+    const round = i
+      ? { ...results.at(-1) }
+      : candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {})
+    ;
+
+    votes.forEach(vote => {
+      if (vote.length) {
+        const choice = vote[Math.min(i, vote.length - 1)];
+        round[choice]++;
+      }
+    })
+
+    results.push(round);
+    i++;
+    if (Math.max(...Object.values(round)) > votes.length / 2) break;
+  }
+
+  return results;
 };
 
 /**
@@ -786,7 +807,7 @@ export {
   copeland, lullCopeland,
   vfa, boehmSigned, vfaRunoff,
   star,
-  fallback, historicalBucklin,
+  bucklin, fallback, historicalBucklin,
   threeTwoOne,
   quadratic,
   cumulative,
