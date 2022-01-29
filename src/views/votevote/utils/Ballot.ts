@@ -68,7 +68,7 @@ class Ballot {
   static toDiscreteScore(ballot: { [candidate: string]: number }, newMin: number, newMax: number, prevMin = -1, prevMax = 1): { [candidate: string]: number } {
     const scores = Object.entries(ballot).reduce((acc, [candidate, score]) => ({
       ...acc,
-      [candidate]: Math.floor((score - prevMin) / (prevMax - prevMin) * (newMax - newMin) + newMin)
+      [candidate]: Math.round((score - prevMin) / (prevMax - prevMin) * (newMax - newMin) + newMin)
     }), {});
 
     return scores;
