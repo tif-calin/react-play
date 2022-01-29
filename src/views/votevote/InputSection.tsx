@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../data/colors';
 import { ColorName } from '.';
-import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff, star } from './utils/votingMethods';
+import { approval, borda, combinedApproval, coombsRCV, copeland, culiRCV, fptp, lullCopeland, rankedChoiceVote, supplementary, vfa, vfaRunoff, star, historicalBucklin, bucklin, threeTwoOne } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
 import Ballot from './utils/Ballot';
@@ -153,6 +153,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const lullCopelandResult = lullCopeland(candidates, rankedVotes);
     const vfaResult = vfa( rankedVotes);
     const vfaRunoffRounds = vfaRunoff(rankedVotes);
+    const bucklinRounds = bucklin(candidates, rankedVotes);
+    const historicalBucklinRounds = historicalBucklin(rankedVotes.map(v => v.slice(0, 2)) as [string, string][]);
+    const threeTwoOneRounds = threeTwoOne(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, -1, 1)));
 
     // not fully finished
     let starRounds = [{}];
@@ -176,15 +179,10 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       vfa: getWinners(vfaResult as any),
       vfaRunoff: getWinners(vfaRunoffRounds.at(-1) as any),
       star: getWinners(starRounds.at(-1) as any),
+      bucklin: getWinners(bucklinRounds.at(-1) as any),
+      historicalBucklin: getWinners(historicalBucklinRounds.at(-1) as any),
+      threeTwoOne: getWinners(threeTwoOneRounds.at(-1) as any),
     });
-
-    // scoredVotes.slice(0, 8).forEach((v, i) => {
-    //   console.log(`${voters[i]}`, v);
-    //   console.table({
-    //     approval: Ballot.toApproval(v, 0),
-    //     ranked: rankedVotes[i].flat(),
-    //   });
-    // });
 
     setRCV(rcvRounds);
     setCoombs(coombsRounds);

@@ -535,6 +535,116 @@ const star = (votes) => {
 
 // #endregion
 
+// #region bucklin
+/**
+ * Bucklin Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Array.<string>>} votes 
+ * @returns {Array.<Round>}
+ * 
+ * @description Voters rank their top candidates. Each round, if a candidate has more than half the number of voters, the top vote-getter wins. Otherwise, the voters' next choice is added in to the scores
+ */
+const bucklin = (candidates, votes) => {
+  const results = [];
+
+  let i = 0;
+  while (i < candidates.length) {
+    const round = i
+      ? { ...results.at(-1) }
+      : candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {})
+    ;
+
+    votes.forEach(vote => {
+      const choice = vote[i];
+      round[choice]++;
+    });
+
+    results.push(round);
+
+    if (Math.max(...Object.values(round)) > votes.length / 2) break;
+    i++;
+  }
+
+  return results;
+};
+
+/**
+ * Historical Bucklin Method
+ * @param {Array.<[string, string]>} votes
+ * @returns {Array.<Round>}
+ * 
+ * @description Voters rank their top 2 candidates. If no candidate has majority support, the voters' second choices are added to the top 2 vote getters
+ */
+const historicalBucklin = (votes) => {
+  const majority = votes.length / 2;
+  const result = votes.reduce((acc, vote) => {
+    acc[vote[0]] = ~~acc[vote[0]] + 1;
+    return acc;
+  }, {});
+
+  if (Math.max(...Object.values(result)) > majority) return [ result ];
+
+  const topTwo = topN(result, 2);
+
+  const secondRound = votes.reduce((acc, vote) => {
+    const secondChoice = vote[1];
+    if (topTwo.includes(secondChoice)) acc[secondChoice]++;
+    return acc;
+  }, { ...result });
+
+  return [ result, secondRound ];
+};
+// http://archive.fairvote.org/?page=2077 
+
+// /**
+//  * Fallback Voting Method
+//  */
+// const fallback = (candidates, votes) => {
+// };
+// #endregion
+
+// #region threeTwoOne
+/**
+ * 3-2-1 Method
+ * @param {Array.<string>} candidates
+ * @param {Array.<Object.<string, number>>} votes
+ * 
+ * @description Voters rank each candidate as "good", "ok", or "bad". There are three rounds. In the first, the top 3 candidates with the most "good" move on. In the second, the top 2 candidates with the least "bad" move on. In the final round, the candidate who is most preferred over the other wins
+ */
+const threeTwoOne = (candidates, votes) => {
+  console.log(votes.slice(0, 6));
+
+  const round1 = votes.reduce((acc, vote) => {
+    Object.entries(vote).forEach(([c, s]) => {
+      if (s === 1) acc[c]++;
+    });
+
+    return acc;
+  }, candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {}));
+
+  const topThree = topN(round1, 3);
+
+  const round2 = votes.reduce((acc, vote) => {
+    Object.entries(vote).forEach(([c, s]) => {
+      if (topThree.includes(c) && s === -1) acc[c]--;
+    });
+
+    return acc;
+  }, topThree.reduce((a, c) => ({ ...a, [c]: 0 }), {}));
+
+  const topTwo = topN(round2, 2);
+
+  const round3 = votes.reduce((acc, vote) => {
+    if (vote[topTwo[0]] > vote[topTwo[1]]) acc[topTwo[0]]++;
+    else if (vote[topTwo[0]] < vote[topTwo[1]]) acc[topTwo[1]]++;
+
+    return acc;
+  }, topTwo.reduce((a, c) => ({ ...a, [c]: 0 }), {}));
+
+  return [ round1, round2, round3 ];
+};
+// #endregion
+
 export { 
   rankedChoiceVote, coombsRCV, culiRCV, 
   supplementary,
@@ -544,4 +654,6 @@ export {
   copeland, lullCopeland,
   vfa, vfaRunoff,
   star,
+  bucklin, historicalBucklin,
+  threeTwoOne
 };
