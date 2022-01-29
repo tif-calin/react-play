@@ -22,7 +22,7 @@ const XAxis: React.FC<Props> = ({ scale }) => {
     />
     {ticks.map(({ value, xOffset }, i) => {
       const PRIME = 17;
-      const offset = ((i * PRIME) % tickVariations) * 16;
+      const offset = (((i + 1) * PRIME) % tickVariations) * 16;
 
       return <g key={value} transform={`translate(${xOffset}, 0)`}>
         <line y2={8 + offset} stroke="currentColor" strokeDasharray={"3, 3"} />
