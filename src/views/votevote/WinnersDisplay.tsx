@@ -5,7 +5,8 @@ import type { ColorName } from '.';
 
 const ResultsDisplay = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   list-style: none;
   padding: 0;
   gap: 0.5rem;
@@ -15,6 +16,10 @@ const ResultsDisplay = styled.ul`
   border-radius: 0.25rem;
 
   & > li {
+    width: calc(10vw + 12rem);
+    max-width: 100%;
+    flex-grow: 1;
+
     display: flex;
     flex-wrap: wrap;
     column-gap: 0.25rem;
@@ -31,6 +36,7 @@ const ResultItem = styled.div`
   display: flex;
   place-items: center;
   padding: 0.05rem 0.15rem;
+  padding-left: 0;
   place-content: center;
 
   &:hover {
