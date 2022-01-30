@@ -8,6 +8,7 @@ import {
   combinedApproval, coombsRCV, copeland, culiRCV, cumulative,
   fallback, fptp, 
   historicalBucklin,
+  kemenyYoung,
   lullCopeland, 
   majorityJudgement, 
   nauru, 
@@ -15,8 +16,7 @@ import {
   rankedChoiceVote, 
   star, supplementary, 
   threeTwoOne,
-  veto,
-  vfa, vfaRunoff, 
+  veto, vfa, vfaRunoff, 
 } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
@@ -178,6 +178,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const quadraticResult = quadratic(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
     const cumulativeResult = cumulative(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
     const majorityJudgementRounds = majorityJudgement(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, 0, 5)));
+    const kemenyYoungResult = kemenyYoung(candidates, scoredVotes);
 
     // not fully finished
     let starRounds = [{}];
@@ -211,6 +212,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       quadratic: getWinners(quadraticResult as any),
       cumulative: getWinners(cumulativeResult as any),
       majorityJudgement: getWinners(majorityJudgementRounds.at(-1) as any),
+      kemenyYoung: getWinners(kemenyYoungResult as any),
     });
 
     setRCV(rcvRounds);

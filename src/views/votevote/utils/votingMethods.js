@@ -837,9 +837,27 @@ const majorityJudgement = (candidates, votes) => {
 
 // #region kemenyYoung
 /**
+ * getPermutations helper function
+ * @param {Array} arr
+ * @returns {Array.<Array>}
+ */
+const getPermutations = (arr) => {
+  if (arr.length === 1) return [arr];
+  const result = [];
+  arr.forEach((a, i) => {
+    const rest = arr.filter((_, j) => j !== i);
+    const restPerms = getPermutations(rest);
+    restPerms.forEach(perm => {
+      result.push([a, ...perm]);
+    });
+  });
+  return result;
+};
+
+/**
  * Kemeny-Young Method
  * @param {Array.<string>} candidates
- * @param {Array.<Array.<Array.<string>>>} votes - ties are allowed
+ * @param {Array.<Object.<string, number>>} votes - ties are allowed
  * @returns {Round}
  */
 const kemenyYoung = (candidates, votes) => {
@@ -848,6 +866,44 @@ const kemenyYoung = (candidates, votes) => {
   // 3. for each permutation, use the pairwise matrix to calculate its score
   // 4. return the permutation with the highest score
 
+  // 1
+  const pairwise = candidates.reduce((acc, c) => ({ 
+    ...acc, 
+    [c]: candidates.reduce((a, c) => ({ ...a, [c]: 0 }), {}) 
+  }), {});
+
+  votes.forEach(vote => {
+    candidates.slice(0, -1).forEach((c1, i) => {
+      candidates.slice(i + 1).forEach((c2) => {
+        if (vote[c1] > vote[c2]) pairwise[c1][c2]++;
+        else if (vote[c1] < vote[c2]) pairwise[c2][c1]++;
+      });
+    });
+  });
+
+  // 2
+  const allPaths = getPermutations(candidates);
+
+  // 3
+  let topPathIndex = 0;
+  let topPathScore = -1;
+  allPaths.forEach((path, i) => {
+    let score = 0;
+    path.slice(0, -1).forEach((c1, i) => {
+      path.slice(i + 1).forEach((c2) => {
+        score += pairwise[c1][c2];
+        if (score > topPathScore) {
+          topPathScore = score;
+          topPathIndex = i;
+        }
+      })
+    })
+  });
+
+  // 4
+  return allPaths[topPathIndex].reduce((a, c, i) => ({
+    ...a, [c]: candidates.length - i
+  }), {});
 };
 // #endregion
 
@@ -865,6 +921,6 @@ export {
   threeTwoOne,
   quadratic,
   cumulative,
-  // kemenyYoung,
-  majorityJudgement
+  majorityJudgement,
+  kemenyYoung,
 };
