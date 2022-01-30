@@ -67,7 +67,6 @@ const generalizedRCV = (candidates, votes, method = 'rcv') => {
     // error handling in case of infinite loop
     if (rounds.length > candidates.length) {
       console.error(`ERROR: more rounds than candidates: Method ${method}`);
-      console.table(rounds);
       break;
     }
   }
@@ -412,11 +411,13 @@ const vfa = votes => {
  */
 const boehmSigned = votes => {
   return votes.reduce((acc, vote) => {
-    const [top, topScore] = Object.entries(vote).reduce((a, c) => a[1] > c[1] ? a : c);
-    const [bottom, bottomScore] = Object.entries(vote).reduce((a, c) => a[1] < c[1] ? a : c);
-
-    if (Math.abs(topScore) > Math.abs(bottomScore)) acc[top] = ~~acc[top] + 1;
-    else if (Math.abs(topScore) < Math.abs(bottomScore)) acc[bottom] = ~~acc[bottom] - 1;
+    if (vote.length) {
+      const [top, topScore] = Object.entries(vote).reduce((a, c) => a[1] > c[1] ? a : c);
+      const [bottom, bottomScore] = Object.entries(vote).reduce((a, c) => a[1] < c[1] ? a : c);
+  
+      if (Math.abs(topScore) > Math.abs(bottomScore)) acc[top] = ~~acc[top] + 1;
+      else if (Math.abs(topScore) < Math.abs(bottomScore)) acc[bottom] = ~~acc[bottom] - 1;
+    }
 
     return acc;
   }, {});
@@ -821,13 +822,16 @@ const majorityJudgement = (candidates, votes) => {
       grades[c].splice(mid - ((1 + grades[c].length) % 2), grades[c].length % 2 ? 1 : 2);
     });
 
+    const oldL = topCandidates.length;
+    const oldM = highestMedian;
     highestMedian = 0;
-    results.push(candidates.reduce((acc, c) => {
+    const round = candidates.reduce((acc, c) => {
       const median = getMedian(grades[c]);
       if (median > highestMedian) highestMedian = median;
       return { ...acc, [c]: median };
-    }, {}));
-    topCandidates = Object.keys(results.at(-1)).filter((c) => results.at(-1)[c] === highestMedian);
+    }, {});
+    topCandidates = Object.keys(round).filter((c) => round[c] === highestMedian);
+    if (topCandidates.length !== oldL || highestMedian !== oldM) results.push(round);
     i++;
   }
 
@@ -866,6 +870,8 @@ const kemenyYoung = (candidates, votes) => {
   // 3. for each permutation, use the pairwise matrix to calculate its score
   // 4. return the permutation with the highest score
 
+  if (!candidates.length) return {};
+
   // 1
   const pairwise = candidates.reduce((acc, c) => ({ 
     ...acc, 
@@ -881,6 +887,8 @@ const kemenyYoung = (candidates, votes) => {
     });
   });
 
+  console.table(pairwise);
+
   // 2
   const allPaths = getPermutations(candidates);
 
@@ -892,12 +900,14 @@ const kemenyYoung = (candidates, votes) => {
     path.slice(0, -1).forEach((c1, i) => {
       path.slice(i + 1).forEach((c2) => {
         score += pairwise[c1][c2];
-        if (score > topPathScore) {
-          topPathScore = score;
-          topPathIndex = i;
-        }
-      })
-    })
+      });
+    });
+    if (score > topPathScore) {
+      topPathScore = score;
+      topPathIndex = i;
+
+      console.log(topPathScore, path);
+    }
   });
 
   // 4
