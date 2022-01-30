@@ -178,7 +178,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const quadraticResult = quadratic(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
     const cumulativeResult = cumulative(candidates, scoredVotes.map(v => Ballot.toContinuousRange(v, 0, 1)));
     const majorityJudgementRounds = majorityJudgement(candidates, scoredVotes.map(v => Ballot.toDiscreteScore(v, 0, 5)));
-    const kemenyYoungResult = kemenyYoung(candidates, scoredVotes);
+    const kemenyYoungResult = candidates.length < 8 ? kemenyYoung(candidates, scoredVotes) : {};
 
     // not fully finished
     let starRounds = [{}];
@@ -212,7 +212,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       quadratic: getWinners(quadraticResult as any),
       cumulative: getWinners(cumulativeResult as any),
       majorityJudgement: getWinners(majorityJudgementRounds.at(-1) as any),
-      kemenyYoung: getWinners(kemenyYoungResult as any),
+      kemenyYoung: candidates.length < 8 ? getWinners(kemenyYoungResult as any) : ['too hard to calculate'],
     });
 
     setRCV(rcvRounds);
