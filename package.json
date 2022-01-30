@@ -4,10 +4,13 @@
   "description": "culi's react playground",
   "main": "index.js",
   "repository": "https://github.com/tif-calin/react-play",
+  "homepage": "https://tif-calin.github.io",
   "author": "culi",
   "license": "MIT",
   "private": false,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "webpack-dev-server --history-api-fallback --hot --config webpack.config.js --mode development --devtool eval-source-map --open",
     "build": "webpack --config webpack.config.js --env env=production"
   },
@@ -54,6 +57,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
     "css-modules-typescript-loader": "^4.0.1",
+    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.5",
     "postcss-loader": "^6.2.1",
