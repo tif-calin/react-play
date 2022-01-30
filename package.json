@@ -4,7 +4,7 @@
   "description": "culi's react playground",
   "main": "index.js",
   "repository": "https://github.com/tif-calin/react-play",
-  "homepage": "https://tif-calin.github.io",
+  "homepage": "https://tif-calin.github.io/react-play",
   "author": "culi",
   "license": "MIT",
   "private": false,
