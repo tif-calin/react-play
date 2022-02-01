@@ -185,7 +185,7 @@ const sriLankanContingency = (votes) => {
   if (firstRound[top2[0]] > Math.floor(votes.length / 2)) return [firstRound];
 
   const secondRound = votes
-    .map(v => vs.slice(1, 3).find(c => top2.includes(c)))
+    .map(v => v.slice(1, 3).find(c => top2.includes(c)))
     .filter(c => c)
     .reduce((acc, vote) => ({
       ...acc, [vote]: ~~acc[vote] + 1
@@ -957,8 +957,6 @@ const kemenyYoung = (candidates, votes) => {
     if (score > topPathScore) {
       topPathScore = score;
       topPathIndex = i;
-
-      console.log(topPathScore, path);
     }
   });
 
