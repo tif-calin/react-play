@@ -14,9 +14,9 @@ import {
   nauru, 
   quadratic,
   rankedChoiceVote, 
-  star, supplementary, 
+  star, contingency, 
   threeTwoOne,
-  veto, vfa, vfaRunoff, 
+  veto, vfa, vfaRunoff, supplementary, sriLankanContingency, 
 } from './utils/votingMethods';
 import { rankClosestRGB, rankClosestHSL, scoreClosestHSL, scoreClosestRGB } from './utils/colorDistance';
 import useRoster from './hooks/useRoster';
@@ -165,7 +165,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
     const vetoResult = veto(rankedVotes.map(v => v.at(-1)) as string[]);
     const bordaResult = borda(candidates, rankedVotes);
     const nauruResult = nauru(rankedVotes);
-    const supplementaryRounds = supplementary(candidates, rankedVotes);
+    const contingencyRounds = contingency(candidates, rankedVotes);
+    const supplementaryRounds = supplementary(rankedVotes);
+    const sriLankanContingencyRounds = sriLankanContingency(rankedVotes);
     const copelandResult = copeland(candidates, rankedVotes);
     const lullCopelandResult = lullCopeland(candidates, rankedVotes);
     const vfaResult = vfa(rankedVotes);
@@ -198,7 +200,9 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
       veto: getWinners(vetoResult as any),
       borda: getWinners(bordaResult as any),
       nauru: getWinners(nauruResult as any),
+      contingency: getWinners(contingencyRounds.at(-1) as any),
       supplementary: getWinners(supplementaryRounds.at(-1) as any),
+      sriLankanContingency: getWinners(sriLankanContingencyRounds.at(-1) as any),
       copeland: getWinners(copelandResult as any),
       lullCopeland: getWinners(lullCopelandResult as any),
       vfa: getWinners(vfaResult as any),

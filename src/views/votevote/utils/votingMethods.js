@@ -100,14 +100,14 @@ const culiRCV = (candidates, votes) => generalizedRCV(candidates, votes, 'culi')
 
 // #endregion 
 
-// #region supplementary
+// #region contingency
 /**
- * Supplementary Method
+ * Contingency Method
  * @param {Array.<string>} candidates
  * @param {Array.<Array.<string>>} votes
  * @returns {Array.<Round>}
  */
-const supplementary = (candidates, votes) => {
+const contingency = (candidates, votes) => {
   const munged = votes
     .map(vote => vote.filter(c => candidates.includes(c)))
     .filter(vote => vote.length)
@@ -141,6 +141,58 @@ const supplementary = (candidates, votes) => {
   });
 
   return [fptp, result];
+};
+
+/**
+ * Supplementary Method
+ * @param {Array.<Array.<string>>} votes 
+ * 
+ * @description Contingent vote where voters are only allowed to rank up to 2 candidates
+ */
+const supplementary = (votes) => {
+  const firstRound = votes.map(v => v[0]).reduce((acc, vote) => ({
+    ...acc, [vote]: ~~acc[vote] + 1
+  }), {});
+
+  const top2 = topN(firstRound, 2);
+
+  if (firstRound[top2[0]] > Math.floor(votes.length / 2)) return [firstRound];
+
+  const secondRound = votes
+    .map(v => v[1])
+    .filter(c => top2.includes(c))
+    .reduce((acc, vote) => ({
+      ...acc, [vote]: ~~acc[vote] + 1
+    }), top2.reduce((a, c) => ({ ...a, [c]: firstRound[c] }), {}));
+  ;
+
+  return [firstRound, secondRound];
+};
+
+/**
+ * Sri Lankan Contingency Method
+ * @param {Array.<Array.<string>>} votes
+ * 
+ * @description Contingent vote where voters are only allowed to rank up to 3 candidates
+ */
+const sriLankanContingency = (votes) => {
+  const firstRound = votes.map(v => v[0]).reduce((acc, vote) => ({
+    ...acc, [vote]: ~~acc[vote] + 1
+  }), {});
+
+  const top2 = topN(firstRound, 2);
+
+  if (firstRound[top2[0]] > Math.floor(votes.length / 2)) return [firstRound];
+
+  const secondRound = votes
+    .map(v => vs.slice(1, 3).find(c => top2.includes(c)))
+    .filter(c => c)
+    .reduce((acc, vote) => ({
+      ...acc, [vote]: ~~acc[vote] + 1
+    }), top2.reduce((a, c) => ({ ...a, [c]: firstRound[c] }), {}));
+  ;
+
+  return [firstRound, secondRound];
 };
 
 // #endregion
@@ -919,7 +971,7 @@ const kemenyYoung = (candidates, votes) => {
 
 export { 
   rankedChoiceVote, coombsRCV, culiRCV, 
-  supplementary,
+  contingency, supplementary, sriLankanContingency,
   fptp, veto,
   borda, modifiedBorda, tournamentBorda,
   nauru,
