@@ -940,6 +940,16 @@ const kemenyYoung = (candidates, votes) => {
   });
 
   console.table(pairwise);
+  // just for show
+  const pairwiseMatchups = candidates.slice(0, -1).reduce((acc, c1, i) => {
+    acc[c1] = {};
+    candidates.slice(i + 1).forEach((c2) => {
+      acc[c1][c2] = Number(pairwise[c1][c2] > pairwise[c2][c1]);
+      if (pairwise[c1][c2] === pairwise[c2][c1]) acc[c1][c2] = 0.5;
+    });
+    return acc;
+  }, {});
+  console.table(pairwiseMatchups);
 
   // 2
   const allPaths = getPermutations(candidates);
@@ -957,6 +967,8 @@ const kemenyYoung = (candidates, votes) => {
     if (score > topPathScore) {
       topPathScore = score;
       topPathIndex = i;
+
+      console.log(topPathScore, path);
     }
   });
 

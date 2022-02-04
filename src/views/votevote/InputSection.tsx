@@ -235,14 +235,14 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
         <button onClick={() => addCandidate()}>add candidate</button>
         {candidates.length > 1 && <button disabled={candidates.length < 3} onClick={clearCandidates}>clear</button>}
       </fieldset>
-      <ColorRoster name="candidates">
+      <ColorRoster name="candidates" aria-hidden="true">
         {candidates.map((name) => (
           <div 
             key={name} 
             style={{ backgroundColor: colors[name] }} 
             onClick={() => { setSelectedCandidate(name); removeCandidate(name); }}
             title={`${name} (${colors[name]})`}
-          ><span>x</span></div>
+          ><span aria-hidden="true">x</span></div>
         ))}
         <span>{candidates.length} candidates</span>
       </ColorRoster>
@@ -262,7 +262,7 @@ const InputSection: React.FC<Props> = ({ setRCV, setCoombs, setCuli }) => {
             style={{ backgroundColor: colors[name] }} 
             onClick={() => { setSelectedVoter(name); removeVoter(name); }}
             title={`${name} (${colors[name]})`}
-          ><span>x</span></div>
+          ><span aria-hidden="true">x</span></div>
         ))}
         <span>{voters.length} voters</span>
       </ColorRoster>
