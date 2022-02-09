@@ -31,6 +31,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-charts": "^3.0.0-beta.34",
     "react-dom": "^18.0.0-beta-24dd07bd2-20211208",
+    "react-hook-form": "^7.26.0",
     "react-router-dom": "^6.1.1",
     "react-select": "^5.2.1",
     "react-spring": "^9.4.2",

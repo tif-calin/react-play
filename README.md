@@ -44,6 +44,7 @@
    - [brand-colors](http://brandcolors.net/)
  - SEO and Semantic Web
    - [schema.org](https://schema.org/)
+ - [react-hook-form](https://medium.com/geekculture/the-1-best-design-pattern-for-managing-forms-in-react-87ae825c98f4)
 
 ## Uses
  - react, react router
