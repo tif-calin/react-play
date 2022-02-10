@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import styled from 'styled-components';
 import useChartSettings from '../../votevote/hooks/useChartSettings';
 import XAxis from './XAxis';
+import Line from './Line';
+import { info as fullInfo } from '../../../data/elections';
 
 const Wrapper = styled.div`
   height: calc(300px + 10vh);
@@ -32,10 +34,11 @@ const Circle = styled.circle`
 interface Props {
   data: number[];
   info?: any;
+  neighbors?: number[][];
   latestYear?: number;
 };
 
-const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info }) => {
+const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info, neighbors }) => {
   const [ ref, { width, height } ] = useChartSettings();
 
   const oldestYear = latestYear - (data.length * 4);
@@ -54,14 +57,24 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info }) => {
     ;
   }, [data, latestYear, height]);
 
+  console.log(info, neighbors);
+
   return (
     <Wrapper ref={ref}>
       <svg viewBox={`0 0 ${width} ${height}`}>
         <g className="plot">
-          <polyline 
-            fill="none" stroke="black"
-            points={data.map((d, i) => `${xScale(latestYear - (i*4))},${yScale(d)}`).join(' ')}
+          <Line
+            points={data.map((d, i) => [ xScale(latestYear - (i*4)), yScale(d) ])}
+            label={info?.acronym && info.acronym}
           />
+          {neighbors && neighbors.map((ns, i) => {
+            return <Line
+              key={i} 
+              points={ns.map((d, i) => [ xScale(latestYear - (i*4)), yScale(d) ])}
+              stroke="#233" opacity={0.15}
+              label={fullInfo?.[info.neighbors[i]]?.acronym}
+            />
+          })}
           {data.map((value, i) => {
             const x = xScale(latestYear - (i * 4));
             const y = yScale(value);
@@ -80,10 +93,6 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info }) => {
               >{value.toFixed(1)}</text>
             </>);
           })}
-          {info?.acronym && <text
-            x={xScale(latestYear) + 24} y={yScale(data[0])}
-            alignmentBaseline="middle"
-          >{info.acronym}</text>}
         </g>
         <g className="x-axis" transform={`translate(0, ${yScale(0)})`}>
           <XAxis scale={xScale} />
