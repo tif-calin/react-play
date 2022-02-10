@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PageTitle from '../../components/layout/PageTitle';
-import electionData from '../../data/elections';
+import electionData, { info as stateInfo } from '../../data/elections';
 import Chart from './chart';
 
 const yearlyResults = electionData.national.map(([ dem, rep ]) => {
@@ -50,7 +50,10 @@ const PartisanLeanPage: React.FC<Props> = () => {
         <select value={state} onChange={e => setState(e.target.value)}>
           {states.map(s => <option key={s}>{s}</option>)}
         </select>
-        <Chart data={(electionData[state as keyof typeof electionData] as number[][]).map(([d, r]) => 100*((d-r)/(d+r)))} />
+        <Chart 
+          data={(electionData[state as keyof typeof electionData] as number[][]).map(([d, r]) => 100*((d-r)/(d+r)))}
+          info={(stateInfo as any)[state]}
+        />
       </section>
 
       <h3>stats, yo</h3>

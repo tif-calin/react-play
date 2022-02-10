@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   max-height: calc(300px + 10vh);
   width: 100%;
   border: 1px solid black;
-  padding: 10px;
+  padding-right: 3rem;
 
   & > svg {
     overflow: visible;
@@ -19,12 +19,23 @@ const Wrapper = styled.div`
   }
 `;
 
+const Circle = styled.circle`
+  & + text {
+    transition: opacity 0.1s;
+  }
+
+  &:hover + text {
+    opacity: 1;
+  }
+`;
+
 interface Props {
   data: number[];
+  info?: any;
   latestYear?: number;
 };
 
-const LineGraph: React.FC<Props> = ({ data, latestYear = 2020 }) => {
+const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info }) => {
   const [ ref, { width, height } ] = useChartSettings();
 
   const oldestYear = latestYear - (data.length * 4);
@@ -38,7 +49,7 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020 }) => {
 
   const yScale = React.useMemo(() => {
     return d3.scaleDiverging()
-      .domain([Math.min(-50, ...data) - 5, Math.max(50, ...data) + 5])
+      .domain([Math.min(-50, ...data) - 12, Math.max(50, ...data) + 12])
       .range([height, 0])
     ;
   }, [data, latestYear, height]);
@@ -47,20 +58,32 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020 }) => {
     <Wrapper ref={ref}>
       <svg viewBox={`0 0 ${width} ${height}`}>
         <g className="plot">
+          <polyline 
+            fill="none" stroke="black"
+            points={data.map((d, i) => `${xScale(latestYear - (i*4))},${yScale(d)}`).join(' ')}
+          />
           {data.map((value, i) => {
             const x = xScale(latestYear - (i * 4));
             const y = yScale(value);
 
-            return (
-              <circle
+            return (<>
+              <Circle
                 key={i}
-                cx={x}
-                cy={y}
-                r={2}
-                fill="black"
+                cx={x} cy={y} r={4}
+                fill={value > 0 ? 'blue' : 'red'}
               />
-            );
+              <text
+                x={x} y={y + (value > 0 ? -10 : 18)}
+                textAnchor="middle"
+                fontSize="14"
+                opacity={!(i % 2) && Math.abs(value) > 5 ? 1 : 0}
+              >{value.toFixed(1)}</text>
+            </>);
           })}
+          {info?.acronym && <text
+            x={xScale(latestYear) + 24} y={yScale(data[0])}
+            alignmentBaseline="middle"
+          >{info.acronym}</text>}
         </g>
         <g className="x-axis" transform={`translate(0, ${yScale(0)})`}>
           <XAxis scale={xScale} />

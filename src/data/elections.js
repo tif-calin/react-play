@@ -1,3 +1,15 @@
+const info = {
+  california: {
+    acronym: 'CA',
+    neighbors: ['oregon', 'nevada', 'arizona'],
+    population: { 2020: 39_538_223, },
+  },
+  texas: {
+    acronym: 'TX',
+    neighbors: ['louisiana', 'arkansas', 'oklahoma', 'new_mexico']
+  }
+};
+
 const data = {
   elections: [
     'california', 'texas', 'florida', 'new_york', 'pennsylvania', 
@@ -387,3 +399,4 @@ const data = {
 };
 
 export default data;
+export { info };
