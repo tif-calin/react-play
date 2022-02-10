@@ -37,12 +37,12 @@ const Page = styled.div`
 
 interface Props {};
 
-const Gerrymandering2020Page: React.FC<Props> = () => {
+const PartisanLeanPage: React.FC<Props> = () => {
   const [ state, setState ] = React.useState(states[0]);
 
   return (
     <Page data-cols={1 + yearlyResults.length}>
-      <PageTitle>2020 Gerrymandering</PageTitle>
+      <PageTitle>State Partisan Lean Over 1976-2020</PageTitle>
       <p>The goal of this page is to show how the partisan lean of each state, relative to the nation as a whole, has changed over time.</p>
 
       <h3>graphs, yo</h3>
@@ -72,4 +72,4 @@ const Gerrymandering2020Page: React.FC<Props> = () => {
   );
 };
 
-export default Gerrymandering2020Page;
+export default PartisanLeanPage;
