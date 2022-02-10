@@ -67,12 +67,12 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info, neighbors }
             points={data.map((d, i) => [ xScale(latestYear - (i*4)), yScale(d) ])}
             label={info?.acronym && info.acronym}
           />
-          {neighbors && neighbors.map((ns, i) => {
+          {neighbors?.length && neighbors?.map((ns, i) => {
             return <Line
               key={i} 
               points={ns.map((d, i) => [ xScale(latestYear - (i*4)), yScale(d) ])}
               stroke="#233" opacity={0.15}
-              label={fullInfo?.[info.neighbors[i]]?.acronym}
+              label={info?.neighbors?.length && fullInfo?.[info.neighbors[i]]?.acronym}
             />
           })}
           {data.map((value, i) => {

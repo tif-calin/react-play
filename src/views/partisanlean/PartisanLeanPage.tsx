@@ -66,7 +66,7 @@ const PartisanLeanPage: React.FC<Props> = () => {
         <Chart 
           data={currStateData}
           info={currStateInfo}
-          neighbors={currStateInfo.neighbors ? currStateInfo.neighbors.map((s: StateKey) => toLean(electionData[s] as number[][])) : []}
+          neighbors={currStateInfo?.neighbors?.map((s: StateKey) => toLean(electionData[s] as number[][])) || []}
         />
       </section>
 
