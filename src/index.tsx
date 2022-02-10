@@ -39,7 +39,7 @@ const App = () => {
           <Route path="/votevote" element={<VoteVotePage />} />
           <Route path="/colors/mix" element={<ColorMixPage />} />
           <Route path="/read-later" element={<ReadLaterPage />} />
-          <Route path="/gerrymandering2020" element={<PartisanLeanPage />} />
+          <Route path="/partisanlean" element={<PartisanLeanPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
