@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../components/layout/PageTitle';
 import SeasonalFruitsChart from './SeasonalFruitsChart';
@@ -40,8 +41,13 @@ const ChartsPage: React.FC<Props> = () => {
       <section>
         <h3>RCV Rounds Animated Bar Chart</h3>
         <p>
-          Check it out <a href="/charts/rcv">here</a>!
+          My first attempt can be found <a href="/charts/rcv">here</a>! Version 2 looks much better though: <Link to="/votevote">votevote</Link>.
         </p>
+      </section>
+
+      <section>
+        <h3>Partisan lean of states over time</h3>
+        <p><Link to="/partisanlean">Check it out!</Link></p>
       </section>
     </Page>
   );

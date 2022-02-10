@@ -42,7 +42,7 @@ const PartisanLeanPage: React.FC<Props> = () => {
 
   return (
     <Page data-cols={1 + yearlyResults.length}>
-      <PageTitle>State Partisan Lean Over 1976-2020</PageTitle>
+      <PageTitle>State Partisan Lean Over 1960-2020</PageTitle>
       <p>Many visualizations show the way state&apos;s have voted over time, but it&apos;s surprisingly hard to find a visualization of how the partisan lean of a state has changed over the years. Partisan lean is the difference between how Dem/Rep a state voted vs how Dem/Rep the nation as a whole voted. It&apos;s FiveThirtyEight&apos;s preferred measurement of how Dem/Rep leaning a state is.</p>
 
       <h3>graphs, yo</h3>
