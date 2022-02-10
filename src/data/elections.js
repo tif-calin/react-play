@@ -7,7 +7,43 @@ const info = {
   texas: {
     acronym: 'TX',
     neighbors: ['louisiana', 'arkansas', 'oklahoma', 'new_mexico']
-  }
+  },
+  florida: {
+    acronym: 'FL',
+    neighbors: ['georgia', 'alabama']
+  },
+  new_york: {
+    acronym: 'NY',
+    neighbors: ['pennsylvania', 'new_jersey', 'vermont', 'massachusetts', 'connecticut']
+  },
+  pennsylvania: {
+    acronym: 'PA',
+  },
+  illinois: {
+    acronym: 'IL',
+  },
+  ohio: {
+    acronym: 'OH',
+  },
+  georgia: {
+    acronym: 'GA',
+  },
+  north_carolina: {
+    acronym: 'NC',
+  },
+  michigan: {
+    acronym: 'MI',
+  },
+  new_jersey: {
+    acronym: 'NJ',
+  },
+  virginia: {
+    acronym: 'VA',
+  },
+  washington: {
+    acronym: 'WA',
+  },
+
 };
 
 const data = {
