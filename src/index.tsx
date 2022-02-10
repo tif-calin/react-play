@@ -17,6 +17,7 @@ import CrowdWritingPage from './views/writings/crowdwriting';
 import VoteVotePage from './views/votevote';
 import ColorMixPage from './views/colors/mix';
 import ReadLaterPage from './views/readlater';
+import Gerrymandering2020Page from './views/gerrymandering2020';
 
 import './styles/index.css';
 
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/votevote" element={<VoteVotePage />} />
           <Route path="/colors/mix" element={<ColorMixPage />} />
           <Route path="/read-later" element={<ReadLaterPage />} />
+          <Route path="/gerrymandering2020" element={<Gerrymandering2020Page />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
