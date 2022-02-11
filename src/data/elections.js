@@ -44,6 +44,16 @@ const info = {
     acronym: 'WA',
   },
 
+  arkansas: {
+    acronym: 'AR',
+    links: [
+      { 
+        url: 'https://www.csmonitor.com/USA/Politics/2016/0725/How-the-Clintons-home-state-turned-so-red-so-quickly',
+        title: 'How the Clinton\'s \'home\' state turned so red, so quickly',
+        source: 'The Christian Science Monitor'
+      }
+    ]
+  },
 };
 
 const data = {
