@@ -59,6 +59,11 @@ const lra = [
   {
     title: 'alcamy.org',
     url: 'https://alcamy.org/',
+  },
+  {
+    title: 'learnawesome.org',
+    url: 'https://learnawesome.org/',
+    description: 'No scope. Should be any sort of resource, but seems biased towards MOOCs. But it also has support for everything from articles and books to twitter feeds notes. For contributions, see their slack #meta channel.'
   }
 ];
 
