@@ -45,6 +45,22 @@
  - SEO and Semantic Web
    - [schema.org](https://schema.org/)
  - [react-hook-form](https://medium.com/geekculture/the-1-best-design-pattern-for-managing-forms-in-react-87ae825c98f4)
+ - important dev tools:
+   - next.js analytics
+   - next.js custom reporting
+   - CrUX report
+   - pagespeed insights
+   - search console, core web vitals report
+   - lighthouse
+   - chrome devtools
+   - ... and also:
+   - W3C Markup Validation
+   - Google PageSpeed Insights
+   - Google Lighthouse
+   - CSS Overview
+   - ... and also:
+   - [FrontEndChecklist](https://frontendchecklist.io/)
+   - [webpagetest](https://webpagetest.org/)
 
 ## Uses
  - react, react router
