@@ -1,7 +1,25 @@
 # Culi's React Prototype Playground
 **repo**: https://github.com/tif-calin/react-play
 
+## Uses
+ - react, react router
+ - typescript and also JS Docs in some parts 
+ - [styled-components](https://www.styled-components.com/)
+ - component libraries
+   - [mui](https://mui.com/)  
+   - [react-select](https://react-select.com/)
+ - data viz libraries
+   - [react-charts](https://react-charts.tanstack.com/)
+   - [recharts](https://recharts.org/)
+   - d3 is amazing!!!
+ - css standards
+   - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
+   - [Open Color](https://yeun.github.io/open-color/)
+   - [easings.net](https://easings.net/)
+ - hooks inspired by [usehooks.com](https://usehooks.com/)
+
 ## Things I wanna try:
+Whenever I come across a tool or resource I wanna try using, I add it to this list.
  - [plausible](https://plausible.io/)
  - assets, icons, illustrations 
    - this [collection of open-source icons](https://www.iconshock.com/freeicons/)
@@ -9,6 +27,7 @@
    - [absurd.design](https://absurd.design/)
    - [micah](https://avatars.dicebear.com/styles/micah)
    - https://typogram.github.io/Anicons/use.html 
+   - [undraw.co](https://undraw.co/illustrations)
  - get more comf w design libraries
    - https://motion.dev/ 
    - react-spring
@@ -20,7 +39,7 @@
  - [react-dnd](https://react-dnd.github.io/react-dnd/)
  - experiment with micro-frontend technologies like [fetchye](https://www.npmjs.com/package/fetchye)
  - making a hexagonal grid [like this](https://css-tricks.com/hexagons-and-beyond-flexible-responsive-grid-patterns-sans-media-queries/)
- - make a basic game using <canvas>'s
+ - make a basic game using \<canvas>'s
  - shaders? webgl?
    - someday I'll replicate that one Stripe background animated gradient
    - https://www.shadertoy.com/view/lsl3RH 
@@ -61,25 +80,15 @@
    - ... and also:
    - [FrontEndChecklist](https://frontendchecklist.io/)
    - [webpagetest](https://webpagetest.org/)
-
-## Uses
- - react, react router
- - typescript and also JS Docs in some parts 
- - [styled-components](https://www.styled-components.com/)
- - component libraries
-   - [mui](https://mui.com/)  
-   - [react-select](https://react-select.com/)
- - data viz libraries
-   - [react-charts](https://react-charts.tanstack.com/)
-   - [recharts](https://recharts.org/)
-   - d3 is amazing!!!
- - css standards
-   - Josh W. Comeau's [CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) 
-   - [Open Color](https://yeun.github.io/open-color/)
-   - [easings.net](https://easings.net/)
-
-## Credits
- - hooks inspired by [usehooks.com](https://usehooks.com/)
+ - optimize svgs with [svgomg](https://jakearchibald.github.io/svgomg/) 
+ - comments section with [utterenc.es](https://utteranc.es/)
+ - [catify.js](https://github.com/yobert/catify) - add a cat to your website!
+ - js game development with [pixijs](https://pixijs.com/) and [ct.js](https://ctjs.rocks/) (see [hn discussion](https://news.ycombinator.com/item?id=24176655)) or phaser
+ - this great online vector editor, [vector-draw](https://editor.method.ac/)
+ - big things
+    - [snowpack](https://www.snowpack.dev/)
+    - [svelte](https://svelte.dev/)
+    - [deno](https://deno.land/)
 
 ## Some things I've used in the past that I liked:
  - [SpeechSynthesisUtterence](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)
