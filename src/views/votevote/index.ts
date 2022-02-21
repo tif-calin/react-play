@@ -1,4 +1,5 @@
-import VoteVotePage from './VoteVotePage';
+import React from 'react';
+const VoteVotePage = React.lazy(() => import('./VoteVotePage'));
 import colors from '../../data/colors';
 
 type ColorName = keyof typeof colors;

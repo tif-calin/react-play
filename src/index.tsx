@@ -21,6 +21,8 @@ import PartisanLeanPage from './views/partisanlean';
 
 import './styles/index.css';
 
+const suspend = (Component: React.FC) => <React.Suspense fallback={<>...</>}><Component /></React.Suspense>
+
 const App = () => {
   return (
     <Router>
@@ -28,15 +30,15 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rate" element={<RatePage />} />
-          <Route path="/catfood" element={<Catfood />} />
-          <Route path="/catfood/stats" element={<CatfoodStats />} />
+          <Route path="/catfood" element={suspend(Catfood)} />
+          <Route path="/catfood/stats" element={suspend(CatfoodStats)} />
           <Route path="/learn" element={<LearnPage />} />
           <Route path="/learn/ruby" element={<LearnRuby />} />
           <Route path="/learn/d3" element={<LearnD3 />} />
           <Route path="/charts" element={<ChartsPage />} />
           <Route path="/charts/rcv" element={<RCVRoundsChartPage />} />
           <Route path="/crowd-writing" element={<CrowdWritingPage />} />
-          <Route path="/votevote" element={<VoteVotePage />} />
+          <Route path="/votevote" element={suspend(VoteVotePage)} />
           <Route path="/colors/mix" element={<ColorMixPage />} />
           <Route path="/read-later" element={<ReadLaterPage />} />
           <Route path="/partisanlean" element={<PartisanLeanPage />} />
