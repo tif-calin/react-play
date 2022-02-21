@@ -61,6 +61,7 @@ Whenever I come across a tool or resource I wanna try using, I add it to this li
  - color palettes 
    - [cohesive-colors](https://javier.xyz/cohesive-colors/)
    - [brand-colors](http://brandcolors.net/)
+   - [accessiblepalette.com](https://accessiblepalette.com/)
  - SEO and Semantic Web
    - [schema.org](https://schema.org/)
  - [react-hook-form](https://medium.com/geekculture/the-1-best-design-pattern-for-managing-forms-in-react-87ae825c98f4)
@@ -89,6 +90,7 @@ Whenever I come across a tool or resource I wanna try using, I add it to this li
     - [snowpack](https://www.snowpack.dev/)
     - [svelte](https://svelte.dev/)
     - [deno](https://deno.land/)
+    - [hotwire.js, turbo.js, and stimulus.js](https://hotwired.dev/)
 
 ## Some things I've used in the past that I liked:
  - [SpeechSynthesisUtterence](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)
