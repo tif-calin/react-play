@@ -17,7 +17,7 @@ const XAxis: React.FC<Props> = ({ scale }) => {
   const tickCount = (scale.domain()[1] - scale.domain()[0]);
 
   const ticks = React.useMemo(() => {
-    return scale.nice().ticks(tickCount).map(value => ({
+    return scale.ticks(tickCount).map(value => ({
       value,
       xOffset: Number(scale(value))
     }));
