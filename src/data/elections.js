@@ -3,6 +3,40 @@ const info = {
     acronym: 'CA',
     neighbors: ['oregon', 'nevada', 'arizona'],
     population: { 2020: 39_538_223, },
+    voting_laws: [
+      {
+        year: 2021,
+        name: 'becomes the eighth state with automatic mail ballots',
+        link: 'https://www.latimes.com/california/story/2021-09-27/california-universal-voting-by-mail-becomes-permanent',
+      },
+      {
+        year: 2007,
+        name: 'reimagines "absentee voting" as "vote by mail"',
+        link: 'https://www.latimes.com/california/story/2021-09-27/california-universal-voting-by-mail-becomes-permanent',
+      },
+      {
+        year: 2001,
+        name: 'expands the federal Voting Rights Act',
+        link: 'https://en.wikipedia.org/wiki/California_Voting_Rights_Act',
+      },
+      {
+        year: 1978,
+        name: 'expansion of absentee voting to any voter',
+        link: 'https://www.jstor.org/stable/2111180',
+      },
+      {
+        year: 1975,
+        name: 'CA stops purging voters who don\'t vote every election',
+        link: 'https://www.latimes.com/california/story/2021-09-27/california-universal-voting-by-mail-becomes-permanent',
+      }
+    ],
+    links: [
+      {
+        url: 'https://www.latimes.com/opinion/story/2020-11-03/california-voting-history',
+        title: 'Op-Ed: Modern California is all about voter access. History reveals a far grimmer voting-rights past',
+        source: 'LA Times',
+      }
+    ]
   },
   texas: {
     acronym: 'TX',
@@ -18,21 +52,27 @@ const info = {
   },
   pennsylvania: {
     acronym: 'PA',
+    neighbors: ['new_york', 'maryland', 'west_virginia', 'ohio', 'new_jersey', 'delaware']
   },
   illinois: {
     acronym: 'IL',
+    neighbors: ['wisconsin', 'indiana', 'kentucky', 'iowa', 'michigan', 'missouri']
   },
   ohio: {
     acronym: 'OH',
+    neighbors: ['michigan', 'indiana', 'kentucky', 'west_virginia', 'pennsylvania']
   },
   georgia: {
     acronym: 'GA',
+    neighbors: ['florida', 'alabama', 'tennessee', 'north_carolina', 'south_carolina']
   },
   north_carolina: {
     acronym: 'NC',
+    neighbors: ['virginia', 'tennessee', 'south_carolina', 'georgia']
   },
   michigan: {
     acronym: 'MI',
+    neighbors: ['ohio', 'indiana', 'wisconsin', 'minnesota']
   },
   new_jersey: {
     acronym: 'NJ',
@@ -43,7 +83,63 @@ const info = {
   washington: {
     acronym: 'WA',
   },
-
+  arizona: {
+    acronym: 'AZ',
+  },
+  tennessee: {
+    acronym: 'TN',
+  },
+  massachusetts: {
+    acronym: 'MA',
+  },
+  indiana: {
+    acronym: 'IN',
+  },
+  missouri: {
+    acronym: 'MO',
+  },
+  maryland: {
+    acronym: 'MD',
+  },
+  colorado: {
+    acronym: 'CO',
+  },
+  wisconsin: {
+    acronym: 'WI',
+  },
+  minnesota: {
+    acronym: 'MN',
+  },
+  south_carolina: {
+    acronym: 'SC',
+  },
+  alabama: {
+    acronym: 'AL',
+  },
+  louisiana: {
+    acronym: 'LA',
+  },
+  kentucky: {
+    acronym: 'KY',
+  },
+  oregon: {
+    acronym: 'OR',
+  },
+  oklahoma: {
+    acronym: 'OK',
+  },
+  connecticut: {
+    acronym: 'CT',
+  },
+  utah: {
+    acronym: 'UT',
+  },
+  nevada: {
+    acronym: 'NV',
+  },
+  iowa: {
+    acronym: 'IA',
+  },
   arkansas: {
     acronym: 'AR',
     links: [
@@ -53,6 +149,57 @@ const info = {
         source: 'The Christian Science Monitor'
       }
     ]
+  },
+  mississippi: {
+    acronym: 'MS',
+  },
+  kansas: {
+    acronym: 'KS',
+  },
+  new_mexico: {
+    acronym: 'NM',
+  },
+  nebraska: {
+    acronym: 'NE',
+  },
+  idaho: {
+    acronym: 'ID',
+  },
+  west_virginia: {
+    acronym: 'WV',
+  },
+  hawaii: {
+    acronym: 'HI',
+  },
+  new_hampshire: {
+    acronym: 'NH',
+  },
+  maine: {
+    acronym: 'ME',
+  },
+  montana: {
+    acronym: 'MT',
+  },
+  rhode_island: {
+    acronym: 'RI',
+  },
+  delaware: {
+    acronym: 'DE',
+  },
+  south_dakota: {
+    acronym: 'SD',
+  },
+  north_dakota: {
+    acronym: 'ND',
+  },
+  alaska: {
+    acronym: 'AK',
+  },
+  vermont: {
+    acronym: 'VT',
+  },
+  wyoming: {
+    acronym: 'WY',
   },
 };
 
