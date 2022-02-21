@@ -6,12 +6,15 @@ import XAxis from './XAxis';
 import Line from './Line';
 import { info as fullInfo } from '../../../data/elections';
 
+type StateName = keyof typeof fullInfo;
+
 const Wrapper = styled.div`
   height: calc(300px + 10vh);
   max-height: calc(300px + 10vh);
   width: 100%;
   border: 1px solid black;
   padding-right: 3rem;
+  overflow: hidden;
 
   & > svg {
     overflow: visible;
@@ -33,7 +36,7 @@ const Circle = styled.circle`
 
 interface Props {
   data: number[];
-  info?: any;
+  info?: { neighbors: StateName[], [key: string]: any };
   neighbors?: number[][];
   latestYear?: number;
 };
@@ -45,7 +48,7 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info, neighbors }
 
   const xScale = React.useMemo(() => {
     return d3.scaleLinear()
-      .domain([oldestYear, latestYear])
+      .domain([oldestYear + 6, latestYear])
       .range([0, width])
     ;
   }, [data, latestYear, width]);
@@ -72,7 +75,7 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info, neighbors }
               key={i} 
               points={ns.map((d, i) => [ xScale(latestYear - (i*4)), yScale(d) ])}
               stroke="#233" opacity={0.15}
-              label={info?.neighbors?.length && fullInfo?.[info.neighbors[i]]?.acronym}
+              label={info?.neighbors?.length && fullInfo?.[info.neighbors[i]]?.acronym || ''}
             />
           })}
           {data.map((value, i) => {
