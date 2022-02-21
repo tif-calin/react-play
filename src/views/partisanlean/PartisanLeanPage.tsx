@@ -28,8 +28,8 @@ const Page = styled.div`
   & > section.table {
     display: grid;
     overflow: auto;
-    grid-template-columns: repeat(${(props: any) => props['data-cols'] || 1+yearlyResults.length}, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(${(props: any) => props['data-cols'] || yearlyResults.length}, 1fr);
+    gap: 0.5rem;
 
     & > span {
       white-space: nowrap;
@@ -54,7 +54,7 @@ const PartisanLeanPage: React.FC<Props> = () => {
   const currStateInfo = React.useMemo(() => (stateInfo as any)[state], [state]);
 
   return (
-    <Page data-cols={1 + yearlyResults.length}>
+    <Page data-cols={yearlyResults.length}>
       <PageTitle>State Partisan Lean Over 1960-2020</PageTitle>
       <p>Many visualizations show the way states have voted over time, but it&apos;s surprisingly hard to find a visualization of how the partisan lean of a state has changed over the years. Partisan lean is the difference between how Dem/Rep a state voted vs how Dem/Rep the nation as a whole voted. It&apos;s FiveThirtyEight&apos;s preferred measurement of how Dem/Rep leaning a state is.</p>
 
@@ -73,12 +73,12 @@ const PartisanLeanPage: React.FC<Props> = () => {
       <h3>stats, yo</h3>
       <section className="table">
         <span></span>
-        {yearlyResults.map((_, i) => <span key={i}><b>{2020 - (i*4)}</b></span>)}
+        {yearlyResults.slice(0, -1).map((_, i) => <span key={i}><b>{2020 - (i*4)}</b></span>)}
         <span><b>national</b></span>
-        {electionData.national.map(([ dem, rep ], i) => <span key={i}>{(100 * (dem - rep) / (dem + rep)).toFixed(1)}</span>)}
+        {electionData.national.slice(0, -1).map(([ dem, rep ], i) => <span key={i}>{(100 * (dem - rep) / (dem + rep)).toFixed(1)}</span>)}
         {states.map((state) => <>
           <span key={state}><b>{state}</b></span>
-          {(electionData[state as keyof typeof electionData] as number[][]).map(([dem, rep], i) => 
+          {(electionData[state as keyof typeof electionData] as number[][]).slice(0, 14).map(([dem, rep], i) => 
             <span key={`${state}-${i}`}>
               {(100 * (dem - rep) / (dem + rep)).toFixed(1)} ({((100 * (dem - rep) / (dem + rep)) - yearlyResults[i]).toFixed(1)})
             </span>
