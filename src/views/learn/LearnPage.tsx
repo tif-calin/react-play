@@ -94,7 +94,17 @@ const LearnPage: React.FC<Props> = () => {
         ))}
       </ul>
 
-      <h3>Learning Resource Discover</h3>
+      <h3>Aggregators of Specific Types of Learning Resources</h3>
+      <ul>
+        <li>
+          <A href="https://github.com/bayandin/awesome-awesomeness">awesome-awesomeness</A> - An awesome list of other awesome lists
+        </li>
+        <li>
+          There&apos;s two projects collecting all sorts of tech cheet sheats: <A href="https://codehouse.vercel.app/">codehouse</A> and <A href="http://www.cheat-sheets.org/">cheat-sheets.org</A>
+        </li>
+      </ul>
+
+      <h3>Learning Resource Discovery</h3>
       <ul>
         <li>
           <A href="https://bestofjs.org/projects?tags=learning&sort=weekly">bestofjs.org</A>
