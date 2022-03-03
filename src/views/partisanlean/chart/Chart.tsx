@@ -48,7 +48,7 @@ const LineGraph: React.FC<Props> = ({ data, latestYear = 2020, info, neighbors }
 
   const xScale = React.useMemo(() => {
     return d3.scaleLinear()
-      .domain([oldestYear + 6, latestYear])
+      .domain([1966, latestYear])
       .range([0, width])
     ;
   }, [data, latestYear, width]);
