@@ -7,7 +7,7 @@ const info = {
       {
         year: 2021,
         name: 'becomes the eighth state with automatic mail ballots',
-        link: 'https://www.latimes.com/california/story/2021-09-27/california-universal-voting-by-mail-becomes-permanent',
+        link: 'https://www.ncsl.org/research/elections-and-campaigns/vopp-table-18-states-with-all-mail-elections.aspx',
       },
       {
         year: 2007,
@@ -40,7 +40,7 @@ const info = {
   },
   texas: {
     acronym: 'TX',
-    neighbors: ['louisiana', 'arkansas', 'oklahoma', 'new_mexico']
+    neighbors: ['louisiana', 'arkansas', 'oklahoma', 'new_mexico'],
   },
   florida: {
     acronym: 'FL',
@@ -52,7 +52,19 @@ const info = {
   },
   pennsylvania: {
     acronym: 'PA',
-    neighbors: ['new_york', 'maryland', 'west_virginia', 'ohio', 'new_jersey', 'delaware']
+    neighbors: ['new_york', 'maryland', 'west_virginia', 'ohio', 'new_jersey', 'delaware'],
+    voting_laws: [
+      {
+        year: 2000,
+        name: 'law forbidding felons from voting for 5 years after release struck down by state supreme court',
+        link: 'https://www.vote.pa.gov/Register-to-Vote/Pages/Convicted-Felon,-Misdemeanant-or-Pretrial-Detainee.aspx',
+      },
+      {
+        year: 1995,
+        name: 'Pennsylvania Voter Registration Act allows ex-convicts to register to vote',
+        link: 'https://www.congress.gov/103/statute/STATUTE-107/STATUTE-107-Pg77.pdf'
+      }
+    ]
   },
   illinois: {
     acronym: 'IL',
