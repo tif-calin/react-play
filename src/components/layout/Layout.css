@@ -22,14 +22,19 @@
   display: flex;
 }
 
-.Layout > header h1 {
+.Layout > header .site-title {
   font-size: 2.5rem;
+  font-weight: 900;
+  opacity: 0.8;
   filter: saturate(0.55) brightness(0.25);
-  transition: all 2s cubic-bezier(0, 0.9, 0.8, 0.99);
+  transition-properties: opacity, filter;
+  transition-duration: 2s;
+  transition-timing-function: cubic-bezier(0, 0.9, 0.8, 0.99);
 }
 
-.Layout > header h1:hover {
+.Layout > header .site-title:hover {
   filter: saturate(1) brightness(1) hue-rotate(1440deg);
+  opacity: 1;
 }
 
 .Layout > main {
