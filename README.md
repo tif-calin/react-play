@@ -28,7 +28,7 @@ Whenever I come across a tool or resource I wanna try using, I add it to this li
    - [micah](https://avatars.dicebear.com/styles/micah)
    - https://typogram.github.io/Anicons/use.html 
    - [undraw.co](https://undraw.co/illustrations)
- - get more comf w design libraries
+ - get more comf w animation libraries
    - https://motion.dev/ 
    - react-spring
    - [moving-letters](https://tobiasahlin.com/moving-letters/)
@@ -95,3 +95,4 @@ Whenever I come across a tool or resource I wanna try using, I add it to this li
 ## Some things I've used in the past that I liked:
  - [SpeechSynthesisUtterence](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)
  - [Fraunces](https://fraunces.undercase.xyz/)
+ - [Fontello](https://fontello.com/)

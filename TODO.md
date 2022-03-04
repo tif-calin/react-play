@@ -1,0 +1,1 @@
+ - [ ] on a given page, pass the path to the github sourcecode to the footer to link directly
