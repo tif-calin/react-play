@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "webpack-dev-server --history-api-fallback --hot --config webpack.config.js --mode development --devtool eval-source-map --open",
+    "start": "webpack-dev-server --history-api-fallback --config webpack.config.js --mode development --devtool eval-source-map --open",
     "build": "webpack --config webpack.config.js --env env=production"
   },
   "browserslist": [
