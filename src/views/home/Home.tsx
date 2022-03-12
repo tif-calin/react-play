@@ -25,22 +25,10 @@ const Home = () => {
       </p>
       <StyledList>
         <li><Link to="redistricting2020">My measurement of how gerrymandered new districting maps are</Link>.</li>
-        <li><Link to="rate/multi">My experiments with budgetory sliders.</Link></li>
-        <li><Link to="charts">I make charts sometimes</Link></li>
+        <li><Link to="rate/multi">My experiments with budgetory sliders</Link>.</li>
+        <li><Link to="charts">I make charts sometimes</Link>.</li>
         <li><Link to="votevote">The original prototype of VoteVote</Link>. Which has now become a seperate website: <A href="https://votevote.page">votevote.page</A></li>
         <li><Link to="learn">My collection of learning resource aggregators</Link>.</li>
-        {/* <li>
-          React forms are still hard tbh, so I tried playing around with a couple things: <Link to="/rate">prototype of raterate</Link>, <Link to="/catfood">catfood price data entry tool</Link> and their <Link to="/catfood/stats">stats</Link>
-        </li> */}
-        {/* <li>
-          <Link to="/charts">my chart playground</Link>
-        </li> */}
-        {/* <li>
-          Sometimes I log my learning journeys like with <Link to="/learn/d3">d3</Link> or <Link to="/learn/ruby">ruby</Link>
-        </li> */}
-        {/* <li>
-          The coolest thing I&apos;ve made so far is my prototype of <Link to="/votevote">votevote.page</Link> (soon to be a <a href="https://votevote.page/">website</a>).
-        </li> */}
       </StyledList>
     </>
   )

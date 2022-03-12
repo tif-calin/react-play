@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ExternalLink from '../../components/A';
 import PageTitle from '../../components/layout/PageTitle';
-import Island from './island';
+import Island from './Island';
 import ActivatorFunctionSection from './sections/ActivatorFunctionSection';
 import StateExamplesSection from './sections/StateExamplesSection';
 

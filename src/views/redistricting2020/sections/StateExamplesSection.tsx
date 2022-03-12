@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import stateRedistrictingData from '../data';
 import electionData from '../../../data/elections';
-import Island from '../island';
+import Island from '../Island';
 
 interface Props {
   aVal?: number;
