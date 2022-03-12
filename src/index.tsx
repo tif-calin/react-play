@@ -22,6 +22,7 @@ const PartisanLeanPage = React.lazy(() => import('./views/partisanlean'));
 
 import './styles/index.css';
 import MultiRatePage from './views/multirate';
+import Redistricting2020Page from './views/redistricting2020/Redistricting2020Page';
 
 const suspend = (Component: React.FC) => <React.Suspense fallback={<>...</>}><Component /></React.Suspense>
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/colors/mix" element={<ColorMixPage />} />
           <Route path="/readlater" element={<ReadLaterPage />} />
           <Route path="/partisanlean" element={suspend(PartisanLeanPage)} />
+          <Route path="/redistricting2020" element={suspend(Redistricting2020Page)} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
