@@ -52,12 +52,19 @@ const Island: React.FC<Props> = ({
 }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(!!defaultOpen);
 
+  const toggle = React.useCallback((e) => {
+    if (e.type === 'keypress' && e.key !== 'Enter') return;
+    setIsOpen(isOpen => !isOpen);
+  }, []);
+
   return (
     <Container
       isOpen={isOpen}
     >
       <HeadingContainer
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggle}
+        onKeyPress={toggle}
+        tabIndex={0}
       >
         <h2>{title}</h2>
       </HeadingContainer>

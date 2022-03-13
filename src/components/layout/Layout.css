@@ -23,10 +23,10 @@
 }
 
 .Layout > header .site-title {
-  font-size: 2.5rem;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 750;
   opacity: 0.8;
-  filter: saturate(0.55) brightness(0.25);
+  filter: saturate(0.55) brightness(0.05);
   transition-properties: opacity, filter;
   transition-duration: 2s;
   transition-timing-function: cubic-bezier(0, 0.9, 0.8, 0.99);

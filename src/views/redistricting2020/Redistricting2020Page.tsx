@@ -21,6 +21,11 @@ const Page = styled.div`
     line-height: 1;
   }
 
+  & > p:last-child {
+    font-size: 0.8rem;
+    font-weight: 200;
+  }
+
   accent-color: var(--oc-pink-3);
 
   --shadow-color: 0deg 0% 80%;
@@ -36,7 +41,6 @@ const Page = styled.div`
     16.3px 23.9px 27.1px -3.7px hsl(var(--shadow-color) / 0.1)
   ;
   --shadow-border: var(--shadow), 0 0 3px hsl(var(--shadow-color));
-
   --shadow-inset:
     inset 0 0 2px hsl(var(--shadow-color) / 0.25),
     inset 0.3px 0.5px 0.5px hsl(var(--shadow-color) / 0.24),
@@ -50,10 +54,8 @@ const Page = styled.div`
   ;
   --shadow-inset-border: var(--shadow-inset), inset 0 0 3px hsl(var(--shadow-color));
 
-  & > p:last-child {
-    font-size: 0.8rem;
-    font-weight: 200;
-  }
+  --black: #1f2727;
+  --white: #f8f9fa;
 `;
 
 const Redistricting2020Page: React.FC<Props> = () => {
@@ -84,7 +86,6 @@ const Redistricting2020Page: React.FC<Props> = () => {
           The problem here, in my mind, is that the measures of seat competitiveness has arbitrary and discrete breakpoints. What I want to find is a way to measure bias in a continuous way. To do that, we need to turn district partisan leans into election result odds. E.g. say a +5R seat translates to a 75% chance Republicans win.
         </p>
       </Island>
-      <p>P.S. this data was typed in by hand and might have mistakes. If there's interest in this, I can try scraping something to get all of the states and more accurate data. Lemme know I guess.</p>
     </Page>
   );
 };
