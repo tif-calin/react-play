@@ -244,7 +244,7 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 		{ 2020: 0.475125135, 2022: 0.5092006227986613, },
 		{ 2020: 0.4974571345, 2022: 0.5267832351857914, },
 	],
-	'New jersey': [
+	'New Jersey': [
 		{ 2020: 0.6097333, 2022: 0.6001811179601325, },
 		{ 2020: 0.466686795, 2022: 0.45425830306080217, },
 		{ 2020: 0.473150795, 2022: 0.544654462506579, },
@@ -258,12 +258,12 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 		{ 2020: 0.50629213, 2022: 0.5544095305943965, },
 		{ 2020: 0.6588648, 2022: 0.6498913752904281, },
 	],
-	'New mexico': [
+	'New Mexico': [
 		{ 2020: 0.5897517, 2022: 0.5565861496185495, },
 		{ 2020: 0.42983455, 2022: 0.5184001888408735, },
 		{ 2020: 0.57011955, 2022: 0.5227880357542521, },
 	],
-	'New york': [
+	'New York': [
 		{ 2020: 0.451833065, 2022: 0.5295296245833474, },
 		{ 2020: 0.4576234, 2022: 0.4018379048224585, },
 		{ 2020: 0.5311404, 2022: 0.5491598397292194, },
@@ -292,7 +292,7 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 		{ 2020: 0.6088959, 2022: 0.5976242247727674, },
 		{ 2020: 0.39308525, },
 	],
-	'North carolina': [
+	'North Carolina': [
 		{ 2020: 0.6891027000000001, 2022: 0.5256088841787384, },
 		{ 2020: 0.62915555, 2022: 0.6177022242703321, },
 		{ 2020: 0.3693129, 2022: 0.357408296266858, },
@@ -361,11 +361,11 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 		{ 2020: 0.3026397, 2022: 0.5029613706582197, },
 		{ 2020: 0.453063, },
 	],
-	'Rhode island': [
+	'Rhode Island': [
 		{ 2020: 0.66608975, 2022: 0.661938531446138, },
 		{ 2020: 0.5823436, 2022: 0.5826693173452645, },
 	],
-	'South carolina': [
+	'South Carolina': [
 		{ 2020: 0.4288614, 2022: 0.41439820473461697, },
 		{ 2020: 0.4031609, 2022: 0.4011930280839, },
 		{ 2020: 0.28201425, 2022: 0.2796794197634925, },
@@ -456,7 +456,7 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 		{ 2020: 0.7138796000000001, 2022: 0.6919990697016515, },
 		{ 2020: 0.54339342, 2022: 0.5518828365871775, },
 	],
-	'West virginia': [
+	'West Virginia': [
 		{ 2020: 0.32796645, 2022: 0.3251435009220535, },
 		{ 2020: 0.35366815, 2022: 0.328095065076994, },
 		{ 2020: 0.2820818, },
@@ -473,4 +473,58 @@ const stateRedistrictingData: Record<string, { 2020?: number, 2022?: number }[]>
 	],
 };
 
+const statePVI: Record<string, number> = {
+  'Alabama': 0.425,
+  'Alaska': 0.455,
+  'Arizona': 0.485,
+  'Arkansas': 0.42,
+  'California': 0.57,
+  'Colorado': 0.515,
+  'Connecticut': 0.535,
+  'Delaware': 0.53,
+  'Florida': 0.485,
+  'Georgia': 0.485,
+  'Hawaii': 0.575,
+  'Idaho': 0.405,
+  'Illinois': 0.535,
+  'Indiana': 0.445,
+  'Iowa': 0.47,
+  'Kansas': 0.445,
+  'Kentucky': 0.42,
+  'Louisiana': 0.44,
+  'Maine': 0.505,
+  'Maryland': 0.57,
+  'Massachusetts': 0.57,
+  'Michigan': 0.495,
+  'Minnesota': 0.505,
+  'Mississippi': 0.45,
+  'Missouri': 0.445,
+  'Montana': 0.445,
+  'Nebraska': 0.435,
+  'Nevada': 0.5,
+  'New Hampshire': 0.5,
+  'New Jersey': 0.53,
+  'New Mexico': 0.515,
+  'New York': 0.55,
+  'North Carolina': 0.485,
+  'North Dakota': 0.4,
+  'Ohio': 0.47,
+  'Oklahoma': 0.4,
+  'Oregon': 0.53,
+  'Pennsylvania': 0.49,
+  'Rhode Island': 0.54,
+  'South Carolina': 0.46,
+  'South Dakota': 0.42,
+  'Tennessee': 0.43,
+  'Texas': 0.475,
+  'Utah': 0.435,
+  'Vermont': 0.575,
+  'Virginia': 0.51,
+  'Washington': 0.54,
+  'West Virginia': 0.385,
+  'Wisconsin': 0.49,
+  'Wyoming': 0.37
+};
+
 export default stateRedistrictingData;
+export { statePVI };

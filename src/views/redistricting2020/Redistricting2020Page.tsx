@@ -14,6 +14,10 @@ const Page = styled.div`
   gap: 2rem;
   margin-bottom: 3rem;
 
+  & input, select, button {
+    cursor: pointer;
+  }
+
   & > h1 {
     width: 100%;
     text-align: center;
