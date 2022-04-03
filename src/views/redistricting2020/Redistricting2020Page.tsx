@@ -8,7 +8,7 @@ import StateExamplesSection from './sections/StateExamplesSection';
 
 interface Props {};
 
-const Page = styled.div`
+export const Page = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
