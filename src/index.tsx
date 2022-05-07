@@ -24,6 +24,7 @@ import './styles/index.css';
 import MultiRatePage from './views/multirate';
 import Redistricting2020Page from './views/redistricting2020/Redistricting2020Page';
 import CookPage from './views/cook';
+import WaterfallPage from './views/charts/waterfall';
 
 const suspend = (Component: React.FC) => <React.Suspense fallback={<>...</>}><Component /></React.Suspense>
 
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/learn/d3" element={<LearnD3 />} />
           <Route path="/charts" element={<ChartsPage />} />
           <Route path="/charts/rcv" element={<RCVRoundsChartPage />} />
+          <Route path="/charts/waterfall" element={suspend(WaterfallPage)} />
           <Route path="/crowdwriting" element={<CrowdWritingPage />} />
           <Route path="/votevote" element={suspend(VoteVotePage)} />
           <Route path="/colors/mix" element={<ColorMixPage />} />
